@@ -4,17 +4,23 @@
 @using Funpoly.Data.Repositories.Interfaces
 @inject IPlayerRepository PlayerRepository
 
-<h3>TeamsConfig</h3>
-@foreach (var player in _playerList)
+@if (@isInitialized)
 {
-    @player.Name
+    <h3>TeamsConfig</h3>
+    @foreach (var player in _playerList)
+    {
+        @player.Name
+    }
 }
 
 @code {
     private List<Player> _playerList;
+    private bool isInitialized = false;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _playerList = PlayerRepository.GetAll();
+        _playerList = await PlayerRepository.GetAll();
+
+        isInitialized = true;
     }
 }

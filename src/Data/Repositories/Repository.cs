@@ -21,14 +21,7 @@ namespace Funpoly.Data.Repositories
 
         public List<TEntity> GetAll()
         {
-            try
-            {
-                return _applicationDbContext.Set<TEntity>().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)

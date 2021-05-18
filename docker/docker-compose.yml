@@ -1,13 +1,15 @@
 version: '3.4'
 
 services:
-
   funpoly:
+    container_name: funpoly
+    hostname: funpoly
+    restart: always
     image: ${DOCKER_REGISTRY-}funpoly
     build:
       context: ..
       dockerfile: src/Dockerfile
-    environment:
+    environment: 
       POSTGRES_CONNECTIONSTRING: Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev
 
   funpoly_postgres:

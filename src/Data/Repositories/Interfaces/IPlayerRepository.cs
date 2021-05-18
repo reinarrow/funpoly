@@ -8,6 +8,10 @@ namespace Funpoly.Data.Repositories.Interfaces
 {
     internal interface IPlayerRepository : IRepository<Player>
     {
-        Player GetById(int id);
+        Task<(bool, string)> AddAsync(Player type);
+
+        Task<Player> GetById(int id);
+
+        Task<List<Player>> GetAll();
     }
 }

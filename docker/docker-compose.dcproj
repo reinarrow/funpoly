@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>df4d76d5-1b9b-40b7-884f-55aee51cece6</ProjectGuid>
+    <ProjectGuid>5dd030a2-7e3a-4a5e-afe3-0b07f0b16db7</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>funpoly</DockerServiceName>

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Funpoly.Data;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
+using Funpoly.Data.Models;
 
 namespace Funpoly
 {
@@ -34,7 +35,7 @@ namespace Funpoly
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IPlayerRepository, PlayerRepository>();
 
-            var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTIONSTRING") ?? "Host=internaltools_postgres;Port=5432;Database=internaltools;Username=rw_dev;Password=rw_dev";
+            var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTIONSTRING") ?? "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev";
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);

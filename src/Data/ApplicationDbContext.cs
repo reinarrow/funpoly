@@ -10,15 +10,11 @@ namespace Funpoly.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<Player>().HasData(
-              new Player { Id = 1, Name = "Player 1" },
-              new Player { Id = 2, Name = "Player 2" },
-              new Player { Id = 3, Name = "Player 3" }
-            );
+            base.OnModelCreating(builder);
         }
 
-        public DbSet<Player> Player { get; set; }
+        public DbSet<Player> Players { get; set; }
     }
 }
