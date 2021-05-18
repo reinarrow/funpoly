@@ -33,9 +33,18 @@ namespace Funpoly
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IBoardSquareRepository, BoardSquareRepository>();
+            services.AddTransient<IContinentRepository, ContinentRepository>();
+            services.AddTransient<IParcelRepository, ParcelRepository>();
             services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<IPostcardRepository, PostcardRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITransportRepository, TransportRepository>();
 
-            var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTIONSTRING") ?? "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev";
+            // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
+            var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "true" ?
+                "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;" :
+                "Host=localhost;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;";
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);

@@ -6,21 +6,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Player
+    public class Transport
     {
         // Unique identifier
         public int Id { get; set; }
 
-        // Player name
+        // Common name of the transport
         [Required]
         public string Name { get; set; }
 
-        // Bool indicating if the player is the captain of his/her team
-        public bool Captain { get; set; }
+        // Number of dices to be thrown when using this transport
+        [Required]
+        public int Dices { get; set; }
 
-        //Relations
-        public int TeamId { get; set; }
+        // Number to be substracted per dice when using this transport
+        [Required]
+        public int Substraction { get; set; }
 
+        // Relations
         public Team Team { get; set; }
     }
 }

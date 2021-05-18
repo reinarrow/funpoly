@@ -24,64 +24,92 @@ namespace Funpoly.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public (bool, string) Add(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
             }
 
+            var rowsChanged = false;
             try
             {
-                await _applicationDbContext.AddAsync(entity);
-                await _applicationDbContext.SaveChangesAsync();
-
-                return entity;
+                _applicationDbContext.Add(entity);
+                rowsChanged = _applicationDbContext.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
                 throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
             }
+
+            //TODO Review null return
+            return (rowsChanged, null);
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<(bool, string)> AddAsync(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
             }
 
+            var rowsChanged = false;
+            try
+            {
+                await _applicationDbContext.AddAsync(entity);
+                rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
+            }
+
+            //TODO Review null return
+            return (rowsChanged, null);
+        }
+
+        public async Task<(bool, string)> UpdateAsync(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
+            }
+
+            var rowsChanged = false;
             try
             {
                 _applicationDbContext.Update(entity);
-                await _applicationDbContext.SaveChangesAsync();
-
-                return entity;
+                rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
             {
                 throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
             }
+
+            //TODO Review null return
+            return (rowsChanged, null);
         }
 
-        public async Task<TEntity> DeleteAsync(TEntity entity)
+        public async Task<(bool, string)> RemoveAsync(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
             }
 
+            var rowsChanged = false;
             try
             {
                 _applicationDbContext.Remove(entity);
-                await _applicationDbContext.SaveChangesAsync();
-
-                return entity;
+                rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
             {
                 throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
             }
+
+            //TODO Review null return
+            return (rowsChanged, null);
         }
     }
 }

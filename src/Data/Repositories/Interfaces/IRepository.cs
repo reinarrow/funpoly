@@ -8,8 +8,12 @@ namespace Funpoly.Data.Repositories.Interfaces
     {
         List<TEntity> GetAll();
 
-        Task<TEntity> AddAsync(TEntity entity);
+        (bool, string) Add(TEntity entity);
 
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<(bool, string)> AddAsync(TEntity entity);
+
+        Task<(bool, string)> UpdateAsync(TEntity entity);
+
+        Task<(bool, string)> RemoveAsync(TEntity entity);
     }
 }

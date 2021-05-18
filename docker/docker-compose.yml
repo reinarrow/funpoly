@@ -10,7 +10,7 @@ services:
       context: ..
       dockerfile: src/Dockerfile
     environment: 
-      POSTGRES_CONNECTIONSTRING: Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev
+      - CONTAINER=true
 
   funpoly_postgres:
     container_name: funpoly_postgres
