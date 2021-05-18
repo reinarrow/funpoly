@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Funpoly", "src\Funpoly.csproj", "{94586654-9731-4316-B5E1-D174D9D3AF38}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker\docker-compose.dcproj", "{DF4D76D5-1B9B-40B7-884F-55AEE51CECE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94586654-9731-4316-B5E1-D174D9D3AF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94586654-9731-4316-B5E1-D174D9D3AF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94586654-9731-4316-B5E1-D174D9D3AF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94586654-9731-4316-B5E1-D174D9D3AF38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4D76D5-1B9B-40B7-884F-55AEE51CECE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4D76D5-1B9B-40B7-884F-55AEE51CECE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4D76D5-1B9B-40B7-884F-55AEE51CECE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4D76D5-1B9B-40B7-884F-55AEE51CECE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B4A6718-6F4B-491B-B0ED-60A19F5C8621}
+	EndGlobalSection
+EndGlobal

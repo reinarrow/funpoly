@@ -1,0 +1,20 @@
+﻿@page "/players"
+
+@using Funpoly.Data.Models
+@using Funpoly.Data.Repositories.Interfaces
+@inject IPlayerRepository PlayerRepository
+
+<h3>TeamsConfig</h3>
+@foreach (var player in _playerList)
+{
+    @player.Name
+}
+
+@code {
+    private List<Player> _playerList;
+
+    protected override void OnInitialized()
+    {
+        _playerList = PlayerRepository.GetAll();
+    }
+}
