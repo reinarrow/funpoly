@@ -25,7 +25,7 @@ namespace Funpoly.Data.Repositories
 
         public async Task<List<Team>> GetAll()
         {
-            return await _applicationDbContext.Teams.ToListAsync();
+            return await _applicationDbContext.Teams.Include(t => t.Players).ToListAsync();
         }
 
         public async Task<Team> GetById(int id)

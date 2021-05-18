@@ -2,24 +2,29 @@
 
 @using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
-@inject IPlayerRepository PlayerRepository
+@inject ITeamRepository TeamRepository
 
 @if (@isInitialized)
 {
     <h3>TeamsConfig</h3>
-    @foreach (var player in _playerList)
-    {
-        @player.Name
-    }
+    <div class="flex-column">
+        @foreach (var team in _teamsList)
+        {
+            <h1>@team.Name</h1>
+            @foreach (var player in team.Players)
+            {
+                <a>@player.Name</a>
+            }
+        }
+    </div>
 }
-
 @code {
-    private List<Player> _playerList;
+    private List<Team> _teamsList;
     private bool isInitialized = false;
 
     protected override async Task OnInitializedAsync()
     {
-        _playerList = await PlayerRepository.GetAll();
+        _teamsList = await TeamRepository.GetAll();
 
         isInitialized = true;
     }

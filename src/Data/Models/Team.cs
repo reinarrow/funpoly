@@ -45,7 +45,7 @@ namespace Funpoly.Data.Models
         public int BoardSquareId { get; set; }
         public BoardSquare BoardSquare { get; set; }
         public List<Postcard> Postcards { get; set; }
-        public int TransportId { get; set; }
+        public int? TransportId { get; set; }
         public Transport Transport { get; set; }
         public List<Parcel> Parcels { get; set; }
     }

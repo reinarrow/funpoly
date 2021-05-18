@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Funpoly.Data
 {
@@ -13,6 +15,7 @@ namespace Funpoly.Data
         public static void Initialize(IServiceProvider serviceProvider)
         {
             var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
             var boardSquareRepository = serviceProvider.GetRequiredService<IBoardSquareRepository>();
             var continentRepository = serviceProvider.GetRequiredService<IContinentRepository>();
             var parcelRepository = serviceProvider.GetRequiredService<IParcelRepository>();
@@ -26,6 +29,7 @@ namespace Funpoly.Data
             applicationDbContext.Database.Migrate();
 
             // Seed data
+
             // - BoardSquares
             var currentBoardSquares = boardSquareRepository.GetAll();
             if (currentBoardSquares.Count == 0)
@@ -139,189 +143,189 @@ namespace Funpoly.Data
             if (currentContinents.Count == 0)
             {
                 List<Continent> continents = new List<Continent>
-                {
-                    new Continent{
-                        Name ="África",
+                    {
+                        new Continent{
+                            Name ="África",
+                            Parcels = new List<Parcel>
+                            {
+                                new Parcel
+                                {
+                                    Name = "Pirámides de Giza, El Cairo",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 2 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Valle de los Reyes, Luxor",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 4 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Serengeti, Tanzania",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 7 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "El Sáhara, Marruecos",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 9 //TODO: Check
+                                }
+                            }
+                        },
+                        new Continent{Name ="Europa",
                         Parcels = new List<Parcel>
-                        {
-                            new Parcel
                             {
-                                Name = "Pirámides de Giza, El Cairo",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 2 //TODO: Check
-                            },
-                            new Parcel
+                                new Parcel
+                                {
+                                    Name = "Coliseo Romano, Italia",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 11 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Partenón, Atenas",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 13 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Torre Eiffel, Paris",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 16 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Catedral de Santa María, Sevilla",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 18 //TODO: Check
+                                }
+                            }
+                        },
+                        new Continent{Name ="Asia",
+                        Parcels = new List<Parcel>
                             {
-                                Name = "Valle de los Reyes, Luxor",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 4 //TODO: Check
-                            },
-                            new Parcel
+                                new Parcel
+                                {
+                                    Name = "Muralla China, Pekín",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 20 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Monte Fuji, Japón",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 22 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Taj Mahal, India",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 25 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Petra, Jordania",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 27 //TODO: Check
+                                }
+                            }
+                        },
+                        new Continent{Name ="América",
+                        Parcels = new List<Parcel>
                             {
-                                Name = "Serengeti, Tanzania",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 7 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "El Sáhara, Marruecos",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 9 //TODO: Check
+                                new Parcel
+                                {
+                                    Name = "Machu Picchu, Perú",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 29 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Isla de Pascua, Chile",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 31 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Cañón del Colorado, Arizona",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 34 //TODO: Check
+                                },
+                                new Parcel
+                                {
+                                    Name = "Parque de Yellowstone, EEUU",
+                                    Price = 0, //TODO: Fill
+                                    RawTax = 0, //TODO: Fill
+                                    HotelTax = 0, //TODO: Fill
+                                    HotelBuilt = false,
+                                    Postcard = new Postcard(),
+                                    BoardSquareId = 36 //TODO: Check
+                                }
                             }
                         }
-                    },
-                    new Continent{Name ="Europa",
-                    Parcels = new List<Parcel>
-                        {
-                            new Parcel
-                            {
-                                Name = "Coliseo Romano, Italia",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 11 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Partenón, Atenas",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 13 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Torre Eiffel, Paris",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 16 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Catedral de Santa María, Sevilla",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 18 //TODO: Check
-                            }
-                        }
-                    },
-                    new Continent{Name ="Asia",
-                    Parcels = new List<Parcel>
-                        {
-                            new Parcel
-                            {
-                                Name = "Muralla China, Pekín",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 20 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Monte Fuji, Japón",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 22 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Taj Mahal, India",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 25 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Petra, Jordania",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 27 //TODO: Check
-                            }
-                        }
-                    },
-                    new Continent{Name ="América",
-                    Parcels = new List<Parcel>
-                        {
-                            new Parcel
-                            {
-                                Name = "Machu Picchu, Perú",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 29 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Isla de Pascua, Chile",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 31 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Cañón del Colorado, Arizona",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 34 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Parque de Yellowstone, EEUU",
-                                Price = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
-                                Postcard = new Postcard(),
-                                BoardSquareId = 36 //TODO: Check
-                            }
-                        }
-                    }
-                };
+                    };
 
                 foreach (var continent in continents)
                 {
@@ -335,38 +339,38 @@ namespace Funpoly.Data
             if (currentTransports.Count == 0)
             {
                 var transports = new List<Transport>
-                {
-                    new Transport
                     {
-                        Name = "Avión",
-                        Dices = 2,
-                        Substraction = 0
-                    },
-                    new Transport
-                    {
-                        Name = "Globo",
-                        Dices = 2,
-                        Substraction = 1
-                    },
-                    new Transport
-                    {
-                        Name = "Tren",
-                        Dices = 1,
-                        Substraction = 0
-                    },
-                    new Transport
-                    {
-                        Name = "Barco",
-                        Dices = 1,
-                        Substraction = 0
-                    },
-                    new Transport
-                    {
-                        Name = "Elefante",
-                        Dices = 1,
-                        Substraction = 1
-                    },
-                };
+                        new Transport
+                        {
+                            Name = "Avión",
+                            Dices = 2,
+                            Substraction = 0
+                        },
+                        new Transport
+                        {
+                            Name = "Globo",
+                            Dices = 2,
+                            Substraction = 1
+                        },
+                        new Transport
+                        {
+                            Name = "Tren",
+                            Dices = 1,
+                            Substraction = 0
+                        },
+                        new Transport
+                        {
+                            Name = "Barco",
+                            Dices = 1,
+                            Substraction = 0
+                        },
+                        new Transport
+                        {
+                            Name = "Elefante",
+                            Dices = 1,
+                            Substraction = 1
+                        },
+                    };
 
                 foreach (var transport in transports)
                 {
@@ -374,26 +378,145 @@ namespace Funpoly.Data
                 }
             }
 
-            //if (!applicationDbContext.Players.Any())
-            //{
-            //    // Players
-            //    applicationDbContext.Players.Add(
-            //        new Player
-            //        {
-            //            Name = "Agustin"
-            //        });
-            //    applicationDbContext.Players.Add(
-            //        new Player
-            //        {
-            //            Name = "Lucas"
-            //        });
-            //    applicationDbContext.Players.Add(
-            //        new Player
-            //        {
-            //            Name = "Rodolfa"
-            //        });
-            //    applicationDbContext.SaveChanges();
-            //}
+            if (webHostEnvironment.IsDevelopment())
+            {
+                // Teams and players
+                if (!applicationDbContext.Teams.Any())
+                {
+                    var teams = new List<Team>
+                    {
+                        new Team
+                        {
+                            Name = "Chicago me limpio",
+                            Turn = 1,
+                            Cash = 1000, //TODO: Check
+                            Color = "#FF0000",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Pepa",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Lucas",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Rodolfa",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Agustín",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Nottingham Prisa",
+                            Turn = 2,
+                            Cash = 1000, //TODO: Check
+                            Color = "#00FF00",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Carmen",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Pepe",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Juan",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Melinda",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Estudiabaantes",
+                            Turn = 3,
+                            Cash = 1000, //TODO: Check
+                            Color = "#0000FF",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Carlos",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Josefina",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Josh",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Tina",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Esfinter de Milán",
+                            Turn = 4,
+                            Cash = 1000, //TODO: Check
+                            Color = "#FFFFFF",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Phil",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Magdalena",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Paula",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Yen",
+                                    Captain = false
+                                }
+                            }
+                        }
+                    };
+                    
+                    foreach(var team in teams)
+                    {
+                        teamRepository.Add(team);
+                    }
+                }
+            }
         }
     }
 }
