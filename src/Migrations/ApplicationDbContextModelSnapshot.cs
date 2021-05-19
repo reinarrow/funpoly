@@ -78,7 +78,7 @@ namespace Funpoly.Migrations
                     b.Property<int>("RawTax")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -235,13 +235,17 @@ namespace Funpoly.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Funpoly.Data.Models.Team", null)
+                    b.HasOne("Funpoly.Data.Models.Team", "Team")
                         .WithMany("Parcels")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BoardSquare");
 
                     b.Navigation("Continent");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Player", b =>
