@@ -36,5 +36,8 @@ namespace Funpoly.Data.Models
         public Continent Continent { get; set; }
         public BoardSquare BoardSquare { get; set; }
         public int BoardSquareId { get; set; }
+
+        public Team Team { get; set; }
+        public int TeamId { get; set; }
     }
 }
