@@ -6,37 +6,37 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager NavManager
 
-    <button @onclick="@OnStartButtonClick"> Iniciar </button>
+<button @onclick="@OnStartButtonClick"> Iniciar </button>
 
-    @code {
-        [Parameter]
-        public string bankerToken { get; set; }
+@code {
+    [Parameter]
+    public string bankerToken { get; set; }
 
-        private bool isBanker = false;
+    private bool isBanker = false;
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Check token
+        var envToken = Environment.GetEnvironmentVariable("BANKER_TOKEN");
+
+        if (bankerToken != null && bankerToken == envToken)
         {
-            // Check token
-            var envToken = Environment.GetEnvironmentVariable("BANKER_TOKEN");
-
-            if (bankerToken != null && bankerToken == envToken)
-            {
-                await localStorage.SetItemAsync("bankerCookie", "true");
-            }
-
-            //// DEBUG: Get cookie
-            //var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
-
-            //if (cookieContent != null && cookieContent == "true")
-            //{
-            //    isBanker = true;
-            //}
-
-            NavManager.NavigateTo("/");
+            await localStorage.SetItemAsync("bankerCookie", "true");
         }
 
-        private void OnStartButtonClick()
-        {
-            NavManager.NavigateTo("players");
-        }
+        //// DEBUG: Get cookie
+        //var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
+
+        //if (cookieContent != null && cookieContent == "true")
+        //{
+        //    isBanker = true;
+        //}
+
+        NavManager.NavigateTo("/");
     }
+
+    private void OnStartButtonClick()
+    {
+        NavManager.NavigateTo("players");
+    }
+}
