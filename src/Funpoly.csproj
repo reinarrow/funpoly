@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0</TargetFramework>
 		<UserSecretsId>890c266a-df8a-4501-a2ea-60bb1083eeb1</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>.</DockerfileContext>
-		<DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,7 +20,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="NewFolder\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
 </Project>
