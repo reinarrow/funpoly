@@ -1,7 +1,46 @@
-﻿@page "/"
+﻿@page  "/"
+@page  "/{bankerToken}"
+
+@using System
+
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavManager
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+@if (isBanker)
+{
+    <p>You are a banker</p>
+}
+else
+{
+    <p>You are NOT a banker</p>
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    [Parameter]
+    public string bankerToken { get; set; }
+
+    private bool isBanker = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Check token
+        var envToken = Environment.GetEnvironmentVariable("BANKER_TOKEN");
+
+        if (bankerToken != null && bankerToken == envToken)
+        {
+            await localStorage.SetItemAsync("bankerCookie", "true");
+        }
+
+        //// DEBUG: Get cookie
+        //var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
+
+        //if (cookieContent != null && cookieContent == "true")
+        //{
+        //    isBanker = true;
+        //}
+
+        NavManager.NavigateTo("/");
+    }
+}

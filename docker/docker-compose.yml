@@ -10,7 +10,9 @@ services:
       context: ..
       dockerfile: src/Dockerfile
     environment: 
-      - CONTAINER=true
+      BANKER_TOKEN: xWy5oFqujuiYhh2OksZJSIBTP23OFRzu
+      CONTAINER: docker
+      
 
   funpoly_postgres:
     container_name: funpoly_postgres

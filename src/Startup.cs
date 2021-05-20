@@ -14,6 +14,8 @@ using Funpoly.Data;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
 using Funpoly.Data.Models;
+using System.Text.Json;
+using Blazored.LocalStorage;
 
 namespace Funpoly
 {
@@ -42,13 +44,18 @@ namespace Funpoly
             services.AddTransient<ITransportRepository, TransportRepository>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
-            var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "true" ?
+            var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "docker" ?
                 "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;" :
                 "Host=localhost;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;";
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);
             }, ServiceLifetime.Transient);
+
+            // Cookies
+            services.AddBlazoredLocalStorage();   // local storage
+            services.AddBlazoredLocalStorage(config =>
+                config.JsonSerializerOptions.WriteIndented = true);  // local storage
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
