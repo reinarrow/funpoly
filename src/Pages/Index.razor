@@ -6,7 +6,16 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager NavManager
 
-<button @onclick="@OnStartButtonClick"> Iniciar </button>
+@if (isBanker)
+{
+    <button @onclick="@OnStartButtonClick"> Iniciar </button>
+}
+else
+{
+    <h3 class="text-center">
+        El banquero está ordenando los billetes. Espera un poco...
+    </h3>
+}
 
 @code {
     [Parameter]
@@ -22,17 +31,18 @@
         if (bankerToken != null && bankerToken == envToken)
         {
             await localStorage.SetItemAsync("bankerCookie", "true");
+
+            NavManager.NavigateTo("/");
         }
 
-        //// DEBUG: Get cookie
-        //var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
+        //Get cookie (needs to be done to work on redirection)
+        var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
 
-        //if (cookieContent != null && cookieContent == "true")
-        //{
-        //    isBanker = true;
-        //}
-
-        NavManager.NavigateTo("/");
+        if (cookieContent != null && cookieContent == "true")
+        {
+            isBanker = true;
+            StateHasChanged();
+        }
     }
 
     private void OnStartButtonClick()
