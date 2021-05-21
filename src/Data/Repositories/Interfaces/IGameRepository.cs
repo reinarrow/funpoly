@@ -6,12 +6,12 @@ using Funpoly.Data.Models;
 
 namespace Funpoly.Data.Repositories.Interfaces
 {
-    internal interface IGameRepository : IRepository<Game>
+    public interface IGameRepository : IRepository<Game>
     {
         Task<(bool, string)> AddAsync(Game type);
 
         Task<Game> GetById(int id);
 
-        List<Game> GetAll();
+        Task<Game> GetAsync();
     }
 }

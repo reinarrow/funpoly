@@ -23,9 +23,13 @@ namespace Funpoly.Data.Repositories
             return await AddAsync(type);
         }
 
-        public List<Game> GetAll()
+        /// <summary>
+        ///  Gets the unique game that should be available on the database (for now, might be more in future implementations)
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Game> GetAsync()
         {
-            return _applicationDbContext.Games.ToList();
+            return await _applicationDbContext.Games.FirstOrDefaultAsync();
         }
 
         public async Task<Game> GetById(int id)

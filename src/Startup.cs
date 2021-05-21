@@ -11,11 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Funpoly.Data;
+using Funpoly.Services;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
-using Funpoly.Data.Models;
-using Funpoly.Services;
-using System.Text.Json;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -45,6 +43,7 @@ namespace Funpoly
             services.AddTransient<IPostcardRepository, PostcardRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<ITransportRepository, TransportRepository>();
+            services.AddTransient<ICoordinationManager, CoordinationManager>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
             var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "docker" ?
@@ -92,7 +91,7 @@ namespace Funpoly
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
-                endpoints.MapHub<BroadcastHub>("/broadcastHub");
+                endpoints.MapHub<CoordinationManager>("/broadcastHub");
             });
         }
     }

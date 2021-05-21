@@ -32,7 +32,7 @@ namespace Funpoly.Data
             // Seed data
 
             // - Game
-            var game = gameRepository.GetAll().FirstOrDefault();
+            var game = applicationDbContext.Games.FirstOrDefault();
             if (game == null)
             {
                 gameRepository.Add(new Game { Status = GameStatus.NotStarted });
