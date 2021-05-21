@@ -1,6 +1,4 @@
-﻿@page "/teams"
-
-@using Funpoly.Data.Models
+﻿@using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
 @inject ITeamRepository TeamRepository
 
@@ -19,6 +17,9 @@
     </div>
 }
 @code {
+    [Parameter]
+    public bool IsBanker { get; set; }
+
     private List<Team> _teamsList;
     private bool isInitialized = false;
 

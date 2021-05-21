@@ -1,7 +1,20 @@
-﻿@page "/game"
+﻿@using Funpoly.Data.Models
+@using Funpoly.Data.Repositories.Interfaces
+@inject ITeamRepository TeamRepository
 
-<h3>Game</h3>
+@if (@isInitialized)
+{
+    <h3>GameView</h3>
 
+}
 @code {
+    [Parameter]
+    public bool IsBanker { get; set; }
 
+    private bool isInitialized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isInitialized = true;
+    }
 }

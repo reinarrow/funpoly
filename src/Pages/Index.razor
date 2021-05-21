@@ -4,21 +4,35 @@
 @using System
 @using Funpoly.Services
 @using Funpoly.Data.Models
+@using Funpoly.Data.Repositories.Interfaces
 
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject ICoordinationManager CoordinationManager
+@inject IGameRepository GameRepository
+@inject NavigationManager NavManager
 
 @if (isInitialised)
 {
-    @if (isBanker)
+    @if (gameStatus == GameStatus.NotStarted)
     {
-        <button @onclick="@OnStartButtonClick"> Iniciar </button>
+        @if (isBanker)
+        {
+            <button @onclick="@OnStartButtonClick"> Iniciar </button>
+        }
+        else
+        {
+            <h3 class="text-center">
+                El banquero está ordenando los billetes. Espera un poco...
+            </h3>
+        }
     }
-    else
+    else if (gameStatus == GameStatus.TeamsConfig)
     {
-        <h3 class="text-center">
-            El banquero está ordenando los billetes. Espera un poco...
-        </h3>
+        <TeamsConfig IsBanker="isBanker"></TeamsConfig>
+    }
+    else if (gameStatus == GameStatus.OnGoing)
+    {
+        <GameView IsBanker="isBanker"></GameView>
     }
 }
 
@@ -27,10 +41,11 @@
     public string bankerToken { get; set; }
     private bool isBanker = false;
     private bool isInitialised = false;
+    private GameStatus gameStatus;
 
     protected override async Task OnInitializedAsync()
     {
-        isInitialised = false;
+        GetGameStatus();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -53,18 +68,46 @@
                 isBanker = true;
             }
 
-            // Obtain the game status to navigate to the correct view.
-            //await CoordinationManager.InitializeHubConnection();
-            await CoordinationManager.TriggerUpdate();
+            //Declare callback for SignalR
+            CoordinationManager.OnChange += Update;
+
             isInitialised = true;
-            StateHasChanged();
+            await Update();
         }
     }
 
     private async Task OnStartButtonClick()
     {
         //Update game status
-        await CoordinationManager.UpdateGameStatus(GameStatus.TeamsConfig);
+        await SetGameStatus(GameStatus.TeamsConfig);
+        await CoordinationManager.NotifyClients();
     }
 
+    private async Task SetGameStatus(GameStatus status)
+    {
+        var game = await GameRepository.GetAsync();
+        game.Status = status;
+
+        await GameRepository.UpdateAsync(game);
+    }
+
+    private async Task GetGameStatus()
+    {
+        gameStatus = (await GameRepository.GetAsync()).Status;
+    }
+
+    private async Task Update()
+    {
+        // Trigger re-render
+        await GetGameStatus();
+        await InvokeAsync(() =>
+        {
+            base.StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        CoordinationManager.OnChange -= Update;
+    }
 }

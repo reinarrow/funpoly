@@ -43,7 +43,8 @@ namespace Funpoly
             services.AddTransient<IPostcardRepository, PostcardRepository>();
             services.AddTransient<ITeamRepository, TeamRepository>();
             services.AddTransient<ITransportRepository, TransportRepository>();
-            services.AddTransient<ICoordinationManager, CoordinationManager>();
+
+            services.AddSingleton<ICoordinationManager, CoordinationManager>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
             var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "docker" ?
@@ -58,14 +59,6 @@ namespace Funpoly
             services.AddBlazoredLocalStorage();   // local storage
             services.AddBlazoredLocalStorage(config =>
                 config.JsonSerializerOptions.WriteIndented = true);  // local storage
-
-            // SignalR
-            services.AddSignalR();
-            services.AddResponseCompression(opts =>
-            {
-                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                    new[] { "application/octet-stream" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +84,6 @@ namespace Funpoly
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
-                endpoints.MapHub<CoordinationManager>("/broadcastHub");
             });
         }
     }
