@@ -18,6 +18,7 @@ namespace Funpoly.Data
             var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
             var boardSquareRepository = serviceProvider.GetRequiredService<IBoardSquareRepository>();
             var continentRepository = serviceProvider.GetRequiredService<IContinentRepository>();
+            var gameRepository = serviceProvider.GetRequiredService<IGameRepository>();
             var parcelRepository = serviceProvider.GetRequiredService<IParcelRepository>();
             var playerRepository = serviceProvider.GetRequiredService<IPlayerRepository>();
             var postcardRepository = serviceProvider.GetRequiredService<IPostcardRepository>();
@@ -29,6 +30,13 @@ namespace Funpoly.Data
             applicationDbContext.Database.Migrate();
 
             // Seed data
+
+            // - Game
+            var game = gameRepository.GetAll().FirstOrDefault();
+            if (game == null)
+            {
+                gameRepository.Add(new Game { Status = GameStatus.NotStarted });
+            }
 
             // - BoardSquares
             var currentBoardSquares = boardSquareRepository.GetAll();
@@ -510,8 +518,8 @@ namespace Funpoly.Data
                             }
                         }
                     };
-                    
-                    foreach(var team in teams)
+
+                    foreach (var team in teams)
                     {
                         teamRepository.Add(team);
                     }

@@ -14,8 +14,10 @@ using Funpoly.Data;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
 using Funpoly.Data.Models;
+using Funpoly.Services;
 using System.Text.Json;
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace Funpoly
 {
@@ -37,6 +39,7 @@ namespace Funpoly
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IBoardSquareRepository, BoardSquareRepository>();
             services.AddTransient<IContinentRepository, ContinentRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
             services.AddTransient<IParcelRepository, ParcelRepository>();
             services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<IPostcardRepository, PostcardRepository>();
@@ -56,6 +59,14 @@ namespace Funpoly
             services.AddBlazoredLocalStorage();   // local storage
             services.AddBlazoredLocalStorage(config =>
                 config.JsonSerializerOptions.WriteIndented = true);  // local storage
+
+            // SignalR
+            services.AddSignalR();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +92,7 @@ namespace Funpoly
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapHub<BroadcastHub>("/broadcastHub");
             });
         }
     }

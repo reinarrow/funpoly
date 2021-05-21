@@ -2,9 +2,13 @@
 @page  "/{bankerToken}"
 
 @using System
+@using Microsoft.AspNetCore.SignalR.Client
+@using Funpoly.Data.Repositories.Interfaces
+@using Funpoly.Data.Models
 
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager NavManager
+@inject IGameRepository GameRepository
 
 @if (isBanker)
 {
@@ -22,6 +26,43 @@ else
     public string bankerToken { get; set; }
 
     private bool isBanker = false;
+
+    private HubConnection hubConnection;
+
+    private Game game;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // SignalR initialization
+        var uri = new Uri("https://localhost/broadcastHub");
+
+        hubConnection = new HubConnectionBuilder()
+        .WithUrl(uri, options =>
+        {
+        //Ignore validating insecure SSL cert
+        var httpClientHandler = new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                }
+            };
+            options.HttpMessageHandlerFactory = _ => httpClientHandler;
+        })
+        .Build();
+
+        // When players receive string GameStart, emulate button click
+        hubConnection.On("ReceiveMessage", () =>
+        {
+            GetGameStatus();
+        });
+
+        await hubConnection.StartAsync();
+
+        // Obtain the game status to navigate to the correct view.
+        GetGameStatus();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -45,8 +86,27 @@ else
         }
     }
 
-    private void OnStartButtonClick()
+    private async Task OnStartButtonClick()
     {
-        NavManager.NavigateTo("players");
+        // U
+        game.Status = GameStatus.TeamsConfig;
+        await GameRepository.UpdateAsync(game);
+
+        await hubConnection.SendAsync("SendMessage");
+    }
+
+    private void GetGameStatus()
+    {
+        // Game status can be "NotStarted", "TeamsConfig" or "OnGoing". Read from database and navigate to corresponding blazor page
+        game = GameRepository.GetAll().FirstOrDefault();
+
+        if (game.Status == GameStatus.TeamsConfig)
+        {
+            NavManager.NavigateTo("teams");
+        }
+        else if (game.Status == GameStatus.OnGoing)
+        {
+            NavManager.NavigateTo("game");
+        }
     }
 }
