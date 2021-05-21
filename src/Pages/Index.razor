@@ -54,6 +54,7 @@
             }
 
             // Obtain the game status to navigate to the correct view.
+            //await CoordinationManager.InitializeHubConnection();
             await CoordinationManager.TriggerUpdate();
             isInitialised = true;
             StateHasChanged();
