@@ -13,10 +13,12 @@ namespace Funpoly.Data.Repositories
     {
         public GameRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
-        public async Task<(bool, string)> AddAsync(Game type)
-        {
-            return await AddAsync(type);
-        }
+          new public async Task<int> AddAsync(Game game)
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                _applicationDbContext.Games.Add(game);
+                return await _applicationDbContext.SaveChangesAsync();
+            }
 
         /// <summary>
         ///  Gets the unique game that should be available on the database (for now, might be more in future implementations)

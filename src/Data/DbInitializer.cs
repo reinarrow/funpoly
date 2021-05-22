@@ -35,7 +35,137 @@ namespace Funpoly.Data
             var game = applicationDbContext.Games.FirstOrDefault();
             if (game == null)
             {
-                gameRepository.Add(new Game { Status = GameStatus.NotStarted });
+                gameRepository.AddAsync(new Game { 
+                    Status = GameStatus.NotStarted, 
+                    Name = "Game 1",
+                    Teams = new List<Team>
+                    {
+                        new Team
+                        {
+                            Name = "Chicago me limpio",
+                            Turn = 1,
+                            Cash = 1000, //TODO: Check
+                            Color = "#FF0000",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Pepa",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Lucas",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Rodolfa",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Agustín",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Nottingham Prisa",
+                            Turn = 2,
+                            Cash = 1000, //TODO: Check
+                            Color = "#00FF00",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Carmen",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Pepe",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Juan",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Melinda",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Estudiabaantes",
+                            Turn = 3,
+                            Cash = 1000, //TODO: Check
+                            Color = "#0000FF",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Carlos",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Josefina",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Josh",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Tina",
+                                    Captain = false
+                                }
+                            }
+                        },
+                        new Team
+                        {
+                            Name = "Esfinter de Milán",
+                            Turn = 4,
+                            Cash = 1000, //TODO: Check
+                            Color = "#FFFFFF",
+                            BoardSquareId = 1,
+                            Players = new List<Player>
+                            {
+                                new Player
+                                {
+                                    Name = "Phil",
+                                    Captain = true
+                                },
+                                new Player
+                                {
+                                    Name = "Magdalena",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Paula",
+                                    Captain = false
+                                },
+                                new Player
+                                {
+                                    Name = "Yen",
+                                    Captain = false
+                                }
+                            }
+                        }
+                    }
+                });
             }
 
             // - BoardSquares
@@ -383,146 +513,6 @@ namespace Funpoly.Data
                 foreach (var transport in transports)
                 {
                     transportRepository.Add(transport);
-                }
-            }
-
-            if (webHostEnvironment.IsDevelopment())
-            {
-                // Teams and players
-                if (!applicationDbContext.Teams.Any())
-                {
-                    var teams = new List<Team>
-                    {
-                        new Team
-                        {
-                            Name = "Chicago me limpio",
-                            Turn = 1,
-                            Cash = 1000, //TODO: Check
-                            Color = "#FF0000",
-                            BoardSquareId = 1,
-                            Players = new List<Player>
-                            {
-                                new Player
-                                {
-                                    Name = "Pepa",
-                                    Captain = true
-                                },
-                                new Player
-                                {
-                                    Name = "Lucas",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Rodolfa",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Agustín",
-                                    Captain = false
-                                }
-                            }
-                        },
-                        new Team
-                        {
-                            Name = "Nottingham Prisa",
-                            Turn = 2,
-                            Cash = 1000, //TODO: Check
-                            Color = "#00FF00",
-                            BoardSquareId = 1,
-                            Players = new List<Player>
-                            {
-                                new Player
-                                {
-                                    Name = "Carmen",
-                                    Captain = true
-                                },
-                                new Player
-                                {
-                                    Name = "Pepe",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Juan",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Melinda",
-                                    Captain = false
-                                }
-                            }
-                        },
-                        new Team
-                        {
-                            Name = "Estudiabaantes",
-                            Turn = 3,
-                            Cash = 1000, //TODO: Check
-                            Color = "#0000FF",
-                            BoardSquareId = 1,
-                            Players = new List<Player>
-                            {
-                                new Player
-                                {
-                                    Name = "Carlos",
-                                    Captain = true
-                                },
-                                new Player
-                                {
-                                    Name = "Josefina",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Josh",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Tina",
-                                    Captain = false
-                                }
-                            }
-                        },
-                        new Team
-                        {
-                            Name = "Esfinter de Milán",
-                            Turn = 4,
-                            Cash = 1000, //TODO: Check
-                            Color = "#FFFFFF",
-                            BoardSquareId = 1,
-                            Players = new List<Player>
-                            {
-                                new Player
-                                {
-                                    Name = "Phil",
-                                    Captain = true
-                                },
-                                new Player
-                                {
-                                    Name = "Magdalena",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Paula",
-                                    Captain = false
-                                },
-                                new Player
-                                {
-                                    Name = "Yen",
-                                    Captain = false
-                                }
-                            }
-                        }
-                    };
-
-                    foreach (var team in teams)
-                    {
-                        teamRepository.Add(team);
-                    }
                 }
             }
         }
