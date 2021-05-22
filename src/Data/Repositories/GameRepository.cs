@@ -11,12 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class GameRepository : Repository<Game>, IGameRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public GameRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
+        public GameRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task<(bool, string)> AddAsync(Game type)
         {
@@ -29,11 +24,13 @@ namespace Funpoly.Data.Repositories
         /// <returns></returns>
         public async Task<Game> GetAsync()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Games.FirstOrDefaultAsync();
         }
 
         public async Task<Game> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Games.SingleOrDefaultAsync(game => game.Id == id);
         }
     }

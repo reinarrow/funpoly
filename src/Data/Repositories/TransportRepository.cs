@@ -11,12 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class TransportRepository : Repository<Transport>, ITransportRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public TransportRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
+        public TransportRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task<(bool, string)> AddAsync(Transport type)
         {
@@ -25,11 +20,13 @@ namespace Funpoly.Data.Repositories
 
         public List<Transport> GetAll()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return _applicationDbContext.Transports.ToList();
         }
 
         public async Task<Transport> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Transports.SingleOrDefaultAsync(Transport => Transport.Id == id);
         }
     }

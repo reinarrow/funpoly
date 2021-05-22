@@ -11,13 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class ParcelRepository : Repository<Parcel>, IParcelRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public ParcelRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
-
+        public ParcelRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
         public async Task<(bool, string)> AddAsync(Parcel type)
         {
             return await AddAsync(type);
@@ -25,11 +19,13 @@ namespace Funpoly.Data.Repositories
 
         public async Task<List<Parcel>> GetAll()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Parcels.ToListAsync();
         }
 
         public async Task<Parcel> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Parcels.SingleOrDefaultAsync(Parcel => Parcel.Id == id);
         }
     }

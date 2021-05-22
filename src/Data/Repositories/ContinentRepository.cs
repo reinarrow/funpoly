@@ -11,12 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class ContinentRepository : Repository<Continent>, IContinentRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public ContinentRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
+        public ContinentRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task<(bool, string)> AddAsync(Continent type)
         {
@@ -25,11 +20,13 @@ namespace Funpoly.Data.Repositories
 
         public List<Continent> GetAll()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return _applicationDbContext.Continents.ToList();
         }
 
         public async Task<Continent> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Continents.SingleOrDefaultAsync(Continent => Continent.Id == id);
         }
     }

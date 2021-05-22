@@ -11,12 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class BoardSquareRepository : Repository<BoardSquare>, IBoardSquareRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public BoardSquareRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
+        public BoardSquareRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task<(bool, string)> AddAsync(BoardSquare type)
         {
@@ -25,11 +20,13 @@ namespace Funpoly.Data.Repositories
 
         public List<BoardSquare> GetAll()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return _applicationDbContext.BoardSquares.ToList();
         }
 
         public async Task<BoardSquare> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.BoardSquares.SingleOrDefaultAsync(BoardSquare => BoardSquare.Id == id);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Funpoly.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Funpoly.Data.Repositories
 {
@@ -12,11 +13,11 @@ namespace Funpoly.Data.Repositories
     /// <typeparam name="TEntity"></typeparam>
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
-        protected readonly ApplicationDbContext _applicationDbContext;
+        protected readonly IDbContextFactory<ApplicationDbContext> _ContextFactory;
 
-        public Repository(ApplicationDbContext applicationDbContext)
+        public Repository(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
-            _applicationDbContext = applicationDbContext;
+            _ContextFactory = contextFactory;
         }
 
         public List<TEntity> GetAll()
@@ -34,6 +35,7 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Add(entity);
                 rowsChanged = _applicationDbContext.SaveChanges() > 0;
             }
@@ -56,6 +58,7 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 await _applicationDbContext.AddAsync(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
@@ -78,6 +81,7 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Update(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
@@ -100,6 +104,7 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Remove(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }

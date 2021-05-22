@@ -11,12 +11,7 @@ namespace Funpoly.Data.Repositories
 {
     public class TeamRepository : Repository<Team>, ITeamRepository
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-
-        public TeamRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-            _applicationDbContext = applicationDbContext;
-        }
+        public TeamRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
         public async Task<(bool, string)> AddAsync(Team type)
         {
@@ -25,11 +20,13 @@ namespace Funpoly.Data.Repositories
 
         public async Task<List<Team>> GetAll()
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Teams.Include(t => t.Players).ToListAsync();
         }
 
         public async Task<Team> GetById(int id)
         {
+            using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Teams.SingleOrDefaultAsync(Team => Team.Id == id);
         }
     }

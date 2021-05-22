@@ -5,7 +5,7 @@ namespace Funpoly.Services
 {
     public interface ICoordinationManager
     {
-        Func<Task> OnChange { get; set; }
+        event Func<Task> OnChange;
 
         Task NotifyClients();
     }

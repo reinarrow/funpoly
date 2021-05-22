@@ -50,6 +50,12 @@ namespace Funpoly
             var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "docker" ?
                 "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;" :
                 "Host=localhost;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;";
+
+            services.AddDbContextFactory<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);
