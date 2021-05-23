@@ -16,10 +16,10 @@ namespace Funpoly.Data
         {
             var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
-            var boardSquareRepository = serviceProvider.GetRequiredService<IBoardSquareRepository>();
-            var continentRepository = serviceProvider.GetRequiredService<IContinentRepository>();
+            var boardSquareRepository = serviceProvider.GetRequiredService<IRepository<BoardSquare>>();
+            var continentRepository = serviceProvider.GetRequiredService<IRepository<Continent>>();
             var gameRepository = serviceProvider.GetRequiredService<IGameRepository>();
-            var transportRepository = serviceProvider.GetRequiredService<ITransportRepository>();
+            var transportRepository = serviceProvider.GetRequiredService<IRepository<Transport>>();
 
             //Migrations
 
