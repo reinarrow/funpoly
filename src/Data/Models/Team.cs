@@ -48,5 +48,8 @@ namespace Funpoly.Data.Models
         public int? TransportId { get; set; }
         public Transport Transport { get; set; }
         public List<Parcel> Parcels { get; set; }
+
+        public int GameId { get; set; }
+        public Game Game { get; set; }
     }
 }

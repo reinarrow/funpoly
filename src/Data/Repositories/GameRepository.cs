@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Funpoly.Data;
-using Funpoly.Data.Models;
+﻿using Funpoly.Data.Models;
 using Funpoly.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Funpoly.Data.Repositories
 {
@@ -13,25 +10,16 @@ namespace Funpoly.Data.Repositories
     {
         public GameRepository(IDbContextFactory<ApplicationDbContext> contextFactory) : base(contextFactory) { }
 
-        public async Task<(bool, string)> AddAsync(Game type)
-        {
-            return await AddAsync(type);
-        }
-
+        // TODO: delete method
+        [Obsolete("This method are going to be deleted once the multigame is supported")]
         /// <summary>
         ///  Gets the unique game that should be available on the database (for now, might be more in future implementations)
         /// </summary>
         /// <returns></returns>
-        public async Task<Game> GetAsync()
+        public async Task<Game> GetAsync() 
         {
             using var _applicationDbContext = _ContextFactory.CreateDbContext();
             return await _applicationDbContext.Games.FirstOrDefaultAsync();
-        }
-
-        public async Task<Game> GetById(int id)
-        {
-            using var _applicationDbContext = _ContextFactory.CreateDbContext();
-            return await _applicationDbContext.Games.SingleOrDefaultAsync(game => game.Id == id);
         }
     }
 }

@@ -35,15 +35,7 @@ namespace Funpoly
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IBoardSquareRepository, BoardSquareRepository>();
-            services.AddTransient<IContinentRepository, ContinentRepository>();
             services.AddTransient<IGameRepository, GameRepository>();
-            services.AddTransient<IParcelRepository, ParcelRepository>();
-            services.AddTransient<IPlayerRepository, PlayerRepository>();
-            services.AddTransient<IPostcardRepository, PostcardRepository>();
-            services.AddTransient<ITeamRepository, TeamRepository>();
-            services.AddTransient<ITransportRepository, TransportRepository>();
-
             services.AddSingleton<ICoordinationManager, CoordinationManager>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
