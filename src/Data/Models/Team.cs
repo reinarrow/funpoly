@@ -6,11 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Team
+    public class Team : BaseModel
     {
-        // Unique identifier
-        public int Id { get; set; }
-
         // Team name
         [Required]
         public string Name { get; set; }

@@ -1,15 +1,16 @@
 ﻿@page  "/"
 @page  "/{bankerToken}"
 @using Funpoly.Features.Games.GameList;
+@using Funpoly.Services
+@using Funpoly.Data.Models
+@using Funpoly.Data.Repositories.Interfaces
 
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IGameManager gameManager
 @inject IGameRepository gameRepository
 @inject NavigationManager navManager
 
-@using Funpoly.Services
-@using Funpoly.Data.Models
-@using Funpoly.Data.Repositories.Interfaces
+
 
 @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
 {
@@ -25,13 +26,13 @@
     }
 }
 
-else if (gameStatus == GameStatus.TeamsConfig)
+else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
 {
     // TODO: Split into banker and player teamconfig
-    <TeamsConfig IsBanker="isBanker"></TeamsConfig> 
+    <TeamsConfig IsBanker="isBanker"></TeamsConfig>
 
 }
-else if (gameStatus == GameStatus.OnGoing)
+else if (gameManager.GetGame().Status == GameStatus.OnGoing)
 {
     <GameView IsBanker="isBanker"></GameView>
 }

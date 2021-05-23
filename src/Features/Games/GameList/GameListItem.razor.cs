@@ -10,5 +10,13 @@ namespace Funpoly.Features.Games.GameList
     public partial class GameListItem : ComponentBase
     {
         [Parameter] public Game Game { get; set; }
+
+
+        #region UIEvents
+        private async Task OnContinueButtonClick(int id)
+        {
+            await gameManager.LoadGameById(id);
+        }
+        #endregion
     }
 }

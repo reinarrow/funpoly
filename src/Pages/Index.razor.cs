@@ -46,7 +46,6 @@ namespace Funpoly.Pages
         private async Task Update()
         {
             // Trigger re-render
-            await GetGameStatus();
             await InvokeAsync(() =>
             {
                 StateHasChanged();
@@ -71,7 +70,7 @@ namespace Funpoly.Pages
         {
             //Update game status
             await SetGameStatus(GameStatus.TeamsConfig);
-            await gameManager.NotifyClients();
+            await gameManager.NotifyClientsAsync();
         }
         #endregion
 

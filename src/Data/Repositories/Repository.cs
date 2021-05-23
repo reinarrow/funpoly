@@ -1,4 +1,5 @@
-﻿using Funpoly.Data.Repositories.Interfaces;
+﻿using Funpoly.Data.Models;
+using Funpoly.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Funpoly.Data.Repositories
     /// Class-less CRUD Entity manager.
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseModel, new()
     {
         protected readonly IDbContextFactory<ApplicationDbContext> _ContextFactory;
 
@@ -69,6 +70,21 @@ namespace Funpoly.Data.Repositories
                 DbSet<TEntity> dbSet = _applicationDbContext.Set<TEntity>();
                 IQueryable<TEntity> query = func(dbSet);
                 return await query.AsNoTracking().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"could not fetch db: {ex.Message}");
+            }
+        }
+
+        public async Task<TEntity> GetByIdAsync(int id, Func<IQueryable<TEntity>, IQueryable<TEntity>> func)
+        {
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                DbSet<TEntity> dbSet = _applicationDbContext.Set<TEntity>();
+                IQueryable<TEntity> query = func(dbSet);
+                return await query.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
             }
             catch (Exception ex)
             {
