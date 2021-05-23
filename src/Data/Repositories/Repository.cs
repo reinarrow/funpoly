@@ -48,6 +48,44 @@ namespace Funpoly.Data.Repositories
             return (rowsChanged, null);
         }
 
+        public async Task<int> AddRangeAsync(List<TEntity> entities)
+        {
+            if (entities == null || !entities.Any())
+            {
+                throw new ArgumentNullException($"{nameof(AddRangeAsync)} entities must not be null or empty");
+            }
+
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                await _applicationDbContext.AddRangeAsync(entities);
+                return await _applicationDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entities)} could not be saved: {ex.Message}");
+            }
+        }
+
+        public int AddRange(List<TEntity> entities)
+        {
+            if (entities == null || !entities.Any())
+            {
+                throw new ArgumentNullException($"{nameof(AddRangeAsync)} entities must not be null or empty");
+            }
+
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                _applicationDbContext.AddRange(entities);
+                return _applicationDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entities)} could not be saved: {ex.Message}");
+            }
+        }
+
         public async Task<(bool, string)> AddAsync(TEntity entity)
         {
             if (entity == null)
@@ -115,6 +153,19 @@ namespace Funpoly.Data.Repositories
 
             //TODO Review null return
             return (rowsChanged, null);
+        }
+
+        public async Task<bool> checkIsEmptyAsync()
+        {
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                return !await _applicationDbContext.Set<TEntity>().AnyAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"could not fetch db: {ex.Message}");
+            }
         }
     }
 }
