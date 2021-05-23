@@ -11,7 +11,6 @@
 @inject NavigationManager navManager
 
 
-
 @if (isInitialised)
 {
     @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
@@ -28,14 +27,14 @@
         }
     }
 
-else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
-{
-    // TODO: Split into banker and player teamconfig
-    <TeamsConfig IsBanker="isBanker"></TeamsConfig>
+    else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
+    {
+        // TODO: Split into banker and player teamconfig
+        <TeamsConfig IsBanker="isBanker"></TeamsConfig>
 
-}
-else if (gameManager.GetGame().Status == GameStatus.OnGoing)
-{
-    <GameView IsBanker="isBanker"></GameView>
-}
+    }
+    else if (gameManager.GetGame().Status == GameStatus.OnGoing)
+    {
+        <GameView IsBanker="isBanker"></GameView>
+    }
 }
