@@ -11,28 +11,36 @@
 @using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
 
-@if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
+@if (isInitialised)
 {
-    @if (isBanker) // TODO: Cascade parameter?
+    @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
     {
-        <GameList></GameList>
+        @if (isBanker) // TODO: Cascade parameter?
+        {
+            <GameList></GameList>
+        }
+        else
+        {
+            <h3 class="text-center">
+                El banquero está ordenando los billetes. Espera un poco...
+            </h3>
+        }
     }
-    else
+
+    else if (gameStatus == GameStatus.TeamsConfig)
     {
-        <h3 class="text-center">
-            El banquero está ordenando los billetes. Espera un poco...
-        </h3>
+        // TODO: Split into banker and player teamconfig
+        <TeamsConfig IsBanker="isBanker"></TeamsConfig>
+
+    }
+    else if (gameStatus == GameStatus.OnGoing)
+    {
+        <GameView IsBanker="isBanker"></GameView>
     }
 }
-
-else if (gameStatus == GameStatus.TeamsConfig)
+else
 {
-    // TODO: Split into banker and player teamconfig
-    <TeamsConfig IsBanker="isBanker"></TeamsConfig> 
-
+    <div>
+        <h3>Loading...</h3>
+    </div>
 }
-else if (gameStatus == GameStatus.OnGoing)
-{
-    <GameView IsBanker="isBanker"></GameView>
-}
-
