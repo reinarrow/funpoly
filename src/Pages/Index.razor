@@ -12,19 +12,21 @@
 
 
 
-@if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
+@if (isInitialised)
 {
-    @if (isBanker) // TODO: Cascade parameter?
+    @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
     {
-        <GameList></GameList>
+        @if (isBanker) // TODO: Cascade parameter?
+        {
+            <GameList></GameList>
+        }
+        else
+        {
+            <h3 class="text-center">
+                El banquero está ordenando los billetes. Espera un poco...
+            </h3>
+        }
     }
-    else
-    {
-        <h3 class="text-center">
-            El banquero está ordenando los billetes. Espera un poco...
-        </h3>
-    }
-}
 
 else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
 {
@@ -36,4 +38,4 @@ else if (gameManager.GetGame().Status == GameStatus.OnGoing)
 {
     <GameView IsBanker="isBanker"></GameView>
 }
-
+}
