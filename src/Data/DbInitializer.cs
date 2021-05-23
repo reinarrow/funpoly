@@ -29,7 +29,7 @@ namespace Funpoly.Data
 
             // - BoardSquares
 
-            if (boardSquareRepository.checkIsEmptyAsync().Result)
+            if (boardSquareRepository.CheckIsEmptyAsync().Result)
             {
                 List<BoardSquare> board = new();
                 AppendBoardSquareListByType(board, SquareTypes.Parcel, 2, 4, 7, 9, 11, 13, 16, 18, 20, 22, 25, 27, 29, 31, 34, 36);
@@ -46,7 +46,7 @@ namespace Funpoly.Data
             }
 
             // - Continents, parcels and postcards
-            if (continentRepository.checkIsEmptyAsync().Result)
+            if (continentRepository.CheckIsEmptyAsync().Result)
             {
                 List<Continent> continents = new()
                 {
@@ -235,7 +235,7 @@ namespace Funpoly.Data
             }
 
             // - Transports
-            if (transportRepository.checkIsEmptyAsync().Result)
+            if (transportRepository.CheckIsEmptyAsync().Result)
             {
                 transportRepository.AddRange(new List<Transport>
                 {
@@ -250,11 +250,80 @@ namespace Funpoly.Data
             if (webHostEnvironment.IsDevelopment())
             {
                 // - Game
-                if (gameRepository.checkIsEmptyAsync().Result)
+                if (gameRepository.CheckIsEmptyAsync().Result)
                 {
                     gameRepository.Add(new Game
                     {
-                        Status = GameStatus.NotStarted,
+                        Status = GameStatus.OnGoing,
+                        Name = "Game 2",
+                        Teams = new List<Team>
+                        {
+                            new Team
+                            {
+                                Name = "Chicago me limpio",
+                                Turn = 1,
+                                Cash = 1000, //TODO: Check
+                                Color = "#FF0000",
+                                BoardSquareId = 1,
+                                Players = new List<Player>
+                                {
+                                    new Player { Name = "Pepa", Captain = true },
+                                    new Player { Name = "Lucas", Captain = false },
+                                    new Player { Name = "Rodolfa", Captain = false },
+                                    new Player { Name = "Agustín", Captain = false }
+                                }
+                            },
+                            new Team
+                            {
+                                Name = "Nottingham Prisa",
+                                Turn = 2,
+                                Cash = 1000, //TODO: Check
+                                Color = "#00FF00",
+                                BoardSquareId = 1,
+                                Players = new List<Player>
+                                {
+                                    new Player { Name = "Carmen", Captain = true },
+                                    new Player { Name = "Pepe", Captain = false },
+                                    new Player { Name = "Juan", Captain = false },
+                                    new Player { Name = "Melinda", Captain = false }
+                                }
+                            },
+                            new Team
+                            {
+                                Name = "Estudiabaantes",
+                                Turn = 3,
+                                Cash = 1000, //TODO: Check
+                                Color = "#0000FF",
+                                BoardSquareId = 1,
+                                Players = new List<Player>
+                                {
+                                    new Player { Name = "Carlos", Captain = true },
+                                    new Player { Name = "Josefina", Captain = false },
+                                    new Player { Name = "Josh", Captain = false },
+                                    new Player { Name = "Tina", Captain = false }
+                                }
+                            },
+                            new Team
+                            {
+                                Name = "Esfinter de Milán",
+                                Turn = 4,
+                                Cash = 1000, //TODO: Check
+                                Color = "#FFFFFF",
+                                BoardSquareId = 1,
+                                Players = new List<Player>
+                                {
+                                    new Player { Name = "Phil", Captain = true },
+                                    new Player { Name = "Magdalena", Captain = false },
+                                    new Player { Name = "Paula", Captain = false },
+                                    new Player { Name = "Yen", Captain = false }
+                                }
+                            }
+                        }
+                    });
+
+                    gameRepository.Add(new Game
+                    {
+                        Status = GameStatus.TeamsConfig,
                         Name = "Game 1",
                         Teams = new List<Team>
                         {

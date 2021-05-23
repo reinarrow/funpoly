@@ -1,0 +1,7 @@
+﻿@using Funpoly.Services
+@inject IGameManager gameManager
+<div>
+    <span>@Game.Name</span><button class="btn-secondary" @onclick="() => OnContinueButtonClick(Game.Id)">Continue</button>
+</div>
+
+

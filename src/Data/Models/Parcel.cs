@@ -6,11 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Parcel
+    public class Parcel : BaseModel
     {
-        // Unique identifier
-        public int Id { get; set; }
-
         // Name of place and location
         public string Name { get; set; }
 

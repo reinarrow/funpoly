@@ -23,4 +23,13 @@
 	<ItemGroup>
 	  <Folder Include="Services\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Features\Games\GameList\GameList - Copia - Copia.razor.cs">
+	    <DependentUpon>GameList - Copia.razor.cs</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Games\GameList\GameList - Copia.razor.cs">
+	    <DependentUpon>GameList.razor.cs</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 </Project>

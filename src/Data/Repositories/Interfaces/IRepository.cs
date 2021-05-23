@@ -17,6 +17,7 @@ namespace Funpoly.Data.Repositories.Interfaces
         Task<(bool, string)> AddAsync(TEntity entity);
         Task<(bool, string)> UpdateAsync(TEntity entity);
         Task<(bool, string)> RemoveAsync(TEntity entity);
-        Task<bool> checkIsEmptyAsync();
+        Task<bool> CheckIsEmptyAsync();
+        Task<TEntity> GetByIdAsync(int id, Func<IQueryable<TEntity>, IQueryable<TEntity>> func);
     }
 }
