@@ -57,6 +57,9 @@ namespace Funpoly.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -81,8 +84,8 @@ namespace Funpoly.Migrations
                     b.Property<int>("ContinentId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("HotelBuilt")
-                        .HasColumnType("boolean");
+                    b.Property<int>("HotelPrice")
+                        .HasColumnType("integer");
 
                     b.Property<int>("HotelTax")
                         .HasColumnType("integer");
@@ -96,7 +99,7 @@ namespace Funpoly.Migrations
                     b.Property<int>("RawTax")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TwoHotelsTax")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -106,9 +109,30 @@ namespace Funpoly.Migrations
 
                     b.HasIndex("ContinentId");
 
+                    b.ToTable("Parcels");
+                });
+
+            modelBuilder.Entity("Funpoly.Data.Models.ParcelProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ParcelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParcelId")
+                        .IsUnique();
+
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Parcels");
+                    b.ToTable("ParcelProperty");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Player", b =>
@@ -258,13 +282,26 @@ namespace Funpoly.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Funpoly.Data.Models.Team", "Team")
-                        .WithMany("Parcels")
-                        .HasForeignKey("TeamId");
-
                     b.Navigation("BoardSquare");
 
                     b.Navigation("Continent");
+                });
+
+            modelBuilder.Entity("Funpoly.Data.Models.ParcelProperty", b =>
+                {
+                    b.HasOne("Funpoly.Data.Models.Parcel", "Parcel")
+                        .WithOne("ParcelProperty")
+                        .HasForeignKey("Funpoly.Data.Models.ParcelProperty", "ParcelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Funpoly.Data.Models.Team", "Team")
+                        .WithMany("ParcelProperties")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parcel");
 
                     b.Navigation("Team");
                 });
@@ -350,12 +387,14 @@ namespace Funpoly.Migrations
 
             modelBuilder.Entity("Funpoly.Data.Models.Parcel", b =>
                 {
+                    b.Navigation("ParcelProperty");
+
                     b.Navigation("Postcard");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Team", b =>
                 {
-                    b.Navigation("Parcels");
+                    b.Navigation("ParcelProperties");
 
                     b.Navigation("Players");
                 });

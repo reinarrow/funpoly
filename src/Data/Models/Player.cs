@@ -15,9 +15,12 @@ namespace Funpoly.Data.Models
         // Bool indicating if the player is the captain of his/her team
         public bool Captain { get; set; }
 
-        //Relations
+        #region relations
+
         public int TeamId { get; set; }
 
         public Team Team { get; set; }
+
+        #endregion relations
     }
 }
