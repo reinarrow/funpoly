@@ -206,7 +206,7 @@ namespace Funpoly.Data.Repositories
             return (rowsChanged, null);
         }
 
-        public async Task<bool> checkIsEmptyAsync()
+        public async Task<bool> CheckIsEmptyAsync()
         {
             try
             {

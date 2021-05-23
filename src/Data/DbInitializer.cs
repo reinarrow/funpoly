@@ -29,7 +29,7 @@ namespace Funpoly.Data
 
             // - BoardSquares
 
-            if (boardSquareRepository.checkIsEmptyAsync().Result)
+            if (boardSquareRepository.CheckIsEmptyAsync().Result)
             {
                 List<BoardSquare> board = new();
                 AppendBoardSquareListByType(board, SquareTypes.Parcel, 2, 4, 7, 9, 11, 13, 16, 18, 20, 22, 25, 27, 29, 31, 34, 36);
@@ -46,7 +46,7 @@ namespace Funpoly.Data
             }
 
             // - Continents, parcels and postcards
-            if (continentRepository.checkIsEmptyAsync().Result)
+            if (continentRepository.CheckIsEmptyAsync().Result)
             {
                 List<Continent> continents = new()
                 {
@@ -235,7 +235,7 @@ namespace Funpoly.Data
             }
 
             // - Transports
-            if (transportRepository.checkIsEmptyAsync().Result)
+            if (transportRepository.CheckIsEmptyAsync().Result)
             {
                 transportRepository.AddRange(new List<Transport>
                 {
@@ -250,7 +250,7 @@ namespace Funpoly.Data
             if (webHostEnvironment.IsDevelopment())
             {
                 // - Game
-                if (gameRepository.checkIsEmptyAsync().Result)
+                if (gameRepository.CheckIsEmptyAsync().Result)
                 {
                     gameRepository.Add(new Game
                     {

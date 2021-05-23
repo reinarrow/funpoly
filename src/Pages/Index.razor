@@ -1,113 +1,38 @@
 ﻿@page  "/"
 @page  "/{bankerToken}"
+@using Funpoly.Features.Games.GameList;
 
-@using System
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject IGameManager gameManager
+@inject IGameRepository gameRepository
+@inject NavigationManager navManager
+
 @using Funpoly.Services
 @using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
 
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
-@inject IGameManager CoordinationManager
-@inject IGameRepository GameRepository
-@inject NavigationManager NavManager
-
-@if (isInitialised)
+@if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
 {
-    @if (gameStatus == GameStatus.NotStarted)
+    @if (isBanker) // TODO: Cascade parameter?
     {
-        @if (isBanker)
-        {
-            <button @onclick="@OnStartButtonClick"> Iniciar </button>
-        }
-        else
-        {
-            <h3 class="text-center">
-                El banquero está ordenando los billetes. Espera un poco...
-            </h3>
-        }
+        <GameList></GameList>
     }
-    else if (gameStatus == GameStatus.TeamsConfig)
+    else
     {
-        <TeamsConfig IsBanker="isBanker"></TeamsConfig>
-    }
-    else if (gameStatus == GameStatus.OnGoing)
-    {
-        <GameView IsBanker="isBanker"></GameView>
+        <h3 class="text-center">
+            El banquero está ordenando los billetes. Espera un poco...
+        </h3>
     }
 }
 
-@code {
-    [Parameter]
-    public string bankerToken { get; set; }
-    private bool isBanker = false;
-    private bool isInitialised = false;
-    private GameStatus gameStatus;
+else if (gameStatus == GameStatus.TeamsConfig)
+{
+    // TODO: Split into banker and player teamconfig
+    <TeamsConfig IsBanker="isBanker"></TeamsConfig> 
 
-    protected override async Task OnInitializedAsync()
-    {
-        await GetGameStatus();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!isInitialised)
-        {
-            // Check token
-            var envToken = Environment.GetEnvironmentVariable("BANKER_TOKEN");
-
-            if (bankerToken != null && bankerToken == envToken)
-            {
-                await localStorage.SetItemAsync("bankerCookie", "true");
-            }
-
-            //Get cookie (needs to be done to work on redirection)
-            var cookieContent = await localStorage.GetItemAsync<string>("bankerCookie");
-
-            if (cookieContent != null && cookieContent == "true")
-            {
-                isBanker = true;
-            }
-
-            //Declare callback for SignalR
-            CoordinationManager.OnChange += async () => await Update();
-
-            isInitialised = true;
-            await Update();
-        }
-    }
-
-    private async Task OnStartButtonClick()
-    {
-        //Update game status
-        await SetGameStatus(GameStatus.TeamsConfig);
-        await CoordinationManager.NotifyClients();
-    }
-
-    private async Task SetGameStatus(GameStatus status)
-    {
-        var game = await GameRepository.GetAsync();
-        game.Status = status;
-
-        await GameRepository.UpdateAsync(game);
-    }
-
-    private async Task GetGameStatus()
-    {
-        gameStatus = (await GameRepository.GetAsync()).Status;
-    }
-
-    private async Task Update()
-    {
-        // Trigger re-render
-        await GetGameStatus();
-        await InvokeAsync(() =>
-        {
-            this.StateHasChanged();
-        });
-    }
-
-    public void Dispose()
-    {
-        CoordinationManager.OnChange -= Update;
-    }
 }
+else if (gameStatus == GameStatus.OnGoing)
+{
+    <GameView IsBanker="isBanker"></GameView>
+}
+

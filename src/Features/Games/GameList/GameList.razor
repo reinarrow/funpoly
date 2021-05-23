@@ -1,0 +1,21 @@
+﻿@using Funpoly.Data.Repositories.Interfaces;
+@using Funpoly.Data.Models;
+@inject IRepository<Game> repository
+<h3>GameList</h3>
+
+@if (games == null)
+{
+    <div>
+        <h3>Loading...</h3>
+    </div>
+
+}
+else
+{
+    @foreach (var game in games)
+    {
+        <GameListItem Game="game"></GameListItem>
+    }
+}
+
+
