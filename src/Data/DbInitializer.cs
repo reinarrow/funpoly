@@ -58,6 +58,7 @@ namespace Funpoly.Data
                             new Parcel {
                                 Name = "Pirámides de Giza, El Cairo",
                                 Price = 0, //TODO: Fill
+								HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
                                 TwoHotelsTax = 0, //TODO: Fill
