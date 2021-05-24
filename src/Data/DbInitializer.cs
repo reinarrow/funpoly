@@ -58,9 +58,10 @@ namespace Funpoly.Data
                             new Parcel {
                                 Name = "Pirámides de Giza, El Cairo",
                                 Price = 0, //TODO: Fill
+								HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 2 //TODO: Check
                             },
@@ -68,9 +69,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Valle de los Reyes, Luxor",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 4 //TODO: Check
                             },
@@ -78,9 +80,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Serengeti, Tanzania",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 7 //TODO: Check
                             },
@@ -88,9 +91,10 @@ namespace Funpoly.Data
                             {
                                 Name = "El Sáhara, Marruecos",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 9 //TODO: Check
                             }
@@ -105,9 +109,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Coliseo Romano, Italia",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 11 //TODO: Check
                             },
@@ -115,9 +120,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Partenón, Atenas",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 13 //TODO: Check
                             },
@@ -125,9 +131,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Torre Eiffel, Paris",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 16 //TODO: Check
                             },
@@ -135,9 +142,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Catedral de Santa María, Sevilla",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 18 //TODO: Check
                             }
@@ -152,9 +160,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Muralla China, Pekín",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 20 //TODO: Check
                             },
@@ -162,9 +171,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Monte Fuji, Japón",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 22 //TODO: Check
                             },
@@ -172,9 +182,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Taj Mahal, India",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 25 //TODO: Check
                             },
@@ -182,9 +193,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Petra, Jordania",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 27 //TODO: Check
                             }
@@ -195,15 +207,24 @@ namespace Funpoly.Data
                         Name = "América",
                         Parcels = new List<Parcel>
                         {
-                            
-                            new Parcel { Name = "Machu Picchu, Perú", Price = 0, RawTax = 0, HotelTax = 0, HotelBuilt = false, Postcard = new(), BoardSquareId = 29 },
+                            new Parcel {
+                                Name = "Machu Picchu, Perú",
+                                Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
+                                RawTax = 0, //TODO: Fill
+                                HotelTax = 0, //TODO: Fill
+                                TwoHotelsTax = 0, //TODO: Fill
+                                Postcard = new(),
+                                BoardSquareId = 29
+                            },
                             new Parcel
                             {
                                 Name = "Isla de Pascua, Chile",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 31 //TODO: Check
                             },
@@ -211,9 +232,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Cañón del Colorado, Arizona",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 34 //TODO: Check
                             },
@@ -221,9 +243,10 @@ namespace Funpoly.Data
                             {
                                 Name = "Parque de Yellowstone, EEUU",
                                 Price = 0, //TODO: Fill
+                                HotelPrice = 0, //TODO: Fill
                                 RawTax = 0, //TODO: Fill
                                 HotelTax = 0, //TODO: Fill
-                                HotelBuilt = false,
+                                TwoHotelsTax = 0, //TODO: Fill
                                 Postcard = new Postcard(),
                                 BoardSquareId = 36 //TODO: Check
                             }
@@ -256,6 +279,7 @@ namespace Funpoly.Data
                     {
                         Status = GameStatus.OnGoing,
                         Name = "Game 2",
+                        CreatedDate = new DateTime(2021, 05, 23),
                         Teams = new List<Team>
                         {
                             new Team
@@ -393,11 +417,10 @@ namespace Funpoly.Data
             }
         }
 
-        public static void AppendBoardSquareListByType(
+        private static void AppendBoardSquareListByType(
             List<BoardSquare> boardSquares,
             SquareTypes squareType,
             params int[] squareIds)
         => boardSquares.AddRange(squareIds.Select(squareId => new BoardSquare { Id = squareId, Type = squareType }));
-
     }
 }

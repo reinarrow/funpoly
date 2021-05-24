@@ -12,8 +12,10 @@ namespace Funpoly.Data.Models
         [Required]
         public string Name { get; set; }
 
-        // Relations
+        #region relations
 
         public List<Parcel> Parcels { get; set; }
+
+        #endregion relations
     }
 }

@@ -36,17 +36,31 @@ namespace Funpoly.Data.Models
         // Turns that the team has been in prison. 0 if the team is not in prison at the moment
         public int TurnsInPrison { get; set; }
 
-        // Relations
+        #region relations
+
+        // Game instance
+        public int GameId { get; set; }
+
+        public Game Game { get; set; }
+
         public List<Player> Players { get; set; }
 
+        // Current position of the team in the game board
         public int BoardSquareId { get; set; }
-        public BoardSquare BoardSquare { get; set; }
-        public List<Postcard> Postcards { get; set; }
-        public int? TransportId { get; set; }
-        public Transport Transport { get; set; }
-        public List<Parcel> Parcels { get; set; }
 
-        public int GameId { get; set; }
-        public Game Game { get; set; }
+        public BoardSquare BoardSquare { get; set; }
+
+        // Postcards owned by the team
+        public List<Postcard> Postcards { get; set; }
+
+        // Transport of the team in the current lap
+        public int? TransportId { get; set; }
+
+        public Transport Transport { get; set; }
+
+        // List of parcel properties of the team
+        public List<ParcelProperty> ParcelProperties { get; set; }
+
+        #endregion relations
     }
 }

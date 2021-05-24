@@ -14,6 +14,8 @@ namespace Funpoly.Data.Models
         [Required]
         public GameStatus Status { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         #region relations
 
         public List<Team> Teams { get; set; }

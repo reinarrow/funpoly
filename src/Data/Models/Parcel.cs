@@ -15,6 +15,10 @@ namespace Funpoly.Data.Models
         [Required]
         public int Price { get; set; }
 
+        // Hotel construction price in euros
+        [Required]
+        public int HotelPrice { get; set; }
+
         // Parcel tax to be paid when no hotel is constructed
         [Required]
         public int RawTax { get; set; }
@@ -23,16 +27,28 @@ namespace Funpoly.Data.Models
         [Required]
         public int HotelTax { get; set; }
 
-        // Bool for hotel being built in the parcel
-        public bool HotelBuilt { get; set; }
+        // Parcel tax to be paid when two hotels are constructed on the same continent
+        [Required]
+        public int TwoHotelsTax { get; set; }
 
-        // Relations
+        #region relations
+
+        // Postcard that is acquired in the parcel
         public Postcard Postcard { get; set; }
 
+        // Continent that the parcel belongs to
         public int ContinentId { get; set; }
+
         public Continent Continent { get; set; }
+
+        // Position of the parcel in the game board
         public BoardSquare BoardSquare { get; set; }
+
         public int BoardSquareId { get; set; }
-        public Team Team { get; set; }
+
+        // Parcel property for the acquisition by teams
+        public ParcelProperty ParcelProperty { get; set; }
+
+        #endregion relations
     }
 }

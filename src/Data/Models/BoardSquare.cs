@@ -12,10 +12,13 @@ namespace Funpoly.Data.Models
         [Required]
         public SquareTypes Type { get; set; }
 
-        // Relations
+        #region relations
+
         public List<Team> Teams { get; set; }
 
         public Parcel Parcel { get; set; }
+
+        #endregion relations
     }
 
     public enum SquareTypes

@@ -3,15 +3,17 @@ using System;
 using Funpoly.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Funpoly.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210523173908_game-created-date")]
+    partial class gamecreateddate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,8 +86,8 @@ namespace Funpoly.Migrations
                     b.Property<int>("ContinentId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HotelPrice")
-                        .HasColumnType("integer");
+                    b.Property<bool>("HotelBuilt")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("HotelTax")
                         .HasColumnType("integer");
