@@ -1,21 +1,74 @@
-﻿@using Funpoly.Data.Repositories.Interfaces;
-@using Funpoly.Data.Models;
-@inject IRepository<Game> repository
-<h3>GameList</h3>
+﻿@using Funpoly.Data.Repositories.Interfaces
+@using Funpoly.Data.Models
+@using Funpoly.Services
+@inject IGameRepository gameRepository
+@inject IGameManager gameManager
 
-@if (games == null)
-{
-    <div>
-        <h3>Loading...</h3>
-    </div>
+<Layout Loading="@(games == null)">
+    <Column>
+        <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">Selección de juego</Heading>
+        <DataGrid TItem="Game"
+                  Data="@games"
+                  Filterable="false"
+                  Editable="true"
+                  EditMode="DataGridEditMode.Inline"
+                  RowSelectable=@((item)=>item.Status != GameStatus.Finished)
+                  @bind-SelectedRow="@selectedGame"
+                  RowInserting="@OnRowInserting"
+                  RowRemoving="@OnRowRemoving"
+                  RowUpdating="@OnRowUpdating"
+                  NewItemDefaultSetter="@OnGameAdded"
+                  Borderless="true">
+            <DataGridColumn TItem="Game" Field="@nameof(Game.Name)" Caption="Nombre" Editable="true" />
+            <DataGridColumn TItem="Game" Field="@nameof(Game.Status)" Caption="Estado" Editable="false">
+                <DisplayTemplate>
+                    @{
+                        switch ((context as Game).Status)
+                        {
+                            case GameStatus.TeamsConfig:
+                                <Text>Inicio</Text>
+                                break;
+                            case GameStatus.OnGoing:
+                                <Text>En marcha</Text>
+                                break;
+                            case GameStatus.Finished:
+                                <Text>Finalizado</Text>
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                </DisplayTemplate>
+            </DataGridColumn>
 
-}
-else
-{
-    @foreach (var game in games)
-    {
-        <GameListItem Game="game"></GameListItem>
-    }
-}
+            @*<DataGridColumn TItem="Game" Field="@nameof(Game.CreatedDate)" Caption="Creado el" Editable="false" />TODO add this once the model is merged*@
 
-
+            <DataGridCommandColumn TItem="Game">
+                <NewCommandTemplate>
+                    <Icon Margin="Margin.Is2" Name="IconName.Add" @onclick="@context.Clicked" />
+                </NewCommandTemplate>
+                <EditCommandTemplate>
+                    <Icon Margin="Margin.Is2" Name="IconName.Edit" @onclick="@context.Clicked" />
+                </EditCommandTemplate>
+                <DeleteCommandTemplate>
+                    <Icon Margin="Margin.Is2" Name="IconName.Delete" @onclick="@context.Clicked" />
+                </DeleteCommandTemplate>
+                <SaveCommandTemplate>
+                    <Icon Margin="Margin.Is2" Name="IconName.Save" @onclick="@context.Clicked" />
+                </SaveCommandTemplate>
+                <CancelCommandTemplate>
+                    <Icon Margin="Margin.Is2" Name="IconName.Undo" @onclick="@context.Clicked" />
+                </CancelCommandTemplate>
+            </DataGridCommandColumn>
+        </DataGrid>
+        <div class="text-center">
+            <Button Disabled="@(selectedGame == null)"
+                    Color="Color.Primary"
+                    Clicked="@OnStartButtonClick"
+                    Style="width: 90%;">
+                @* CSS isolation does not work with Blazorise components *@
+                Iniciar
+            </Button>
+        </div>
+    </Column>
+</Layout>

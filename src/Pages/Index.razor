@@ -10,7 +10,6 @@
 @inject IGameRepository gameRepository
 @inject NavigationManager navManager
 
-
 @if (isInitialised)
 {
     @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
@@ -21,9 +20,10 @@
         }
         else
         {
-            <h3 class="text-center">
+            //TODO: Vertical center
+            <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
                 El banquero está ordenando los billetes. Espera un poco...
-            </h3>
+            </Heading>
         }
     }
 

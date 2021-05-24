@@ -1,9 +1,18 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="main">
-    <img class="w-75 h-auto ml-auto mr-auto p-4" src="image/logo_high_res.png">
-
-    <div class="content">
-        @Body
-    </div>
-</div>
+<Layout>
+    <Container Fluid="true">
+        <Row RowSize="RowSize.Is2" Class="justify-content-center">
+            <Column ColumnSize="ColumnSize.IsFull.OnMobile.IsHalf.OnDesktop">
+                <Figure Margin="Margin.Is4">
+                    <FigureImage Source="image/logo_high_res.png" AlternateText="Funpoly Logo"></FigureImage>
+                </Figure>
+            </Column>
+        </Row>
+        <Row RowSize="RowSize.Is10">
+            <Column ColumnSize="ColumnSize.IsFull">
+                @Body
+            </Column>
+        </Row>
+    </Container>
+</Layout>
