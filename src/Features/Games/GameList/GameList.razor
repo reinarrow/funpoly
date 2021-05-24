@@ -41,8 +41,11 @@
                 </DisplayTemplate>
             </DataGridColumn>
 
-            @*<DataGridColumn TItem="Game" Field="@nameof(Game.CreatedDate)" Caption="Creado el" Editable="false" />TODO add this once the model is merged*@
-
+            <DataGridColumn TItem="Game" Field="@nameof(Game.CreatedDate)" Caption="Creado el" Editable="false">
+                <DisplayTemplate>
+                    @((context as Game).CreatedDate.ToString("dd/MM/yyyy"))
+                </DisplayTemplate>
+            </DataGridColumn>
             <DataGridCommandColumn TItem="Game">
                 <NewCommandTemplate>
                     <Icon Margin="Margin.Is2" Name="IconName.Add" @onclick="@context.Clicked" />

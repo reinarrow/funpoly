@@ -1,18 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
-<Layout>
-    <Container Fluid="true">
-        <Row RowSize="RowSize.Is2" Class="justify-content-center">
-            <Column ColumnSize="ColumnSize.IsFull.OnMobile.IsHalf.OnDesktop">
-                <Figure Margin="Margin.Is4">
-                    <FigureImage Source="image/logo_high_res.png" AlternateText="Funpoly Logo"></FigureImage>
-                </Figure>
-            </Column>
-        </Row>
-        <Row RowSize="RowSize.Is10">
-            <Column ColumnSize="ColumnSize.IsFull">
-                @Body
-            </Column>
-        </Row>
-    </Container>
-</Layout>
+<Container Fluid="true">
+    <Row RowSize="RowSize.Is2" Class="justify-content-center">
+        <Column ColumnSize="ColumnSize.IsFull.OnMobile.IsHalf.OnDesktop">
+            <Figure Margin="Margin.Is4">
+                <FigureImage Source="image/logo_high_res.png" AlternateText="Funpoly Logo"></FigureImage>
+            </Figure>
+        </Column>
+    </Row>
+    <Row RowSize="RowSize.Is10">
+        @Body
+    </Row>
+</Container>

@@ -22,7 +22,7 @@ namespace Funpoly.Features.Games.GameList
         {
             game.Name = "Nuevo juego";
             game.Status = GameStatus.TeamsConfig;
-            //game.CreatedDate = DateTime.Now; //TODO uncomment this once the data model is merged
+            game.CreatedDate = DateTime.Now;
         }
 
         private async Task OnRowInserting(CancellableRowChange<Game, Dictionary<string, object>> arg)
