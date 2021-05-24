@@ -7,11 +7,14 @@ namespace Funpoly.Data.Models
 {
     public class Postcard : BaseModel
     {
-        // Relations
+        #region relations
+
         public int ParcelId { get; set; }
 
         public Parcel Parcel { get; set; }
 
         public List<Team> Teams { get; set; }
+
+        #endregion relations
     }
 }
