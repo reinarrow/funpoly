@@ -25,7 +25,7 @@ namespace Funpoly.Features.Games.GameList
             game.CreatedDate = DateTime.Now;
         }
 
-        private async Task OnRowInserting(CancellableRowChange<Game, Dictionary<string, object>> arg)
+        private async Task OnRowInserted(SavedRowItem<Game, Dictionary<string, object>> arg)
         {
             var (result, _) = await gameRepository.AddAsync(arg.Item);
             if (result)
@@ -34,7 +34,7 @@ namespace Funpoly.Features.Games.GameList
             }
             else
             {
-                arg.Cancel = true;
+                games.Remove(arg.Item);
             }
         }
 

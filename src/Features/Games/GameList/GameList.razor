@@ -11,10 +11,10 @@
                   Data="@games"
                   Filterable="false"
                   Editable="true"
-                  EditMode="DataGridEditMode.Inline"
+                  EditMode="DataGridEditMode.Form"
                   RowSelectable=@((item)=>item.Status != GameStatus.Finished)
                   @bind-SelectedRow="@selectedGame"
-                  RowInserting="@OnRowInserting"
+                  RowInserted="@OnRowInserted"
                   RowRemoving="@OnRowRemoving"
                   RowUpdating="@OnRowUpdating"
                   NewItemDefaultSetter="@OnGameAdded"
