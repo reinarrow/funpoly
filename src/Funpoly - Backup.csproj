@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>890c266a-df8a-4501-a2ea-60bb1083eeb1</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Services\**" />
+	  <Content Remove="Services\**" />
+	  <EmbeddedResource Remove="Services\**" />
+	  <None Remove="Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Blazored.LocalStorage" Version="4.1.1" />
+		<PackageReference Include="Blazorise" Version="0.9.3.6" />
+		<PackageReference Include="Blazorise.Bootstrap" Version="0.9.3.6" />
+		<PackageReference Include="Blazorise.DataGrid" Version="0.9.3.6" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.3.6" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+		<PackageReference Include="Serilog" Version="2.10.0" />
+		<PackageReference Include="System.Text.Json" Version="5.0.2" />
+		<PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Features\Games\GameList\GameList - Copia - Copia.razor.cs">
+	    <DependentUpon>GameList - Copia.razor.cs</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Games\GameList\GameList - Copia.razor.cs">
+	    <DependentUpon>GameList.razor.cs</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+</Project>

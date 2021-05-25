@@ -64,14 +64,9 @@
                 </CancelCommandTemplate>
             </DataGridCommandColumn>
         </DataGrid>
-        <div class="text-center">
-            <Button Disabled="@(selectedGame == null)"
-                    Color="Color.Primary"
-                    Clicked="@OnStartButtonClick"
-                    Style="width: 90%;">
-                @* CSS isolation does not work with Blazorise components *@
-                Iniciar
-            </Button>
-        </div>
+        <GenericButton Disabled="@(selectedGame == null)"
+                       OnClick="@OnStartButtonClick"
+                       Text="Iniciar">
+        </GenericButton>
     </Column>
 </Layout>

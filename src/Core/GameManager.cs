@@ -10,6 +10,7 @@ namespace Funpoly.Services
     public class GameManager : IGameManager
     {
         private readonly IGameRepository gameRepository;
+
         public GameManager(IGameRepository gameRepository)
         {
             this.gameRepository = gameRepository;
@@ -39,6 +40,13 @@ namespace Funpoly.Services
         {
             game = await gameRepository.GetByIdAsync(id, game => game
             .Include(game => game.Teams));
+            await NotifyClientsAsync();
+        }
+
+        public async Task StartGame()
+        {
+            game.Status = GameStatus.OnGoing;
+            await gameRepository.UpdateAsync(game);
             await NotifyClientsAsync();
         }
     }

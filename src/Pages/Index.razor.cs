@@ -13,7 +13,6 @@ namespace Funpoly.Pages
         public string bankerToken { get; set; }
         private bool isInitialised = false;
         private bool isBanker = false;
-        private GameStatus gameStatus;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -50,11 +49,6 @@ namespace Funpoly.Pages
             {
                 StateHasChanged();
             });
-        }
-
-        private async Task GetGameStatus()
-        {
-            gameStatus = (await gameRepository.GetAsync()).Status;
         }
 
         private async Task SetGameStatus(GameStatus status)

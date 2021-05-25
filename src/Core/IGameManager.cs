@@ -11,6 +11,9 @@ namespace Funpoly.Services
         event Func<Task> OnChange;
 
         Task NotifyClientsAsync();
+
         Task LoadGameById(int id);
+
+        Task StartGame();
     }
 }
