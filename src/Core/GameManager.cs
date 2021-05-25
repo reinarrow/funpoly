@@ -2,9 +2,10 @@
 using Funpoly.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Funpoly.Services
+namespace Funpoly.Core
 {
     // Class dedicated to the coordination of the clients. When an update occurs, all connected clients get notified to update their pages
     public class GameManager : IGameManager
@@ -47,6 +48,34 @@ namespace Funpoly.Services
         {
             game.Status = GameStatus.OnGoing;
             await gameRepository.UpdateAsync(game);
+            await NotifyClientsAsync();
+        }
+
+        public async Task AddTeam(Team team)
+        {
+            // Fill in the default initial values
+            team.Cash = 1500;
+            team.Turn = team.Color switch
+            {
+                "#00B0F0" => 1, // Blue is 1st
+                "#C00000" => 2, // Red is 2nd
+                "#FFC000" => 3, // Yellow is 3rd
+                "#92D050" => 4, // Green is 4th
+                _ => throw new NotImplementedException(),
+            };
+
+            team.Days = 0;
+            team.ConsecutiveSixes = 0;
+            team.TurnsInPrison = 0;
+            team.GameId = game.Id;
+            team.BoardSquareId = 1;
+            team.Postcards = new List<Postcard>();
+            team.ParcelProperties = new List<ParcelProperty>();
+
+            game.Teams.Add(team);
+
+            // Do not write into database yet. Wait for game to start
+            //await gameRepository.UpdateAsync(game);
             await NotifyClientsAsync();
         }
     }

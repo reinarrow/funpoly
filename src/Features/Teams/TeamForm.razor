@@ -1,4 +1,49 @@
-﻿@using Funpoly.Data.Models
-@using Funpoly.Data.Repositories.Interfaces
+﻿@using Funpoly.Core
+@using Funpoly.Data.Models
 @using Microsoft.EntityFrameworkCore
-@inject IRepository<Team> TeamRepository
+@inject IGameManager gameManager
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@if (isInitialised)
+{ 
+    @if (teamCookie == null)
+    {
+        @if (gameManager.GetGame().Teams.Count < 4)
+        {
+            <Column>
+                <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">Creación del equipo</Heading>
+
+                <Heading Size="HeadingSize.Is5" Alignment="TextAlignment.Center ">Nombre</Heading>
+                <TextEdit @bind-Text="@team.Name" />
+
+                <Heading Size="HeadingSize.Is5" Alignment="TextAlignment.Center ">Color</Heading>
+                <RadioGroup TValue="string" @bind-CheckedValue="team.Color" Name="Color" Buttons="true">
+                    <Radio TValue="string" Value="@("#00B0F0")" Disabled="@gameManager.GetGame().Teams.Any(team => team.Color == "#00B0F0")">Azul</Radio>
+                    <Radio TValue="string" Value="@("#C00000")" Disabled="@gameManager.GetGame().Teams.Any(team => team.Color == "#C00000")">Rojo</Radio>
+                    <Radio TValue="string" Value="@("#FFC000")" Disabled="@gameManager.GetGame().Teams.Any(team => team.Color == "#FFC000")">Amarillo</Radio>
+                    <Radio TValue="string" Value="@("#92D050")" Disabled="@gameManager.GetGame().Teams.Any(team => team.Color == "#92D050")">Verde</Radio>
+                </RadioGroup>
+
+                <GenericButton Disabled="@(team.Name == null
+                                               || team.Name == ""
+                                               || gameManager.GetGame().Teams.Any(t => t.Name == team.Name)
+                                               || team.Color == null
+                               )"
+                               Text="¡Listo!"
+                               OnClick="@OnButtonClick"></GenericButton>
+            </Column>
+        }
+        else
+        {
+            <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+                Lo sentimos, el juego ya tiene el máximo número de equipos.
+            </Heading>
+        }
+    }
+    else
+    {
+    <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+        El juego está a punto de empezar. Esperando al resto de equipos…
+    </Heading>
+    }
+}

@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Funpoly.Services
+namespace Funpoly.Core
 {
     public interface IGameManager
     {
@@ -15,5 +15,7 @@ namespace Funpoly.Services
         Task LoadGameById(int id);
 
         Task StartGame();
+
+        Task AddTeam(Team team);
     }
 }

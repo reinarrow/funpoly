@@ -1,6 +1,6 @@
 ﻿using Funpoly.Data.Models;
 using Funpoly.Data.Repositories.Interfaces;
-using Funpoly.Services;
+using Funpoly.Core;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -11,6 +11,7 @@ namespace Funpoly.Pages
     {
         [Parameter]
         public string bankerToken { get; set; }
+
         private bool isInitialised = false;
         private bool isBanker = false;
 
@@ -18,6 +19,9 @@ namespace Funpoly.Pages
         {
             if (!isInitialised)
             {
+                //Declare callback for SignalR
+                gameManager.OnChange += async () => await Update();
+
                 // Check token
                 var envToken = Environment.GetEnvironmentVariable("BANKER_TOKEN");
 
@@ -32,11 +36,8 @@ namespace Funpoly.Pages
                 if (cookieContent != null && cookieContent == "true")
                 {
                     isBanker = true;
+                    navManager.NavigateTo("/");
                 }
-
-                //Declare callback for SignalR
-                gameManager.OnChange += async () => await Update();
-
                 isInitialised = true;
                 await Update();
             }
@@ -60,14 +61,15 @@ namespace Funpoly.Pages
         }
 
         #region UIEvents
+
         private async Task OnStartButtonClick()
         {
             //Update game status
             await SetGameStatus(GameStatus.TeamsConfig);
             await gameManager.NotifyClientsAsync();
         }
-        #endregion
 
+        #endregion UIEvents
 
         public void Dispose()
         {

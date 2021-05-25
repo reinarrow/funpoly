@@ -1,7 +1,7 @@
 ﻿@page  "/"
 @page  "/{bankerToken}"
 @using Funpoly.Features.Games.GameList;
-@using Funpoly.Services
+@using Funpoly.Core
 @using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
 @using Funpoly.Features.Teams
@@ -16,7 +16,7 @@
     <CascadingValue Value="@isBanker">
         @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
         {
-            @if (isBanker) // TODO: Cascade parameter?
+            @if (isBanker)
             {
                 <GameList></GameList>
             }
@@ -37,7 +37,7 @@
             }
             else
             {
-
+                <TeamForm />
             }
 
         }
