@@ -17,5 +17,7 @@ namespace Funpoly.Core
         Task StartGame();
 
         Task AddTeam(Team team);
+
+        Task UpdateTeam(Team team);
     }
 }

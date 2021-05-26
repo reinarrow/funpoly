@@ -52,25 +52,6 @@ namespace Funpoly.Pages
             });
         }
 
-        private async Task SetGameStatus(GameStatus status)
-        {
-            var game = await gameRepository.GetAsync();
-            game.Status = status;
-
-            await gameRepository.UpdateAsync(game);
-        }
-
-        #region UIEvents
-
-        private async Task OnStartButtonClick()
-        {
-            //Update game status
-            await SetGameStatus(GameStatus.TeamsConfig);
-            await gameManager.NotifyClientsAsync();
-        }
-
-        #endregion UIEvents
-
         public void Dispose()
         {
             gameManager.OnChange -= Update; // TODO: Check this dispose

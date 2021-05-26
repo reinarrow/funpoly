@@ -75,7 +75,15 @@ namespace Funpoly.Core
             game.Teams.Add(team);
 
             // Do not write into database yet. Wait for game to start
-            //await gameRepository.UpdateAsync(game);
+            await NotifyClientsAsync();
+        }
+
+        public async Task UpdateTeam(Team team)
+        {
+            var prevTeam = game.Teams.Find(t => t.Id == team.Id);
+            prevTeam.Name = team.Name;
+            prevTeam.Color = team.Color;
+
             await NotifyClientsAsync();
         }
     }

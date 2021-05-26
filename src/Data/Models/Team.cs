@@ -62,5 +62,10 @@ namespace Funpoly.Data.Models
         public List<ParcelProperty> ParcelProperties { get; set; }
 
         #endregion relations
+
+        public Team ShallowCopy()
+        {
+            return (Team)MemberwiseClone();
+        }
     }
 }
