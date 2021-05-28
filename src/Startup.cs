@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Funpoly.Data;
-using Funpoly.Services;
+using Funpoly.Core;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
 using Blazored.LocalStorage;

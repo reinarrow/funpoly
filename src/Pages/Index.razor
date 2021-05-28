@@ -1,9 +1,10 @@
 ﻿@page  "/"
 @page  "/{bankerToken}"
 @using Funpoly.Features.Games.GameList;
-@using Funpoly.Services
+@using Funpoly.Core
 @using Funpoly.Data.Models
 @using Funpoly.Data.Repositories.Interfaces
+@using Funpoly.Features.Teams
 
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IGameManager gameManager
@@ -12,29 +13,37 @@
 
 @if (isInitialised)
 {
-    @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
-    {
-        @if (isBanker) // TODO: Cascade parameter?
+    <CascadingValue Value="@isBanker">
+        @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
         {
-            <GameList></GameList>
+            @if (isBanker)
+            {
+                <GameList></GameList>
+            }
+            else
+            {
+                //TODO: Vertical center
+                <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+                    El banquero está ordenando los billetes. Espera un poco...
+                </Heading>
+            }
         }
-        else
+
+        else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
         {
-            //TODO: Vertical center
-            <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
-                El banquero está ordenando los billetes. Espera un poco...
-            </Heading>
+            @if (isBanker)
+            {
+                <TeamList />
+            }
+            else
+            {
+                <TeamForm />
+            }
+
         }
-    }
-
-    else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
-    {
-        // TODO: Split into banker and player teamconfig
-        <TeamsConfig IsBanker="isBanker"></TeamsConfig>
-
-    }
-    else if (gameManager.GetGame().Status == GameStatus.OnGoing)
-    {
-        <GameView IsBanker="isBanker"></GameView>
-    }
+        else if (gameManager.GetGame().Status == GameStatus.OnGoing)
+        {
+            <GameView></GameView>
+        }
+    </CascadingValue>
 }

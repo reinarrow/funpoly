@@ -27,8 +27,8 @@ namespace Funpoly.Data.Models
         // Days employed in the world tours
         public int Days { get; set; }
 
-        // Number of consecutive twelves obtained in dices. Used for bids and jail punishments
-        public int ConsecutiveTwelves { get; set; }
+        // Number of consecutive sixes obtained in dices. Used for bids and jail punishments
+        public int ConsecutiveSixes { get; set; }
 
         // Bool indicating if the team is currently in prison
         public bool InPrison { get; set; }
@@ -62,5 +62,10 @@ namespace Funpoly.Data.Models
         public List<ParcelProperty> ParcelProperties { get; set; }
 
         #endregion relations
+
+        public Team ShallowCopy()
+        {
+            return (Team)MemberwiseClone();
+        }
     }
 }
