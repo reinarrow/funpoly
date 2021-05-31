@@ -1,8 +1,15 @@
-﻿<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
+﻿@* TODO: Fix tab icons CSS to limit the size *@
+@using Funpoly.Features.Money
+@using Funpoly.Features.Properties
+@using Funpoly.Features.Travels
+@using Funpoly.Features.BankerActions
+@using Funpoly.Features.Settings
+
+<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
     <Items>
         <Tab Name="money">
             <Figure Class="mb-auto mt-auto">
-                <FigureImage Source="image/money.png" AlternateText="money"/>
+                <FigureImage Source="image/money.png" AlternateText="money" />
             </Figure>
         </Tab>
         <Tab Name="property">
@@ -31,21 +38,21 @@
     </Items>
     <Content>
         <TabPanel Name="money">
-            Money
+            <MoneyList></MoneyList>
         </TabPanel>
         <TabPanel Name="property">
-            Property
+            <ContinentList></ContinentList>
         </TabPanel>
         <TabPanel Name="travel">
-            Travel
+            <TravelList></TravelList>
         </TabPanel>
         @if (IsBanker)
         {
             <TabPanel Name="bank">
-                Bank
+                <BankerActionList></BankerActionList>
             </TabPanel>
             <TabPanel Name="settings">
-                Settings
+                <SettingList></SettingList>
             </TabPanel>
         }
     </Content>
