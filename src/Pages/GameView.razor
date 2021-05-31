@@ -1,20 +1,52 @@
-﻿@using Funpoly.Data.Models
-@using Funpoly.Data.Repositories.Interfaces
-@inject IRepository<Team> TeamRepository
-
-@if (@isInitialized)
-{
-    <h3>GameView</h3>
-
-}
-@code {
-    [Parameter]
-    public bool IsBanker { get; set; }
-
-    private bool isInitialized = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        isInitialized = true;
-    }
-}
+﻿<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
+    <Items>
+        <Tab Name="money">
+            <Figure Class="mb-auto mt-auto">
+                <FigureImage Source="image/money.png" AlternateText="money"/>
+            </Figure>
+        </Tab>
+        <Tab Name="property">
+            <Figure Class="mb-auto mt-auto">
+                <FigureImage Source="image/property.png" AlternateText="property" />
+            </Figure>
+        </Tab>
+        <Tab Name="travel">
+            <Figure Class="mb-auto mt-auto">
+                <FigureImage Source="image/travel.png" AlternateText="travel" />
+            </Figure>
+        </Tab>
+        @if (IsBanker)
+        {
+            <Tab Name="bank">
+                <Figure Class="mb-auto mt-auto">
+                    <FigureImage Source="image/bank.png" AlternateText="bank" />
+                </Figure>
+            </Tab>
+            <Tab Name="settings">
+                <Figure Class="mb-auto mt-auto">
+                    <FigureImage Source="image/settings.png" AlternateText="settings" />
+                </Figure>
+            </Tab>
+        }
+    </Items>
+    <Content>
+        <TabPanel Name="money">
+            Money
+        </TabPanel>
+        <TabPanel Name="property">
+            Property
+        </TabPanel>
+        <TabPanel Name="travel">
+            Travel
+        </TabPanel>
+        @if (IsBanker)
+        {
+            <TabPanel Name="bank">
+                Bank
+            </TabPanel>
+            <TabPanel Name="settings">
+                Settings
+            </TabPanel>
+        }
+    </Content>
+</Tabs>
