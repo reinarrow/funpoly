@@ -1,59 +1,73 @@
 ﻿@* TODO: Fix tab icons CSS to limit the size *@
+@using Funpoly.Core
 @using Funpoly.Features.Money
 @using Funpoly.Features.Properties
 @using Funpoly.Features.Travels
 @using Funpoly.Features.BankerActions
 @using Funpoly.Features.Settings
+@inject IGameManager gameManager
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
-<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
-    <Items>
-        <Tab Name="money">
-            <Figure Class="mb-auto mt-auto">
-                <FigureImage Source="image/money.png" AlternateText="money" />
-            </Figure>
-        </Tab>
-        <Tab Name="property">
-            <Figure Class="mb-auto mt-auto">
-                <FigureImage Source="image/property.png" AlternateText="property" />
-            </Figure>
-        </Tab>
-        <Tab Name="travel">
-            <Figure Class="mb-auto mt-auto">
-                <FigureImage Source="image/travel.png" AlternateText="travel" />
-            </Figure>
-        </Tab>
-        @if (IsBanker)
-        {
-            <Tab Name="bank">
-                <Figure Class="mb-auto mt-auto">
-                    <FigureImage Source="image/bank.png" AlternateText="bank" />
-                </Figure>
-            </Tab>
-            <Tab Name="settings">
-                <Figure Class="mb-auto mt-auto">
-                    <FigureImage Source="image/settings.png" AlternateText="settings" />
-                </Figure>
-            </Tab>
-        }
-    </Items>
-    <Content>
-        <TabPanel Name="money">
-            <MoneyList></MoneyList>
-        </TabPanel>
-        <TabPanel Name="property">
-            <ContinentList></ContinentList>
-        </TabPanel>
-        <TabPanel Name="travel">
-            <TravelList></TravelList>
-        </TabPanel>
-        @if (IsBanker)
-        {
-            <TabPanel Name="bank">
-                <BankerActionList></BankerActionList>
-            </TabPanel>
-            <TabPanel Name="settings">
-                <SettingList></SettingList>
-            </TabPanel>
-        }
-    </Content>
-</Tabs>
+@if (IsBanker || userTeam != null)
+{
+    <CascadingValue Name="UserTeam" Value="@userTeam">
+        <Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
+            <Items>
+                <Tab Name="money">
+                    <Figure Class="mb-auto mt-auto">
+                        <FigureImage Source="image/money.png" AlternateText="money" />
+                    </Figure>
+                </Tab>
+                <Tab Name="property">
+                    <Figure Class="mb-auto mt-auto">
+                        <FigureImage Source="image/property.png" AlternateText="property" />
+                    </Figure>
+                </Tab>
+                <Tab Name="travel">
+                    <Figure Class="mb-auto mt-auto">
+                        <FigureImage Source="image/travel.png" AlternateText="travel" />
+                    </Figure>
+                </Tab>
+                @if (IsBanker)
+                {
+                    <Tab Name="bank">
+                        <Figure Class="mb-auto mt-auto">
+                            <FigureImage Source="image/bank.png" AlternateText="bank" />
+                        </Figure>
+                    </Tab>
+                    <Tab Name="settings">
+                        <Figure Class="mb-auto mt-auto">
+                            <FigureImage Source="image/settings.png" AlternateText="settings" />
+                        </Figure>
+                    </Tab>
+                }
+            </Items>
+            <Content>
+                <TabPanel Name="money">
+                    <MoneyList></MoneyList>
+                </TabPanel>
+                <TabPanel Name="property">
+                    <ContinentList></ContinentList>
+                </TabPanel>
+                <TabPanel Name="travel">
+                    <TravelList></TravelList>
+                </TabPanel>
+                @if (IsBanker)
+                {
+                    <TabPanel Name="bank">
+                        <BankerActionList></BankerActionList>
+                    </TabPanel>
+                    <TabPanel Name="settings">
+                        <SettingList></SettingList>
+                    </TabPanel>
+                }
+            </Content>
+        </Tabs>
+    </CascadingValue>
+}
+else
+{
+    <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+        Ya hay un juego en marcha. Espera a que termine para unirte al siguiente.
+    </Heading>
+}

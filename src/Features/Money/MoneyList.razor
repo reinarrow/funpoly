@@ -1,1 +1,38 @@
-﻿<h3>Money List</h3>
+﻿@using Funpoly.Core
+@using Funpoly.Data.Models
+
+@inject IGameManager gameManager
+
+<Column>
+    @foreach (var team in gameManager.GetGame().Teams)
+    {
+        <div @onclick="() => OnTeamButtonClick(team)">
+            <MoneyListItem Team="team"></MoneyListItem>
+        </div>
+    }
+
+    @if (!IsBanker)
+    {
+        <GenericButton Text="Pagar impuesto"
+                       OnClick="@OnBankButtonClick"></GenericButton>
+    }
+</Column>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>Transferencia</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Cantidad</FieldLabel>
+                <NumericEdit @bind-Value="@modalCash" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="@SaveChanges">Guardar</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

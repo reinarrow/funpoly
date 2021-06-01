@@ -1,1 +1,34 @@
-﻿<h3>Money List Item</h3>
+﻿@using Funpoly.Core
+@inject IGameManager gameManager
+
+@if (isInitialized)
+{
+    <div class="team-item" style="border-color: @Team.Color">
+        @Team.Name: @Team.Cash €
+        @if (IsBanker)
+        {
+            <Icon Style="margin-right: 10px; position: absolute; right: 0;" Name="IconName.Edit" @onclick="ShowModal"></Icon>
+        }
+    </div>
+
+    <Modal @ref="modalRef">
+        <ModalContent Centered="true">
+            <ModalHeader>
+                <ModalTitle>Editar dinero</ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody>
+                <Heading Size="HeadingSize.Is3">@Team.Name</Heading>
+
+                <Field>
+                    <FieldLabel>Dinero</FieldLabel>
+                    <NumericEdit @bind-Value="@modalCash" />
+                </Field>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+                <Button Color="Color.Primary" Clicked="@SaveChanges">Guardar</Button>
+            </ModalFooter>
+        </ModalContent>
+    </Modal>
+}

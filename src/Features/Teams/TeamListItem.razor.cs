@@ -12,7 +12,7 @@ namespace Funpoly.Features.Teams
 
         private Team modalTeam;
 
-        [CascadingParameter]
+        [CascadingParameter(Name = "IsBanker")]
         protected bool IsBanker { get; set; }
 
         // reference to the modal component
