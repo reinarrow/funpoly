@@ -28,7 +28,16 @@ namespace Funpoly.Features.Teams
                 //Get cookie for team (needs to be done to work on redirection)
                 teamCookie = await localStorage.GetItemAsync<string>("teamCookie");
 
-                //TODO: Cookie needs to be removed when game finishes
+                if (teamCookie != null)
+                {
+                    var userTeam = gameManager.GetGame().Teams.Find(team => team.Name == teamCookie);
+                    if (userTeam == null)
+                    {
+                        // Cookie is from previous game. Remove it
+                        await localStorage.RemoveItemAsync("teamCookie");
+                        teamCookie = null;
+                    }
+                }
 
                 // Declare callback for SignalR
                 gameManager.OnChange += async () => await Update();
