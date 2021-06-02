@@ -11,10 +11,12 @@ namespace Funpoly.Core
     public class GameManager : IGameManager
     {
         private readonly IGameRepository gameRepository;
+        private readonly IRepository<Team> teamRepository;
 
-        public GameManager(IGameRepository gameRepository)
+        public GameManager(IGameRepository gameRepository, IRepository<Team> teamRepository)
         {
             this.gameRepository = gameRepository;
+            this.teamRepository = teamRepository;
         }
 
         private Game game;
@@ -83,6 +85,16 @@ namespace Funpoly.Core
             var prevTeam = game.Teams.Find(t => t.Id == team.Id);
             prevTeam.Name = team.Name;
             prevTeam.Color = team.Color;
+
+            await NotifyClientsAsync();
+        }
+
+        public async Task UpdateTeamCash(Team team, decimal newCash)
+        {
+            var prevTeam = game.Teams.Find(t => t.Id == team.Id);
+            prevTeam.Cash = newCash;
+
+            await teamRepository.UpdateAsync(prevTeam);
 
             await NotifyClientsAsync();
         }

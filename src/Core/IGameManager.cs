@@ -19,5 +19,7 @@ namespace Funpoly.Core
         Task AddTeam(Team team);
 
         Task UpdateTeam(Team team);
+
+        Task UpdateTeamCash(Team team, decimal newCash);
     }
 }

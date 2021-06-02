@@ -13,7 +13,7 @@
 
 @if (isInitialised)
 {
-    <CascadingValue Value="@isBanker">
+    <CascadingValue Name="IsBanker" Value="@isBanker">
         @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted)
         {
             @if (isBanker)
