@@ -8,66 +8,69 @@
 @inject IGameManager gameManager
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
-@if (IsBanker || userTeam != null)
+@if (isInitialised)
 {
-    <CascadingValue Name="UserTeam" Value="@userTeam">
-        <Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
-            <Items>
-                <Tab Name="money">
-                    <Figure Class="mb-auto mt-auto">
-                        <FigureImage Source="image/money.png" AlternateText="money" />
-                    </Figure>
-                </Tab>
-                <Tab Name="property">
-                    <Figure Class="mb-auto mt-auto">
-                        <FigureImage Source="image/property.png" AlternateText="property" />
-                    </Figure>
-                </Tab>
-                <Tab Name="travel">
-                    <Figure Class="mb-auto mt-auto">
-                        <FigureImage Source="image/travel.png" AlternateText="travel" />
-                    </Figure>
-                </Tab>
-                @if (IsBanker)
-                {
-                    <Tab Name="bank">
+    @if (IsBanker || userTeam != null)
+    {
+        <CascadingValue Name="UserTeam" Value="@userTeam">
+            <Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged" Justified="true">
+                <Items>
+                    <Tab Name="money">
                         <Figure Class="mb-auto mt-auto">
-                            <FigureImage Source="image/bank.png" AlternateText="bank" />
+                            <FigureImage Source="image/money.png" AlternateText="money" />
                         </Figure>
                     </Tab>
-                    <Tab Name="settings">
+                    <Tab Name="property">
                         <Figure Class="mb-auto mt-auto">
-                            <FigureImage Source="image/settings.png" AlternateText="settings" />
+                            <FigureImage Source="image/property.png" AlternateText="property" />
                         </Figure>
                     </Tab>
-                }
-            </Items>
-            <Content>
-                <TabPanel Name="money">
-                    <MoneyList></MoneyList>
-                </TabPanel>
-                <TabPanel Name="property">
-                    <ContinentList></ContinentList>
-                </TabPanel>
-                <TabPanel Name="travel">
-                    <TravelList></TravelList>
-                </TabPanel>
-                @if (IsBanker)
-                {
-                    <TabPanel Name="bank">
-                        <BankerActionList></BankerActionList>
+                    <Tab Name="travel">
+                        <Figure Class="mb-auto mt-auto">
+                            <FigureImage Source="image/travel.png" AlternateText="travel" />
+                        </Figure>
+                    </Tab>
+                    @if (IsBanker)
+                    {
+                        <Tab Name="bank">
+                            <Figure Class="mb-auto mt-auto">
+                                <FigureImage Source="image/bank.png" AlternateText="bank" />
+                            </Figure>
+                        </Tab>
+                        <Tab Name="settings">
+                            <Figure Class="mb-auto mt-auto">
+                                <FigureImage Source="image/settings.png" AlternateText="settings" />
+                            </Figure>
+                        </Tab>
+                    }
+                </Items>
+                <Content>
+                    <TabPanel Name="money" Class="w-100">
+                        <MoneyList></MoneyList>
                     </TabPanel>
-                    <TabPanel Name="settings">
-                        <SettingList></SettingList>
+                    <TabPanel Name="property" Class="w-100">
+                        <ContinentList></ContinentList>
                     </TabPanel>
-                }
-            </Content>
-        </Tabs>
-    </CascadingValue>
-}
-else
-{
-    <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
-        Ya hay un juego en marcha. Espera a que termine para unirte al siguiente.
-    </Heading>
+                    <TabPanel Name="travel" Class="w-100">
+                        <TravelList></TravelList>
+                    </TabPanel>
+                    @if (IsBanker)
+                    {
+                        <TabPanel Name="bank" Class="w-100">
+                            <BankerActionList></BankerActionList>
+                        </TabPanel>
+                        <TabPanel Name="settings" Class="w-100">
+                            <SettingList></SettingList>
+                        </TabPanel>
+                    }
+                </Content>
+            </Tabs>
+        </CascadingValue>
+    }
+    else
+    {
+        <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+            Ya hay un juego en marcha. Espera a que termine para unirte al siguiente.
+        </Heading>
+    }
 }

@@ -20,9 +20,6 @@ namespace Funpoly.Features.Money
 
         private Modal modalRef;
 
-        // Local flag to identify team where money is being transferred
-        private Team transferTeam;
-
         protected override async Task OnInitializedAsync()
         {
             //Declare callback for SignalR
@@ -47,18 +44,7 @@ namespace Funpoly.Features.Money
 
         private async Task OnBankButtonClick()
         {
-            transferTeam = null;
             ShowModal();
-        }
-
-        private async Task OnTeamButtonClick(Team team)
-        {
-            // Do not allow transferring money to own team
-            if (UserTeam != null && team.Id != UserTeam.Id)
-            {
-                transferTeam = team;
-                ShowModal();
-            }
         }
 
         private void ShowModal()
@@ -74,16 +60,10 @@ namespace Funpoly.Features.Money
 
         private async Task SaveChanges()
         {
-            // Always remove transferred money from user's team
+            // Remove transferred money from user's team
             var newUserCash = UserTeam.Cash - modalCash;
-            gameManager.UpdateTeamCash(UserTeam, newUserCash);
+            await gameManager.UpdateTeamCash(UserTeam, newUserCash);
 
-            // Only send money to other team when applicable (not transfer to bank)
-            if (transferTeam != null)
-            {
-                var newOtherCash = transferTeam.Cash + modalCash;
-                gameManager.UpdateTeamCash(transferTeam, newOtherCash);
-            }
             HideModal();
         }
     }

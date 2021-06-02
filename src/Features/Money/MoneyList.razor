@@ -6,9 +6,7 @@
 <Column>
     @foreach (var team in gameManager.GetGame().Teams)
     {
-        <div @onclick="() => OnTeamButtonClick(team)">
-            <MoneyListItem Team="team"></MoneyListItem>
-        </div>
+        <MoneyListItem Team="team"></MoneyListItem>
     }
 
     @if (!IsBanker)
@@ -21,7 +19,7 @@
 <Modal @ref="modalRef">
     <ModalContent Centered="true">
         <ModalHeader>
-            <ModalTitle>Transferencia</ModalTitle>
+            <ModalTitle>Zumbi a la Banca</ModalTitle>
             <CloseButton />
         </ModalHeader>
         <ModalBody>
@@ -32,7 +30,7 @@
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
-            <Button Color="Color.Primary" Clicked="@SaveChanges">Guardar</Button>
+            <Button Color="Color.Primary" Clicked="@SaveChanges">Enviar</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
