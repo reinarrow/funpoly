@@ -1,1 +1,13 @@
-﻿<h3>Parcel list</h3>
+﻿@using Funpoly.Data.Models
+@using Funpoly.Core
+@inject IGameManager gameManager
+
+@if (isInitialized)
+{
+    <Column>
+        @foreach (var parcel in parcels)
+        {
+            <ParcelListItem Parcel="@parcel"></ParcelListItem>
+        }
+    </Column>
+}

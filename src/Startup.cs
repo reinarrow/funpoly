@@ -47,7 +47,6 @@ namespace Funpoly
             services.AddServerSideBlazor();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IGameRepository, GameRepository>();
             services.AddSingleton<IGameManager, GameManager>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)

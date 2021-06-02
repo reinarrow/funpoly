@@ -15,6 +15,18 @@ app {
     width: 100%;
 }
 
+.team-item {
+    width: 90%;
+    height: 25%;
+    border: 2px solid;
+    border-radius: 5px;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }

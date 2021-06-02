@@ -3,6 +3,7 @@ using Funpoly.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Funpoly.Core
@@ -10,13 +11,17 @@ namespace Funpoly.Core
     // Class dedicated to the coordination of the clients. When an update occurs, all connected clients get notified to update their pages
     public class GameManager : IGameManager
     {
-        private readonly IGameRepository gameRepository;
+        private readonly IRepository<Game> gameRepository;
         private readonly IRepository<Team> teamRepository;
+        private readonly IRepository<Parcel> parcelRepository;
+        private readonly IRepository<ParcelProperty> parcelPropertyRepository;
 
-        public GameManager(IGameRepository gameRepository, IRepository<Team> teamRepository)
+        public GameManager(IRepository<Game> gameRepository, IRepository<Team> teamRepository, IRepository<Parcel> parcelRepository, IRepository<ParcelProperty> parcelPropertyRepository)
         {
             this.gameRepository = gameRepository;
             this.teamRepository = teamRepository;
+            this.parcelRepository = parcelRepository;
+            this.parcelPropertyRepository = parcelPropertyRepository;
         }
 
         private Game game;
@@ -95,6 +100,42 @@ namespace Funpoly.Core
             prevTeam.Cash = newCash;
 
             await teamRepository.UpdateAsync(prevTeam);
+
+            await NotifyClientsAsync();
+        }
+
+        public async Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId)
+        {
+            //Get Parcels for given Continent including the properties and teams corresponding to the current game
+            var continentParcels = await parcelRepository.GetAllAsync(
+                parcel => parcel
+                .Where(parcel => parcel.ContinentId == ContinentId)
+                .Include(parcel => parcel.ParcelProperties
+                              .Where(prop => prop.Team.GameId == game.Id))
+                .ThenInclude(prop => prop.Team));
+            return continentParcels;
+        }
+
+        public async Task CreateParcelProperty(ParcelProperty parcelProperty)
+        {
+            await parcelPropertyRepository.AddAsync(parcelProperty);
+
+            await NotifyClientsAsync();
+        }
+
+        public async Task UpdateParcelProperty(ParcelProperty parcelProperty)
+        {
+            // EF limitation: Need to remove relationship entities for update to avoid unexpected tracking errors
+            parcelProperty.Team = null;
+            parcelProperty.Parcel = null;
+            await parcelPropertyRepository.UpdateAsync(parcelProperty);
+
+            await NotifyClientsAsync();
+        }
+
+        public async Task RemoveParcelProperty(ParcelProperty parcelProperty)
+        {
+            await parcelPropertyRepository.RemoveAsync(parcelProperty);
 
             await NotifyClientsAsync();
         }

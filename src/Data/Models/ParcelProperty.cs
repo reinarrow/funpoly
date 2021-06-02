@@ -7,7 +7,7 @@ namespace Funpoly.Data.Models
 {
     public class ParcelProperty : BaseModel
     {
-        private bool HotelBuilt { get; set; }
+        public bool HotelBuilt { get; set; }
 
         #region relations
 
@@ -18,5 +18,10 @@ namespace Funpoly.Data.Models
         public Parcel Parcel { get; set; }
 
         #endregion relations
+
+        public ParcelProperty ShallowCopy()
+        {
+            return (ParcelProperty)MemberwiseClone();
+        }
     }
 }
