@@ -94,6 +94,13 @@ namespace Funpoly.Core
             await NotifyClientsAsync();
         }
 
+        public async Task DeleteTeam(Team team)
+        {
+            await teamRepository.RemoveAsync(team);
+
+            await NotifyClientsAsync();
+        }
+
         public async Task UpdateTeamCash(Team team, decimal newCash)
         {
             var prevTeam = game.Teams.Find(t => t.Id == team.Id);

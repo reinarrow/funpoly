@@ -21,6 +21,8 @@ namespace Funpoly.Core
 
         Task UpdateTeam(Team team);
 
+        Task DeleteTeam(Team team);
+
         Task UpdateTeamCash(Team team, decimal newCash);
 
         Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId);

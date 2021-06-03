@@ -45,5 +45,11 @@ namespace Funpoly.Features.Teams
             await gameManager.UpdateTeam(modalTeam);
             HideModal();
         }
+
+        private async Task DeleteTeam()
+        {
+            await gameManager.DeleteTeam(Team);
+            HideModal();
+        }
     }
 }
