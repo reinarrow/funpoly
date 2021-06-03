@@ -34,5 +34,7 @@ namespace Funpoly.Core
         Task RemoveParcelProperty(ParcelProperty parcelProperty);
 
         Task<List<Team>> GetTeamsWithTravelData();
+
+        Task UpdateTeamTravelData(int teamId, int travelDays, int? transportId);
     }
 }

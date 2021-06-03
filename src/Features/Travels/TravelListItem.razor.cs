@@ -20,14 +20,29 @@ namespace Funpoly.Features.Travels
         protected Team UserTeam { get; set; }
 
         private bool collapseVisible;
+        private bool isInitialized = false;
 
         // reference to the modal component
         private Modal modalRef;
+
         private int modalDays;
+        private int? modalTransportId;
+
+        private List<Transport> availableTransports;
+
+        protected override async Task OnInitializedAsync()
+        {
+            availableTransports = await transportRepository.GetAllAsync();
+
+            await base.OnInitializedAsync();
+
+            isInitialized = true;
+        }
 
         private void ShowModal()
         {
             modalDays = Team.Days;
+            modalTransportId = Team.TransportId ?? 0;
             modalRef.Show();
         }
 
@@ -38,43 +53,35 @@ namespace Funpoly.Features.Travels
 
         private async Task SaveChanges()
         {
-            // TODO: Update travel data (days, transport)
+            //Update travel data (days and transport)
+            if (modalTransportId == 0) modalTransportId = null;
+            await gameManager.UpdateTeamTravelData(Team.Id, modalDays, modalTransportId);
 
             HideModal();
         }
 
         private string GetTransportIcon()
         {
-            if (Team.Transport.Name == "Avión")
+            switch (Team.Transport.Name)
             {
-                return "image/plane.png";
-            }
-            else if (Team.Transport.Name == "Globo")
-            {
-                return "image/balloon.png";
-            }
-            else if (Team.Transport.Name == "Tren")
-            {
-                return "image/train.png";
-            }
-            else if (Team.Transport.Name == "Barco")
-            {
-                return "image/boat.png";
-            }
-            else if (Team.Transport.Name == "Elefante")
-            {
-                return "image/elephant.png";
-            }
-            else
-            {
-                return "";
+                case "Avión":
+                    return "image/plane.png";
+
+                case "Globo":
+                    return "image/balloon.png";
+
+                case "Tren":
+                    return "image/train.png";
+
+                case "Barco":
+                    return "image/boat.png";
+
+                case "Elefante":
+                    return "image/elephant.png";
+
+                default:
+                    return "";
             }
         }
     }
 }
-
-//new Transport { Name = "Avión", Dices = 2, Substraction = 0 },
-//                    new Transport { Name = "Globo", Dices = 2, Substraction = 1 },
-//                    new Transport { Name = "Tren", Dices = 1, Substraction = 0 },
-//                    new Transport { Name = "Barco", Dices = 1, Substraction = 0 },
-//                    new Transport { Name = "Elefante", Dices = 1, Substraction = 1 },

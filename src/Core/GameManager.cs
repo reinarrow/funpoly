@@ -103,7 +103,7 @@ namespace Funpoly.Core
 
         public async Task UpdateTeamCash(Team team, decimal newCash)
         {
-            var prevTeam = game.Teams.Find(t => t.Id == team.Id);
+            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == team.Id);
             prevTeam.Cash = newCash;
 
             await teamRepository.UpdateAsync(prevTeam);
@@ -154,6 +154,16 @@ namespace Funpoly.Core
             .Include(t => t.Transport));
 
             return teams;
+        }
+
+        public async Task UpdateTeamTravelData(int teamId, int travelDays, int? transportId)
+        {
+            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == teamId);
+            prevTeam.Days = travelDays;
+            prevTeam.TransportId = transportId;
+
+            await teamRepository.UpdateAsync(prevTeam);
+            await NotifyClientsAsync();
         }
     }
 }
