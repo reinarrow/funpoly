@@ -47,7 +47,7 @@ namespace Funpoly.Data.Models
         public int BoardSquareId { get; set; }
 
         // Parcel property for the acquisition by teams
-        public ParcelProperty ParcelProperty { get; set; }
+        public List<ParcelProperty> ParcelProperties { get; set; }
 
         #endregion relations
     }

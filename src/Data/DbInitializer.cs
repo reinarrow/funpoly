@@ -18,7 +18,7 @@ namespace Funpoly.Data
             var webHostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
             var boardSquareRepository = serviceProvider.GetRequiredService<IRepository<BoardSquare>>();
             var continentRepository = serviceProvider.GetRequiredService<IRepository<Continent>>();
-            var gameRepository = serviceProvider.GetRequiredService<IGameRepository>();
+            var gameRepository = serviceProvider.GetRequiredService<IRepository<Game>>();
             var transportRepository = serviceProvider.GetRequiredService<IRepository<Transport>>();
 
             //Migrations

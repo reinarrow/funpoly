@@ -1,7 +1,7 @@
 ﻿@using Funpoly.Data.Repositories.Interfaces
 @using Funpoly.Data.Models
 @using Funpoly.Core
-@inject IGameRepository gameRepository
+@inject IRepository<Game> gameRepository
 @inject IGameManager gameManager
 
 <Layout Loading="@(games == null)">

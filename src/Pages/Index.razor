@@ -8,7 +8,7 @@
 
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IGameManager gameManager
-@inject IGameRepository gameRepository
+@inject IRepository<Game> gameRepository
 @inject NavigationManager navManager
 
 @if (isInitialised)
