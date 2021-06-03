@@ -1,1 +1,42 @@
-﻿<h3>Travel list item</h3>
+﻿<Collapse Visible="@collapseVisible" Style="margin: 10px 0;">
+    @{ var headerStyle = "background: transparent; border: 2px solid " + Team.Color;}
+    <CollapseHeader @onclick="()=>collapseVisible = !collapseVisible"
+                    Style="@headerStyle">
+        <Row>
+            @if (Team.Transport != null)
+            {
+                <Figure Size="FigureSize.Is32x32" Style="margin-left: 10px; position: absolute; left: 0;">
+                    @{ var iconSource = GetTransportIcon();}
+                    <FigureImage Source="@iconSource"></FigureImage>
+                </Figure>
+            }
+            <Text Class="ml-auto mr-auto" Alignment="TextAlignment.Center">@Team.Name: @Team.Days días</Text>
+            @if (IsBanker)
+            {
+                <Icon Style="margin-right: 10px; position: absolute; right: 0;" Name="IconName.Edit" @onclick="@ShowModal"></Icon>
+            }
+        </Row>
+    </CollapseHeader>
+    <CollapseBody>
+        Lorem ipsum
+    </CollapseBody>
+</Collapse>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>Modificar datos de viaje de @Team.Name</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Días de viaje</FieldLabel>
+                <NumericEdit @bind-Value="@modalDays" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="@SaveChanges">Enviar</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

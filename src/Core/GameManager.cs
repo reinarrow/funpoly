@@ -139,5 +139,14 @@ namespace Funpoly.Core
 
             await NotifyClientsAsync();
         }
+
+        public async Task<List<Team>> GetTeamsWithTravelData()
+        {
+            var teams = await teamRepository.GetAllAsync(t => t.Where(t => t.GameId == game.Id)
+            .Include(t => t.Postcards)
+            .Include(t => t.Transport));
+
+            return teams;
+        }
     }
 }
