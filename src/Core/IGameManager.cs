@@ -36,5 +36,11 @@ namespace Funpoly.Core
         Task<List<Team>> GetTeamsWithTravelData();
 
         Task UpdateTeamTravelData(int teamId, int travelDays, int? transportId);
+
+        Task<List<Postcard>> GetPostcardsByContinent(Continent continent);
+
+        Task CreatePostcardTeam(PostcardTeam postcardTeam);
+
+        Task RemovePostcardTeam(PostcardTeam postcardTeam);
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Funpoly.Features.Properties
 {
-    public partial class ContinentList : ComponentBase
+    public partial class ParcelContinentList : ComponentBase
     {
         private bool isInitialized = false;
         private List<Continent> continents;

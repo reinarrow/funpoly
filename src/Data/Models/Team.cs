@@ -51,7 +51,7 @@ namespace Funpoly.Data.Models
         public BoardSquare BoardSquare { get; set; }
 
         // Postcards owned by the team
-        public List<Postcard> Postcards { get; set; }
+        public List<PostcardTeam> PostcardTeams { get; set; }
 
         // Transport of the team in the current lap
         public int? TransportId { get; set; }
