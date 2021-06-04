@@ -1,1 +1,12 @@
-﻿<h3>Travel list</h3>
+﻿@using Funpoly.Core
+@inject IGameManager gameManager
+
+@if (@isInitialized)
+{
+    <Column>
+        @foreach (var team in teams)
+        {
+            <TravelListItem Team="@team"></TravelListItem>
+        }
+    </Column>
+}

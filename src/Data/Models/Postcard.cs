@@ -13,7 +13,7 @@ namespace Funpoly.Data.Models
 
         public Parcel Parcel { get; set; }
 
-        public List<Team> Teams { get; set; }
+        public List<PostcardTeam> PostcardTeams { get; set; }
 
         #endregion relations
     }

@@ -7,27 +7,31 @@ using Microsoft.AspNetCore.Components;
 
 namespace Funpoly.Features.Travels
 {
-    public partial class TravelList : ComponentBase
+    public partial class TravelContinentListItem : ComponentBase
     {
+        [Parameter]
+        public Continent Continent { get; set; }
+
+        [Parameter]
+        public Team Team { get; set; }
+
         private bool isInitialized = false;
-        private List<Team> teams;
+        private List<Postcard> postcards;
 
         protected override async Task OnInitializedAsync()
         {
-            //Declare callback for SignalR (need to update in case parcel properties change)
+            //Declare callback for SignalR
             gameManager.OnChange += async () => await Update();
 
-            // Call update for the first time to obtain data
             await Update();
-
             await base.OnInitializedAsync();
             isInitialized = true;
         }
 
         private async Task Update()
         {
-            // Obtain teams list with travel data from gamemanager
-            teams = await gameManager.GetTeamsWithTravelData();
+            // Obtain fixed continents list from DB
+            postcards = await gameManager.GetPostcardsByContinent(Continent);
 
             // Trigger re-render
             await InvokeAsync(() =>

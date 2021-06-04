@@ -21,6 +21,8 @@ namespace Funpoly.Core
 
         Task UpdateTeam(Team team);
 
+        Task DeleteTeam(Team team);
+
         Task UpdateTeamCash(Team team, decimal newCash);
 
         Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId);
@@ -30,5 +32,15 @@ namespace Funpoly.Core
         Task UpdateParcelProperty(ParcelProperty parcelProperty);
 
         Task RemoveParcelProperty(ParcelProperty parcelProperty);
+
+        Task<List<Team>> GetTeamsWithTravelData();
+
+        Task UpdateTeamTravelData(int teamId, int travelDays, int? transportId);
+
+        Task<List<Postcard>> GetPostcardsByContinent(Continent continent);
+
+        Task CreatePostcardTeam(PostcardTeam postcardTeam);
+
+        Task RemovePostcardTeam(PostcardTeam postcardTeam);
     }
 }

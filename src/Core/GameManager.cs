@@ -1,10 +1,10 @@
-﻿using Funpoly.Data.Models;
-using Funpoly.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Funpoly.Data.Models;
+using Funpoly.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Funpoly.Core
 {
@@ -15,13 +15,22 @@ namespace Funpoly.Core
         private readonly IRepository<Team> teamRepository;
         private readonly IRepository<Parcel> parcelRepository;
         private readonly IRepository<ParcelProperty> parcelPropertyRepository;
+        private readonly IRepository<Postcard> postcardRepository;
+        private readonly IRepository<PostcardTeam> postcardTeamRepository;
 
-        public GameManager(IRepository<Game> gameRepository, IRepository<Team> teamRepository, IRepository<Parcel> parcelRepository, IRepository<ParcelProperty> parcelPropertyRepository)
+        public GameManager(IRepository<Game> gameRepository
+            , IRepository<Team> teamRepository
+            , IRepository<Parcel> parcelRepository
+            , IRepository<ParcelProperty> parcelPropertyRepository
+            , IRepository<Postcard> postcardRepository
+            , IRepository<PostcardTeam> postcardTeamRepository)
         {
             this.gameRepository = gameRepository;
             this.teamRepository = teamRepository;
             this.parcelRepository = parcelRepository;
             this.parcelPropertyRepository = parcelPropertyRepository;
+            this.postcardRepository = postcardRepository;
+            this.postcardTeamRepository = postcardTeamRepository;
         }
 
         private Game game;
@@ -47,7 +56,7 @@ namespace Funpoly.Core
         public async Task LoadGameById(int id)
         {
             game = await gameRepository.GetByIdAsync(id, game => game
-            .Include(game => game.Teams));
+            .Include(game => game.Teams.OrderBy(t => t.Turn)));
             await NotifyClientsAsync();
         }
 
@@ -76,7 +85,7 @@ namespace Funpoly.Core
             team.TurnsInPrison = 0;
             team.GameId = game.Id;
             team.BoardSquareId = 1;
-            team.Postcards = new List<Postcard>();
+            team.PostcardTeams = new List<PostcardTeam>();
             team.ParcelProperties = new List<ParcelProperty>();
 
             game.Teams.Add(team);
@@ -94,9 +103,16 @@ namespace Funpoly.Core
             await NotifyClientsAsync();
         }
 
+        public async Task DeleteTeam(Team team)
+        {
+            await teamRepository.RemoveAsync(team);
+
+            await NotifyClientsAsync();
+        }
+
         public async Task UpdateTeamCash(Team team, decimal newCash)
         {
-            var prevTeam = game.Teams.Find(t => t.Id == team.Id);
+            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == team.Id);
             prevTeam.Cash = newCash;
 
             await teamRepository.UpdateAsync(prevTeam);
@@ -137,6 +153,46 @@ namespace Funpoly.Core
         {
             await parcelPropertyRepository.RemoveAsync(parcelProperty);
 
+            await NotifyClientsAsync();
+        }
+
+        public async Task<List<Team>> GetTeamsWithTravelData()
+        {
+            var teams = await teamRepository.GetAllAsync(t => t.Where(t => t.GameId == game.Id)
+            .Include(t => t.Transport).OrderBy(t => t.Turn));
+
+            return teams;
+        }
+
+        public async Task UpdateTeamTravelData(int teamId, int travelDays, int? transportId)
+        {
+            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == teamId);
+            prevTeam.Days = travelDays;
+            prevTeam.TransportId = transportId;
+
+            await teamRepository.UpdateAsync(prevTeam);
+            await NotifyClientsAsync();
+        }
+
+        public async Task<List<Postcard>> GetPostcardsByContinent(Continent continent)
+        {
+            // Get postcards with the corresponding Teams that own it from the current game
+            var postcards = await postcardRepository.GetAllAsync(postcard => postcard.Where(postcard => postcard.Parcel.ContinentId == continent.Id)
+            .Include(postcard => postcard.Parcel)
+            .Include(postcard => postcard.PostcardTeams.Where(pt => pt.Team.GameId == game.Id))
+            .ThenInclude(pt => pt.Team));
+            return postcards;
+        }
+
+        public async Task CreatePostcardTeam(PostcardTeam postcardTeam)
+        {
+            await postcardTeamRepository.AddAsync(postcardTeam);
+            await NotifyClientsAsync();
+        }
+
+        public async Task RemovePostcardTeam(PostcardTeam postcardTeam)
+        {
+            await postcardTeamRepository.RemoveAsync(postcardTeam);
             await NotifyClientsAsync();
         }
     }

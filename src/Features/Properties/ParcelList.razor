@@ -4,10 +4,8 @@
 
 @if (isInitialized)
 {
-    <Column>
-        @foreach (var parcel in parcels)
-        {
-            <ParcelListItem Parcel="@parcel"></ParcelListItem>
-        }
-    </Column>
+    @foreach (var parcel in parcels)
+    {
+        <ParcelListItem Parcel="@parcel"></ParcelListItem>
+    }
 }
