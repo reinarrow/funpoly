@@ -8,5 +8,20 @@ namespace Funpoly.Features.BankerActions
 {
     public partial class BankerActionList : ComponentBase
     {
+        private async Task FinePerSpeedLimit(int teamId)
+        {
+        }
+
+        private async Task GetSurpriseCard(int teamId)
+        {
+        }
+
+        private async Task GiveLotteryPrize(int teamId)
+        {
+        }
+
+        private async Task RegisterLap(int teamId)
+        {
+        }
     }
 }
