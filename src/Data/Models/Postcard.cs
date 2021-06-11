@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace Funpoly.Data.Models
 {
-    public class Postcard
+    public class Postcard : BaseModel
     {
-        // Unique identifier
-        public int Id { get; set; }
+        #region relations
 
-        // Relations
         public int ParcelId { get; set; }
 
         public Parcel Parcel { get; set; }
 
-        public List<Team> Teams { get; set; }
+        public List<PostcardTeam> PostcardTeams { get; set; }
+
+        #endregion relations
     }
 }

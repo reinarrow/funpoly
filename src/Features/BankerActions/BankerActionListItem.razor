@@ -1,0 +1,32 @@
+﻿@using Funpoly.Core
+@inject IGameManager gameManager
+
+<div class="team-item" style="border-color: darkgray" @onclick="@ShowModal">
+    <Figure Class="mt-auto mb-auto" Size="FigureSize.Is32x32">
+        <FigureImage Source="@IconSource" />
+    </Figure>
+</div>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>@ModalTitle</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Equipo</FieldLabel>
+                <Select TValue="int" @bind-SelectedValue="@selectedTeam">
+                    @foreach (var team in gameManager.GetGame().Teams)
+                    {
+                        <SelectItem Value="team.Id">@team.Name</SelectItem>
+                    }
+                </Select>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="@SaveChanges">Aceptar</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

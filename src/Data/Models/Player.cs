@@ -6,11 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Player
+    public class Player : BaseModel
     {
-        // Unique identifier
-        public int Id { get; set; }
-
         // Player name
         [Required]
         public string Name { get; set; }
@@ -18,9 +15,12 @@ namespace Funpoly.Data.Models
         // Bool indicating if the player is the captain of his/her team
         public bool Captain { get; set; }
 
-        //Relations
+        #region relations
+
         public int TeamId { get; set; }
 
         public Team Team { get; set; }
+
+        #endregion relations
     }
 }

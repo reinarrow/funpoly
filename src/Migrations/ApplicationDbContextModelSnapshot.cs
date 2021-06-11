@@ -50,6 +50,27 @@ namespace Funpoly.Migrations
                     b.ToTable("Continents");
                 });
 
+            modelBuilder.Entity("Funpoly.Data.Models.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Games");
+                });
+
             modelBuilder.Entity("Funpoly.Data.Models.Parcel", b =>
                 {
                     b.Property<int>("Id")
@@ -63,8 +84,8 @@ namespace Funpoly.Migrations
                     b.Property<int>("ContinentId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("HotelBuilt")
-                        .HasColumnType("boolean");
+                    b.Property<int>("HotelPrice")
+                        .HasColumnType("integer");
 
                     b.Property<int>("HotelTax")
                         .HasColumnType("integer");
@@ -78,7 +99,7 @@ namespace Funpoly.Migrations
                     b.Property<int>("RawTax")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TwoHotelsTax")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -88,9 +109,32 @@ namespace Funpoly.Migrations
 
                     b.HasIndex("ContinentId");
 
+                    b.ToTable("Parcels");
+                });
+
+            modelBuilder.Entity("Funpoly.Data.Models.ParcelProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("HotelBuilt")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ParcelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParcelId");
+
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Parcels");
+                    b.ToTable("ParcelProperty");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Player", b =>
@@ -135,6 +179,28 @@ namespace Funpoly.Migrations
                     b.ToTable("Postcards");
                 });
 
+            modelBuilder.Entity("Funpoly.Data.Models.PostcardTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("PostcardId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostcardId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("PostcardTeam");
+                });
+
             modelBuilder.Entity("Funpoly.Data.Models.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -152,10 +218,13 @@ namespace Funpoly.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ConsecutiveTwelves")
+                    b.Property<int>("ConsecutiveSixes")
                         .HasColumnType("integer");
 
                     b.Property<int>("Days")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GameId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("InPrison")
@@ -177,6 +246,8 @@ namespace Funpoly.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BoardSquareId");
+
+                    b.HasIndex("GameId");
 
                     b.HasIndex("TransportId")
                         .IsUnique();
@@ -206,21 +277,6 @@ namespace Funpoly.Migrations
                     b.ToTable("Transports");
                 });
 
-            modelBuilder.Entity("PostcardTeam", b =>
-                {
-                    b.Property<int>("PostcardsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TeamsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PostcardsId", "TeamsId");
-
-                    b.HasIndex("TeamsId");
-
-                    b.ToTable("PostcardTeam");
-                });
-
             modelBuilder.Entity("Funpoly.Data.Models.Parcel", b =>
                 {
                     b.HasOne("Funpoly.Data.Models.BoardSquare", "BoardSquare")
@@ -235,13 +291,28 @@ namespace Funpoly.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Funpoly.Data.Models.Team", null)
-                        .WithMany("Parcels")
-                        .HasForeignKey("TeamId");
-
                     b.Navigation("BoardSquare");
 
                     b.Navigation("Continent");
+                });
+
+            modelBuilder.Entity("Funpoly.Data.Models.ParcelProperty", b =>
+                {
+                    b.HasOne("Funpoly.Data.Models.Parcel", "Parcel")
+                        .WithMany("ParcelProperties")
+                        .HasForeignKey("ParcelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Funpoly.Data.Models.Team", "Team")
+                        .WithMany("ParcelProperties")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parcel");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Player", b =>
@@ -266,11 +337,36 @@ namespace Funpoly.Migrations
                     b.Navigation("Parcel");
                 });
 
+            modelBuilder.Entity("Funpoly.Data.Models.PostcardTeam", b =>
+                {
+                    b.HasOne("Funpoly.Data.Models.Postcard", "Postcard")
+                        .WithMany("PostcardTeams")
+                        .HasForeignKey("PostcardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Funpoly.Data.Models.Team", "Team")
+                        .WithMany("PostcardTeams")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Postcard");
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("Funpoly.Data.Models.Team", b =>
                 {
                     b.HasOne("Funpoly.Data.Models.BoardSquare", "BoardSquare")
                         .WithMany("Teams")
                         .HasForeignKey("BoardSquareId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Funpoly.Data.Models.Game", "Game")
+                        .WithMany("Teams")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -280,22 +376,9 @@ namespace Funpoly.Migrations
 
                     b.Navigation("BoardSquare");
 
+                    b.Navigation("Game");
+
                     b.Navigation("Transport");
-                });
-
-            modelBuilder.Entity("PostcardTeam", b =>
-                {
-                    b.HasOne("Funpoly.Data.Models.Postcard", null)
-                        .WithMany()
-                        .HasForeignKey("PostcardsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Funpoly.Data.Models.Team", null)
-                        .WithMany()
-                        .HasForeignKey("TeamsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.BoardSquare", b =>
@@ -310,16 +393,30 @@ namespace Funpoly.Migrations
                     b.Navigation("Parcels");
                 });
 
+            modelBuilder.Entity("Funpoly.Data.Models.Game", b =>
+                {
+                    b.Navigation("Teams");
+                });
+
             modelBuilder.Entity("Funpoly.Data.Models.Parcel", b =>
                 {
+                    b.Navigation("ParcelProperties");
+
                     b.Navigation("Postcard");
+                });
+
+            modelBuilder.Entity("Funpoly.Data.Models.Postcard", b =>
+                {
+                    b.Navigation("PostcardTeams");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Team", b =>
                 {
-                    b.Navigation("Parcels");
+                    b.Navigation("ParcelProperties");
 
                     b.Navigation("Players");
+
+                    b.Navigation("PostcardTeams");
                 });
 
             modelBuilder.Entity("Funpoly.Data.Models.Transport", b =>

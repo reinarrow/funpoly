@@ -1,0 +1,20 @@
+﻿<div class="text-center margin-top: auto">
+    <Button Disabled="@Disabled"
+            Color="Color.Primary"
+            Clicked="@OnClick"
+            Style="width: 80%;">
+        @* CSS isolation does not work with Blazorise components *@
+        @Text
+    </Button>
+</div>
+
+@code {
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+}
