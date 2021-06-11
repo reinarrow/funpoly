@@ -1,14 +1,15 @@
 ﻿@inherits LayoutComponentBase
 
-<Container Fluid="true">
-    <Row RowSize="RowSize.Is1" Class="justify-content-center">
-        <Column ColumnSize="ColumnSize.IsFull.OnMobile.IsHalf.OnDesktop">
-            <Figure Margin="Margin.Is2">
-                <FigureImage Source="image/logo_high_res_cut.png" AlternateText="Funpoly Logo"></FigureImage>
-            </Figure>
-        </Column>
-    </Row>
-    <Row RowSize="RowSize.Is11">
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+    </div>
+
+    <div class="content px-4">
         @Body
-    </Row>
-</Container>
+    </div>
+</div>

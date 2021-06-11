@@ -6,16 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Continent : BaseModel
+    public class Continent
     {
+        // Unique identifier
+        public int Id { get; set; }
+
         // Continent name
         [Required]
         public string Name { get; set; }
 
-        #region relations
+        // Relations
 
         public List<Parcel> Parcels { get; set; }
-
-        #endregion relations
     }
 }

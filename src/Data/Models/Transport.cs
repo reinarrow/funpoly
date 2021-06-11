@@ -6,8 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Funpoly.Data.Models
 {
-    public class Transport : BaseModel
+    public class Transport
     {
+        // Unique identifier
+        public int Id { get; set; }
+
         // Common name of the transport
         [Required]
         public string Name { get; set; }
@@ -20,10 +23,7 @@ namespace Funpoly.Data.Models
         [Required]
         public int Substraction { get; set; }
 
-        #region relations
-
+        // Relations
         public Team Team { get; set; }
-
-        #endregion relations
     }
 }

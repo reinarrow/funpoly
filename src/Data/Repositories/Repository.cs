@@ -1,10 +1,8 @@
-﻿using Funpoly.Data.Models;
-using Funpoly.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Funpoly.Data.Repositories.Interfaces;
 
 namespace Funpoly.Data.Repositories
 {
@@ -12,84 +10,18 @@ namespace Funpoly.Data.Repositories
     /// Class-less CRUD Entity manager.
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseModel, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
-        protected readonly IDbContextFactory<ApplicationDbContext> _ContextFactory;
+        protected readonly ApplicationDbContext _applicationDbContext;
 
-        public Repository(IDbContextFactory<ApplicationDbContext> contextFactory)
+        public Repository(ApplicationDbContext applicationDbContext)
         {
-            _ContextFactory = contextFactory;
+            _applicationDbContext = applicationDbContext;
         }
 
         public List<TEntity> GetAll()
         {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                return _applicationDbContext.Set<TEntity>().AsNoTracking().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
-        }
-
-        public List<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func)
-        {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                DbSet<TEntity> dbSet = _applicationDbContext.Set<TEntity>();
-                IQueryable<TEntity> query = func(dbSet);
-                return query.AsNoTracking().ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
-        }
-
-        public async Task<List<TEntity>> GetAllAsync()
-        {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                return await _applicationDbContext.Set<TEntity>().AsNoTracking().ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
-        }
-
-        public async Task<List<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func)
-        {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                DbSet<TEntity> dbSet = _applicationDbContext.Set<TEntity>();
-                IQueryable<TEntity> query = func(dbSet);
-                return await query.AsNoTracking().ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
-        }
-
-        public async Task<TEntity> GetByIdAsync(int id, Func<IQueryable<TEntity>, IQueryable<TEntity>> func)
-        {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                DbSet<TEntity> dbSet = _applicationDbContext.Set<TEntity>();
-                IQueryable<TEntity> query = func(dbSet);
-                return await query.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
+            throw new NotImplementedException();
         }
 
         public (bool, string) Add(TEntity entity)
@@ -102,7 +34,6 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Add(entity);
                 rowsChanged = _applicationDbContext.SaveChanges() > 0;
             }
@@ -115,44 +46,6 @@ namespace Funpoly.Data.Repositories
             return (rowsChanged, null);
         }
 
-        public async Task<int> AddRangeAsync(List<TEntity> entities)
-        {
-            if (entities == null || !entities.Any())
-            {
-                throw new ArgumentNullException($"{nameof(AddRangeAsync)} entities must not be null or empty");
-            }
-
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                await _applicationDbContext.AddRangeAsync(entities);
-                return await _applicationDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"{nameof(entities)} could not be saved: {ex.Message}");
-            }
-        }
-
-        public int AddRange(List<TEntity> entities)
-        {
-            if (entities == null || !entities.Any())
-            {
-                throw new ArgumentNullException($"{nameof(AddRangeAsync)} entities must not be null or empty");
-            }
-
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                _applicationDbContext.AddRange(entities);
-                return _applicationDbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"{nameof(entities)} could not be saved: {ex.Message}");
-            }
-        }
-
         public async Task<(bool, string)> AddAsync(TEntity entity)
         {
             if (entity == null)
@@ -163,7 +56,6 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 await _applicationDbContext.AddAsync(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
@@ -186,7 +78,6 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Update(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
@@ -209,7 +100,6 @@ namespace Funpoly.Data.Repositories
             var rowsChanged = false;
             try
             {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 _applicationDbContext.Remove(entity);
                 rowsChanged = await _applicationDbContext.SaveChangesAsync() > 0;
             }
@@ -220,19 +110,6 @@ namespace Funpoly.Data.Repositories
 
             //TODO Review null return
             return (rowsChanged, null);
-        }
-
-        public async Task<bool> CheckIsEmptyAsync()
-        {
-            try
-            {
-                using var _applicationDbContext = _ContextFactory.CreateDbContext();
-                return !await _applicationDbContext.Set<TEntity>().AsNoTracking().AnyAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"could not fetch db: {ex.Message}");
-            }
         }
     }
 }

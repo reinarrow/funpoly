@@ -11,14 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Funpoly.Data;
-using Funpoly.Core;
 using Funpoly.Data.Repositories.Interfaces;
 using Funpoly.Data.Repositories;
-using Blazored.LocalStorage;
-using Microsoft.AspNetCore.ResponseCompression;
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
+using Funpoly.Data.Models;
 
 namespace Funpoly
 {
@@ -35,39 +30,25 @@ namespace Funpoly
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-              .AddBlazorise(options =>
-              {
-                  options.ChangeTextOnKeyPress = true; // optional
-              })
-              .AddBootstrapProviders()
-              .AddFontAwesomeIcons();
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddSingleton<IGameManager, GameManager>();
+            services.AddTransient<IBoardSquareRepository, BoardSquareRepository>();
+            services.AddTransient<IContinentRepository, ContinentRepository>();
+            services.AddTransient<IParcelRepository, ParcelRepository>();
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<IPostcardRepository, PostcardRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITransportRepository, TransportRepository>();
 
             // Connection string host is different from within the app container and the host dev computer (for executing dotnet ef commands)
-            var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "docker" ?
+            var connectionString = Environment.GetEnvironmentVariable("CONTAINER") == "true" ?
                 "Host=funpoly_postgres;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;" :
                 "Host=localhost;Port=5432;Database=funpoly;Username=rw_dev;Password=rw_dev;";
-
-            services.AddDbContextFactory<ApplicationDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString);
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);
             }, ServiceLifetime.Transient);
-
-            // Cookies
-            services.AddBlazoredLocalStorage();   // local storage
-            services.AddBlazoredLocalStorage(config =>
-                config.JsonSerializerOptions.WriteIndented = true);  // local storage
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

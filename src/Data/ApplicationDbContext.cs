@@ -24,6 +24,5 @@ namespace Funpoly.Data
         public DbSet<Postcard> Postcards { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Transport> Transports { get; set; }
-        public DbSet<Game> Games { get; set; }
     }
 }
