@@ -55,99 +55,36 @@ namespace Funpoly.Data
                         Name = "África",
                         Parcels = new List<Parcel>
                         {
-                            new Parcel {
-                                Name = "Pirámides de Giza, El Cairo",
-                                Price = 0, //TODO: Fill
-								HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 2 //TODO: Check
-                            },
                             new Parcel
                             {
-                                Name = "Valle de los Reyes, Luxor",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Name = "El Sáhara, Marruecos",
+                                Price = 60,
+                                HotelPrice = 75,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 4 //TODO: Check
+                                BoardSquareId = 2
                             },
                             new Parcel
                             {
                                 Name = "Serengeti, Tanzania",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 80,
+                                HotelPrice = 75,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 7 //TODO: Check
+                                BoardSquareId = 4
+                            },
+                            new Parcel {
+                                Name = "Pirámides de Giza, El Cairo",
+                                Price = 100,
+                                HotelPrice = 75,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 7
                             },
                             new Parcel
                             {
-                                Name = "El Sáhara, Marruecos",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Name = "Bosque de baobabs, Madagascar",
+                                Price = 120,
+                                HotelPrice = 75,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 9 //TODO: Check
-                            }
-                        }
-                    },
-                    new Continent
-                    {
-                        Name = "Europa",
-                        Parcels = new List<Parcel>
-                        {
-                            new Parcel
-                            {
-                                Name = "Coliseo Romano, Italia",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 11 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Partenón, Atenas",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 13 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Torre Eiffel, Paris",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 16 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Catedral de Santa María, Sevilla",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 18 //TODO: Check
+                                BoardSquareId = 9
                             }
                         }
                     },
@@ -158,50 +95,39 @@ namespace Funpoly.Data
                         {
                             new Parcel
                             {
-                                Name = "Muralla China, Pekín",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Name = "Petra, Jordania",
+                                Price = 140,
+                                HotelPrice = 100,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 20 //TODO: Check
+                                BoardSquareId = 11
                             },
                             new Parcel
                             {
                                 Name = "Monte Fuji, Japón",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 160,
+                                HotelPrice = 100,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 22 //TODO: Check
+                                BoardSquareId = 16
+                            },
+                            new Parcel
+                            {
+                                Name = "Muralla China, Pekín",
+                                Price = 180,
+                                HotelPrice = 100,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 13
                             },
                             new Parcel
                             {
                                 Name = "Taj Mahal, India",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 200,
+                                HotelPrice = 100,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 25 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Petra, Jordania",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 27 //TODO: Check
+                                BoardSquareId = 18
                             }
                         }
                     },
+
                     new Continent
                     {
                         Name = "América",
@@ -209,46 +135,72 @@ namespace Funpoly.Data
                         {
                             new Parcel {
                                 Name = "Machu Picchu, Perú",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 220,
+                                HotelPrice = 150,
                                 Postcard = new(),
-                                BoardSquareId = 29
+                                BoardSquareId = 20
+                            },
+                            new Parcel {
+                                Name = "Cañón del Colorado, Arizona",
+                                Price = 240,
+                                HotelPrice = 150,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 22
                             },
                             new Parcel
                             {
                                 Name = "Isla de Pascua, Chile",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 260,
+                                HotelPrice = 150,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 31 //TODO: Check
-                            },
-                            new Parcel
-                            {
-                                Name = "Cañón del Colorado, Arizona",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
-                                Postcard = new Postcard(),
-                                BoardSquareId = 34 //TODO: Check
+                                BoardSquareId = 25
                             },
                             new Parcel
                             {
                                 Name = "Parque de Yellowstone, EEUU",
-                                Price = 0, //TODO: Fill
-                                HotelPrice = 0, //TODO: Fill
-                                RawTax = 0, //TODO: Fill
-                                HotelTax = 0, //TODO: Fill
-                                TwoHotelsTax = 0, //TODO: Fill
+                                Price = 280,
+                                HotelPrice = 150,
                                 Postcard = new Postcard(),
-                                BoardSquareId = 36 //TODO: Check
+                                BoardSquareId = 27
+                            }
+                        }
+                    },
+                    new Continent
+                    {
+                        Name = "Europa",
+                        Parcels = new List<Parcel>
+                        {
+                            new Parcel
+                            {
+                                Name = "Partenón, Atenas",
+                                Price = 300,
+                                HotelPrice = 200,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 29
+                            },
+                            new Parcel
+                            {
+                                Name = "Catedral de Santa María, Sevilla",
+                                Price = 340,
+                                HotelPrice = 200,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 31
+                            },
+                            new Parcel
+                            {
+                                Name = "Coliseo Romano, Italia",
+                                Price = 360,
+                                HotelPrice = 200,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 34
+                            },
+                            new Parcel
+                            {
+                                Name = "Torre Eiffel, Paris",
+                                Price = 400,
+                                HotelPrice = 200,
+                                Postcard = new Postcard(),
+                                BoardSquareId = 36
                             }
                         }
                     }
@@ -278,7 +230,7 @@ namespace Funpoly.Data
                     gameRepository.Add(new Game
                     {
                         Status = GameStatus.OnGoing,
-                        Name = "Game 2",
+                        Name = "Juego 1",
                         CreatedDate = new DateTime(2021, 05, 23),
                         Teams = new List<Team>
                         {
@@ -286,8 +238,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Chicago me limpio",
                                 Turn = 1,
-                                Cash = 1000, //TODO: Check
-                                Color = "#FF0000",
+                                Cash = 1500,
+                                Color = "#00B0F0",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -301,8 +253,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Nottingham Prisa",
                                 Turn = 2,
-                                Cash = 1000, //TODO: Check
-                                Color = "#00FF00",
+                                Cash = 1500,
+                                Color = "#C00000",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -316,8 +268,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Estudiabaantes",
                                 Turn = 3,
-                                Cash = 1000, //TODO: Check
-                                Color = "#0000FF",
+                                Cash = 1500,
+                                Color = "#FFC000",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -331,8 +283,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Esfinter de Milán",
                                 Turn = 4,
-                                Cash = 1000, //TODO: Check
-                                Color = "#FFFFFF",
+                                Cash = 1500,
+                                Color = "#92D050",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -348,15 +300,15 @@ namespace Funpoly.Data
                     gameRepository.Add(new Game
                     {
                         Status = GameStatus.TeamsConfig,
-                        Name = "Game 1",
+                        Name = "Juego 2",
                         Teams = new List<Team>
                         {
                             new Team
                             {
                                 Name = "Chicago me limpio",
                                 Turn = 1,
-                                Cash = 1000, //TODO: Check
-                                Color = "#FF0000",
+                                Cash = 1500,
+                                Color = "#00B0F0",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -370,8 +322,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Nottingham Prisa",
                                 Turn = 2,
-                                Cash = 1000, //TODO: Check
-                                Color = "#00FF00",
+                                Cash = 1500,
+                                Color = "#C00000",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -385,8 +337,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Estudiabaantes",
                                 Turn = 3,
-                                Cash = 1000, //TODO: Check
-                                Color = "#0000FF",
+                                Cash = 1500,
+                                Color = "#FFC000",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {
@@ -400,8 +352,8 @@ namespace Funpoly.Data
                             {
                                 Name = "Esfinter de Milán",
                                 Turn = 4,
-                                Cash = 1000, //TODO: Check
-                                Color = "#FFFFFF",
+                                Cash = 1500,
+                                Color = "#92D050",
                                 BoardSquareId = 1,
                                 Players = new List<Player>
                                 {

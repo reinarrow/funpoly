@@ -3,15 +3,17 @@ using System;
 using Funpoly.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Funpoly.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210611101415_parcel-taxes-removed-prices-decimal")]
+    partial class parceltaxesremovedpricesdecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,26 +112,14 @@ namespace Funpoly.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("BuffetServiceAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("HotelBuilt")
                         .HasColumnType("boolean");
 
                     b.Property<int>("ParcelId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("ParkingServiceAvailable")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("PoolServiceAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("TeamId")
                         .HasColumnType("integer");
-
-                    b.Property<bool>("WifiServiceAvailable")
-                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

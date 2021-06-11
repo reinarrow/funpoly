@@ -23,6 +23,10 @@ namespace Funpoly.Features.Properties
 
         private int modalTeamId;
         private bool modalHotelBuilt = false;
+        private bool modalWifi = false;
+        private bool modalBuffet = false;
+        private bool modalParking = false;
+        private bool modalPool = false;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -49,11 +53,19 @@ namespace Funpoly.Features.Properties
             {
                 modalTeamId = parcelProperty.Team.Id;
                 modalHotelBuilt = parcelProperty.HotelBuilt;
+                modalWifi = parcelProperty.WifiServiceAvailable;
+                modalBuffet = parcelProperty.BuffetServiceAvailable;
+                modalParking = parcelProperty.ParkingServiceAvailable;
+                modalPool = parcelProperty.PoolServiceAvailable;
             }
             else
             {
                 modalTeamId = 0;
                 modalHotelBuilt = false;
+                modalWifi = false;
+                modalBuffet = false;
+                modalParking = false;
+                modalPool = false;
             }
             modalRef.Show();
         }
@@ -75,7 +87,11 @@ namespace Funpoly.Features.Properties
                     {
                         ParcelId = Parcel.Id,
                         TeamId = modalTeamId,
-                        HotelBuilt = modalHotelBuilt
+                        HotelBuilt = modalHotelBuilt,
+                        WifiServiceAvailable = modalWifi,
+                        BuffetServiceAvailable = modalBuffet,
+                        ParkingServiceAvailable = modalParking,
+                        PoolServiceAvailable = modalPool
                     };
                     await gameManager.CreateParcelProperty(newParcelProperty);
                 }
@@ -87,12 +103,21 @@ namespace Funpoly.Features.Properties
                     // Remove parcel property
                     await gameManager.RemoveParcelProperty(parcelProperty);
                 }
-                else if (modalTeamId != parcelProperty.Team.Id || modalHotelBuilt != parcelProperty.HotelBuilt)
+                else if (modalTeamId != parcelProperty.Team.Id
+                    || modalHotelBuilt != parcelProperty.HotelBuilt
+                    || modalWifi != parcelProperty.WifiServiceAvailable
+                    || modalBuffet != parcelProperty.BuffetServiceAvailable
+                    || modalParking != parcelProperty.ParkingServiceAvailable
+                    || modalPool != parcelProperty.PoolServiceAvailable)
                 {
                     // Edit parcel property
                     var editedParcelProperty = parcelProperty.ShallowCopy();
                     editedParcelProperty.TeamId = modalTeamId;
                     editedParcelProperty.HotelBuilt = modalHotelBuilt;
+                    editedParcelProperty.WifiServiceAvailable = modalWifi;
+                    editedParcelProperty.BuffetServiceAvailable = modalBuffet;
+                    editedParcelProperty.ParkingServiceAvailable = modalParking;
+                    editedParcelProperty.PoolServiceAvailable = modalPool;
 
                     await gameManager.UpdateParcelProperty(editedParcelProperty);
                 }
