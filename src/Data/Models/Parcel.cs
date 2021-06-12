@@ -13,23 +13,11 @@ namespace Funpoly.Data.Models
 
         // Parcel acquisition price in euros
         [Required]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         // Hotel construction price in euros
         [Required]
-        public int HotelPrice { get; set; }
-
-        // Parcel tax to be paid when no hotel is constructed
-        [Required]
-        public int RawTax { get; set; }
-
-        // Parcel tax to be paid when a hotel is constructed
-        [Required]
-        public int HotelTax { get; set; }
-
-        // Parcel tax to be paid when two hotels are constructed on the same continent
-        [Required]
-        public int TwoHotelsTax { get; set; }
+        public decimal HotelPrice { get; set; }
 
         #region relations
 

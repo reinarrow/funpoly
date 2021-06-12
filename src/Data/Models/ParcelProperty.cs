@@ -9,6 +9,11 @@ namespace Funpoly.Data.Models
     {
         public bool HotelBuilt { get; set; }
 
+        public bool WifiServiceAvailable { get; set; }
+        public bool BuffetServiceAvailable { get; set; }
+        public bool ParkingServiceAvailable { get; set; }
+        public bool PoolServiceAvailable { get; set; }
+
         #region relations
 
         public int TeamId { get; set; }
