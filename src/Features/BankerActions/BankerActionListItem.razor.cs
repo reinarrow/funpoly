@@ -33,8 +33,8 @@ namespace Funpoly.Features.BankerActions
 
         private async Task SaveChanges()
         {
-            await ModalAction.InvokeAsync(selectedTeam);
             HideModal();
+            await ModalAction.InvokeAsync(selectedTeam);
         }
     }
 }

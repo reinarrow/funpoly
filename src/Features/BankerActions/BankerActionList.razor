@@ -1,4 +1,8 @@
-﻿<Column>
+﻿@using Funpoly.Data.Repositories.Interfaces
+@using Funpoly.Data.Models
+@inject IRepository<SurpriseCard> surpriseCardRepository
+
+<Column>
     <Row>
         <Column>
             <BankerActionListItem IconSource="image/speed.png"
@@ -31,3 +35,19 @@
         </Column>
     </Row>
 </Column>
+
+<Modal @ref="@surpriseCardModalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>
+                Carta sorpresa
+            </ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Label>
+                @surpriseCardText
+            </Label>
+        </ModalBody>
+    </ModalContent>
+</Modal>
