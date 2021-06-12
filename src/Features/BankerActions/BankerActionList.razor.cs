@@ -29,7 +29,7 @@ namespace Funpoly.Features.BankerActions
         {
             // Extract a random surprise card and show it on screen
             int surpriseCardsCount = surpriseCardRepository.GetCount();
-            SurpriseCard card = await surpriseCardRepository.GetByIdAsync(rand.Next(surpriseCardsCount));
+            SurpriseCard card = await surpriseCardRepository.GetByIdAsync(rand.Next(1, surpriseCardsCount));
 
             surpriseCardText = card.Text;
             surpriseCardModalRef.Show();
