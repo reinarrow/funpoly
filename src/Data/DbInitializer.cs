@@ -58,6 +58,7 @@ namespace Funpoly.Data
                         {
                             new Parcel
                             {
+                                Id = 1,
                                 Name = "El Sáhara, Marruecos",
                                 Price = 60,
                                 HotelPrice = 75,
@@ -66,13 +67,16 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 2,
                                 Name = "Serengeti, Tanzania",
                                 Price = 80,
                                 HotelPrice = 75,
                                 Postcard = new Postcard(),
                                 BoardSquareId = 4
                             },
-                            new Parcel {
+                            new Parcel
+                            {
+                                Id = 3,
                                 Name = "Pirámides de Giza, El Cairo",
                                 Price = 100,
                                 HotelPrice = 75,
@@ -81,6 +85,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 4,
                                 Name = "Bosque de baobabs, Madagascar",
                                 Price = 120,
                                 HotelPrice = 75,
@@ -96,6 +101,7 @@ namespace Funpoly.Data
                         {
                             new Parcel
                             {
+                                Id = 5,
                                 Name = "Petra, Jordania",
                                 Price = 140,
                                 HotelPrice = 100,
@@ -104,6 +110,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 6,
                                 Name = "Monte Fuji, Japón",
                                 Price = 160,
                                 HotelPrice = 100,
@@ -112,6 +119,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 7,
                                 Name = "Muralla China, Pekín",
                                 Price = 180,
                                 HotelPrice = 100,
@@ -120,6 +128,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 8,
                                 Name = "Taj Mahal, India",
                                 Price = 200,
                                 HotelPrice = 100,
@@ -134,14 +143,18 @@ namespace Funpoly.Data
                         Name = "América",
                         Parcels = new List<Parcel>
                         {
-                            new Parcel {
+                            new Parcel
+                            {
+                                Id = 9,
                                 Name = "Machu Picchu, Perú",
                                 Price = 220,
                                 HotelPrice = 150,
                                 Postcard = new(),
                                 BoardSquareId = 20
                             },
-                            new Parcel {
+                            new Parcel
+                            {
+                                Id = 10,
                                 Name = "Cañón del Colorado, Arizona",
                                 Price = 240,
                                 HotelPrice = 150,
@@ -150,6 +163,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 11,
                                 Name = "Isla de Pascua, Chile",
                                 Price = 260,
                                 HotelPrice = 150,
@@ -158,6 +172,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 12,
                                 Name = "Parque de Yellowstone, EEUU",
                                 Price = 280,
                                 HotelPrice = 150,
@@ -173,6 +188,7 @@ namespace Funpoly.Data
                         {
                             new Parcel
                             {
+                                Id = 13,
                                 Name = "Partenón, Atenas",
                                 Price = 300,
                                 HotelPrice = 200,
@@ -181,6 +197,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 14,
                                 Name = "Catedral de Santa María, Sevilla",
                                 Price = 340,
                                 HotelPrice = 200,
@@ -189,6 +206,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 15,
                                 Name = "Coliseo Romano, Italia",
                                 Price = 360,
                                 HotelPrice = 200,
@@ -197,6 +215,7 @@ namespace Funpoly.Data
                             },
                             new Parcel
                             {
+                                Id = 16,
                                 Name = "Torre Eiffel, Paris",
                                 Price = 400,
                                 HotelPrice = 200,
