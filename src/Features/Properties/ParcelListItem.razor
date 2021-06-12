@@ -1,8 +1,10 @@
 ﻿@using Funpoly.Core
 @using Funpoly.Data.Models
+@using Funpoly.Data.Repositories.Interfaces
 @inject IGameManager gameManager
+@inject IRepository<ParcelProperty> parcelPropertyRepository
 
-<div class="team-item" style="border-color: @GetParcelColor()">
+<div class="team-item" style="border-color: @GetParcelColor()" @onclick="@ShowDisplayModal">
     @if (parcelProperty != null && parcelProperty.HotelBuilt)
     {
         <Icon Style="margin-left: 10px; position: absolute; left: 0;"
@@ -11,7 +13,9 @@
     @Parcel.Name
     @if (IsBanker)
     {
-        <Icon Style="margin-right: 10px; position: absolute; right: 0;" Name="IconName.Edit" @onclick="@ShowModal"></Icon>
+        <div style="margin-right: 10px; position: absolute; right: 0;" @onclick:stopPropagation="true">
+            <Icon Name="IconName.Edit" @onclick="ShowModal" />
+        </div>
     }
 </div>
 
@@ -73,5 +77,58 @@
             <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
             <Button Color="Color.Primary" Clicked="@SaveChanges">Guardar</Button>
         </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="displayModalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>Información parcela @Parcel.Name</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Column>
+                <Row>
+                    <Label>Precio de compra: @Parcel.Price €</Label>
+                </Row>
+                <Row>
+                    <Label>Coste construcción hotel: @Parcel.HotelPrice €</Label>
+                </Row>
+                <Row>
+                    <Label>Coste de estancia sin hotel: @(Parcel.Price/2) €</Label>
+                </Row>
+                <Row>
+                    <Label>Coste de estancia con hotel: @Parcel.Price €</Label>
+                </Row>
+                <Row>
+                    <Label>Incremento por cada servicio: 50 €</Label> @*TODO: Hardcoded setting*@
+                </Row>
+                <Row>
+                    <Label>Incremento con las 4 parcelas del continente: x2</Label> @*TODO: Hardcoded setting*@
+                </Row>
+
+                <Row>
+                    <Label>Propietario: @(parcelProperty?.Team.Name ?? "Ninguno" )</Label>
+                </Row>
+                <Row>
+                    <Label>Hotel construido: @((parcelProperty?.HotelBuilt ?? false) ? "Sí" : "No")</Label>
+                </Row>
+                <Row>
+                    <Label>Wifi: @((parcelProperty?.WifiServiceAvailable ?? false) ? "Sí" : "No")</Label>
+                </Row>
+                <Row>
+                    <Label>Buffet: @((parcelProperty?.BuffetServiceAvailable ?? false) ? "Sí" : "No")</Label>
+                </Row>
+                <Row>
+                    <Label>Parking: @((parcelProperty?.ParkingServiceAvailable ?? false) ? "Sí" : "No")</Label>
+                </Row>
+                <Row>
+                    <Label>Piscina: @((parcelProperty?.PoolServiceAvailable ?? false) ? "Sí" : "No")</Label>
+                </Row>
+                <Row>
+                    <Label>Coste actual de la estancia: @currentParcelTax €</Label>
+                </Row>
+            </Column>
+        </ModalBody>
     </ModalContent>
 </Modal>

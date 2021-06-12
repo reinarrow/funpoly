@@ -6,6 +6,6 @@
 {
     @foreach (var parcel in parcels)
     {
-        <ParcelListItem Parcel="@parcel"></ParcelListItem>
+        <ParcelListItem Parcel="@parcel" GameId="@gameManager.GetGame().Id"></ParcelListItem>
     }
 }

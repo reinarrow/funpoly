@@ -13,13 +13,19 @@ namespace Funpoly.Features.Properties
         [Parameter]
         public Parcel Parcel { get; set; }
 
+        [Parameter]
+        public int GameId { get; set; }
+
         [CascadingParameter(Name = "IsBanker")]
         protected bool IsBanker { get; set; }
 
         private ParcelProperty parcelProperty;
+        private decimal currentParcelTax;
 
         // reference to the modal component
         private Modal modalRef;
+
+        private Modal displayModalRef;
 
         private int modalTeamId;
         private bool modalHotelBuilt = false;
@@ -30,9 +36,48 @@ namespace Funpoly.Features.Properties
 
         protected override async Task OnParametersSetAsync()
         {
-            parcelProperty = Parcel.ParcelProperties.SingleOrDefault();
+            // Get property in the current active game
+            parcelProperty = Parcel.ParcelProperties.SingleOrDefault(prop => prop.Team.GameId == GameId);
+
+            // Calculate current parcelTax
+            await CalculateParcelTax();
 
             await base.OnParametersSetAsync();
+        }
+
+        private async Task CalculateParcelTax()
+        {
+            if (parcelProperty == null)
+            {
+                currentParcelTax = Parcel.Price / 2;
+            }
+            else
+            {
+                if (parcelProperty.HotelBuilt)
+                {
+                    currentParcelTax = Parcel.Price;
+                }
+                else
+                {
+                    currentParcelTax = Parcel.Price / 2;
+                }
+
+                // Each available service increments the tax by 50 €
+                decimal servicesIncrement = 50 * (
+                    (parcelProperty.WifiServiceAvailable ? 1 : 0)
+                    + (parcelProperty.BuffetServiceAvailable ? 1 : 0)
+                    + (parcelProperty.ParkingServiceAvailable ? 1 : 0)
+                    + (parcelProperty.PoolServiceAvailable ? 1 : 0));
+
+                currentParcelTax += servicesIncrement;
+
+                // If the team owns all 4 parcels in the continent, the tax is doubled
+                List<ParcelProperty> teamPropertiesInContinent = await parcelPropertyRepository.GetAllAsync(p => p.Where(p => p.TeamId == parcelProperty.TeamId && p.Parcel.ContinentId == Parcel.ContinentId));
+                if (teamPropertiesInContinent.Count == 4)
+                {
+                    currentParcelTax *= 2;
+                }
+            }
         }
 
         private string GetParcelColor()
@@ -45,6 +90,11 @@ namespace Funpoly.Features.Properties
             {
                 return parcelProperty.Team.Color;
             }
+        }
+
+        private void ShowDisplayModal()
+        {
+            displayModalRef.Show();
         }
 
         private void ShowModal()
