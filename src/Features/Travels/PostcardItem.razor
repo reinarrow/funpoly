@@ -22,3 +22,17 @@
         </ModalFooter>
     </ModalContent>
 </Modal>
+
+<Modal @ref="imageModalRef">
+    <ModalContent Centered="true" Size="ModalSize.Small">
+        <ModalHeader>
+            <ModalTitle>@Postcard.Parcel.Name</ModalTitle>
+            <CloseButton></CloseButton>
+        </ModalHeader>
+        <ModalBody>
+            <Figure>
+                <FigureImage Source="@("image/postcards/"+Postcard.Id+".jpg")"></FigureImage>
+            </Figure>
+        </ModalBody>
+    </ModalContent>
+</Modal>

@@ -20,6 +20,7 @@ namespace Funpoly.Features.Travels
         protected bool IsBanker { get; set; }
 
         private Modal modalRef;
+        private Modal imageModalRef;
 
         private PostcardTeam postcardTeam;
 
@@ -37,6 +38,15 @@ namespace Funpoly.Features.Travels
             {
                 ShowModal();
             }
+            else
+            {
+                ShowImageModal();
+            }
+        }
+
+        private void ShowImageModal()
+        {
+            imageModalRef.Show();
         }
 
         private void ShowModal()
