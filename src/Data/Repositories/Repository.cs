@@ -77,6 +77,19 @@ namespace Funpoly.Data.Repositories
             }
         }
 
+        public async Task<TEntity> GetByIdAsync(int id)
+        {
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                return await _applicationDbContext.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"could not fetch db: {ex.Message}");
+            }
+        }
+
         public async Task<TEntity> GetByIdAsync(int id, Func<IQueryable<TEntity>, IQueryable<TEntity>> func)
         {
             try
@@ -228,6 +241,19 @@ namespace Funpoly.Data.Repositories
             {
                 using var _applicationDbContext = _ContextFactory.CreateDbContext();
                 return !await _applicationDbContext.Set<TEntity>().AsNoTracking().AnyAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"could not fetch db: {ex.Message}");
+            }
+        }
+
+        public int GetCount()
+        {
+            try
+            {
+                using var _applicationDbContext = _ContextFactory.CreateDbContext();
+                return _applicationDbContext.Set<TEntity>().AsNoTracking().Count();
             }
             catch (Exception ex)
             {

@@ -20,6 +20,7 @@ namespace Funpoly.Data
             var continentRepository = serviceProvider.GetRequiredService<IRepository<Continent>>();
             var gameRepository = serviceProvider.GetRequiredService<IRepository<Game>>();
             var transportRepository = serviceProvider.GetRequiredService<IRepository<Transport>>();
+            var surpriseCardRepository = serviceProvider.GetRequiredService<IRepository<SurpriseCard>>();
 
             //Migrations
 
@@ -219,6 +220,39 @@ namespace Funpoly.Data
                     new Transport { Name = "Tren", Dices = 1, Substraction = 0 },
                     new Transport { Name = "Barco", Dices = 1, Substraction = 0 },
                     new Transport { Name = "Elefante", Dices = 1, Substraction = 1 },
+                });
+            }
+
+            // - Surprise cards
+            if (surpriseCardRepository.CheckIsEmptyAsync().Result)
+            {
+                surpriseCardRepository.AddRange(new List<SurpriseCard>
+                {
+                    new SurpriseCard { Text = "Sabemos de tus intentos de hacerte Instagramer o Youtuber y tus fracasos. Te enviamos 100 € con cariño para que sigas con los estudios. La fama no es lo tuyo..."},
+                    new SurpriseCard { Text = "Tu foto de Snapchat que encontramos en la red es digna del premio al ridículo del año. 50 € por la cara."},
+                    new SurpriseCard { Text = "Tu vecino te ha denunciado porque tu gato hace caca en sus macetas. Págale 25 € para replantar sus maltrechas flores."},
+                    new SurpriseCard { Text = "Somos del programa \"Tú sí que vales\". Hemos recibido la grabación que mandó tu madre para las audiciones y hemos decidido pagarte 100 € para una gira mundial junto a Paquirrín y su hermana. Y así alejaros del país..."},
+                    new SurpriseCard { Text = "La revista \"Jardines del Hogar\" le otorga 75 €  por hablarle y cantarle con tanto mimo a las plantas. Para que te puedas pagar un psicólogo."},
+                    new SurpriseCard { Text = "Estás invitada a la fiesta de jubilación de la cigüeña que te trajo al mundo y en la invitación indican que hay que vestir de gala. Paga 80 € para comprarte un traje elegante."},
+                    new SurpriseCard { Text = "Vocal \"A\"."},
+                    new SurpriseCard { Text = "Este vale te da derecho a comer tarta aunque tu grupo sea el primero en caer en bancarrota."},
+                    new SurpriseCard { Text = "Donación de 25 € a la asociación protectore de bichitos. No puedes seguir viviendo mientras se aplasta a pobres cucarachitas, arañitas y hormiguitas."},
+                    new SurpriseCard { Text = "Donación mundial contra el hambre en el mundo. Todos los equipos donan: El que esté en América 10 €, Europa 15 €, Asia, 20 € y África 25 €."},
+                    new SurpriseCard { Text = "Donación de 10 € para montar la asociación que siempre quisiste: \"Peluqueros caninos sin fronteras\" y que los pobres animalitos callejeros no anden con esos pelos por el mundo."},
+                    new SurpriseCard { Text = "Ayuda al paquidermo. Cada equipo le paga 10 € al grupo que esté viajando actualmente en Elefante para contribuir con los gastos de alimentación."},
+                    new SurpriseCard { Text = "Intercámbiate con el equipo que quieras. Solo cambia de posición, sin hacer lo que te toque en esa casilla no pasar por la frontera."},
+                    new SurpriseCard { Text = "Vé a la prisión sin pasar por la frontera."},
+                    new SurpriseCard { Text = "Tirada extra. ¡Yuju!"},
+                    new SurpriseCard { Text = "Vocal \"E\"."},
+                    new SurpriseCard { Text = "Paga 10 € a cada grupo."},
+                    new SurpriseCard { Text = "Wifi para tu propiedad."},
+                    new SurpriseCard { Text = "Buffet para tu propiedad."},
+                    new SurpriseCard { Text = "Parking para tu propiedad."},
+                    new SurpriseCard { Text = "Piscina para tu propiedad."},
+                    new SurpriseCard { Text = "¡Construye un hotal gratis!"},
+                    new SurpriseCard { Text = "Vocal \"I\"."},
+                    new SurpriseCard { Text = "Vocal \"O\"."},
+                    new SurpriseCard { Text = "Vocal \"U\"."},
                 });
             }
 
