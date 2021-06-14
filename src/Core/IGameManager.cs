@@ -50,5 +50,7 @@ namespace Funpoly.Core
         Task PayToLotteryPrize(int teamId, decimal quantity);
 
         Task RegisterTeamLap(int teamId, int travelDays, int newTransportId);
+
+        Task FinePerSpeedLimit(int teamId, bool fine, bool reprimand);
     }
 }

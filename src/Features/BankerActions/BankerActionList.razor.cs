@@ -19,6 +19,11 @@ namespace Funpoly.Features.BankerActions
         private int modalTravelDays;
         private int modalTransportId;
 
+        private Modal speedLimitModalRef;
+        private Team speedModalTeam = new Team();
+        private bool speedModalFine = false;
+        private bool speedModalReprimand = false;
+
         private List<Transport> availableTransports = new List<Transport>();
 
         protected override async Task OnInitializedAsync()
@@ -27,8 +32,25 @@ namespace Funpoly.Features.BankerActions
             await base.OnInitializedAsync();
         }
 
-        private async Task FinePerSpeedLimit(int teamId)
+        private async Task ShowSpeedModal(int teamId)
         {
+            speedModalTeam = gameManager.GetGame().Teams.SingleOrDefault(t => t.Id == teamId);
+            speedModalReprimand = false;
+            speedModalFine = false;
+
+            speedLimitModalRef.Show();
+        }
+
+        private void HideSpeedModal()
+        {
+            speedLimitModalRef.Hide();
+        }
+
+        private async Task FinePerSpeedLimit()
+        {
+            HideSpeedModal();
+
+            gameManager.FinePerSpeedLimit(speedModalTeam.Id, speedModalFine, speedModalReprimand);
         }
 
         private async Task GetSurpriseCard(int teamId)

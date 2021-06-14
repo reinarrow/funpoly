@@ -251,5 +251,24 @@ namespace Funpoly.Core
             await teamRepository.UpdateAsync(team);
             await NotifyClientsAsync();
         }
+
+        public async Task FinePerSpeedLimit(int teamId, bool fine, bool reprimand)
+        {
+            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            if (fine)
+            {
+                team.Cash -= 100; //TODO: To settings parameter
+            }
+
+            if (reprimand)
+            {
+                team.ConsecutiveSixes += 1;
+                if (team.ConsecutiveSixes >= 3) team.ConsecutiveSixes = 0;
+            }
+
+            await teamRepository.UpdateAsync(team);
+            await NotifyClientsAsync();
+        }
     }
 }
