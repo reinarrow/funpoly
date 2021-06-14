@@ -57,12 +57,26 @@ namespace Funpoly.Core
         {
             game = await gameRepository.GetByIdAsync(id, game => game
             .Include(game => game.Teams.OrderBy(t => t.Turn)));
+
+            // If game status is not in TeamsConfig Status, change it
+            if (game.Status != GameStatus.TeamsConfig)
+            {
+                game.Status = GameStatus.TeamsConfig;
+                await gameRepository.UpdateAsync(game);
+            }
             await NotifyClientsAsync();
         }
 
         public async Task StartGame()
         {
             game.Status = GameStatus.OnGoing;
+            await gameRepository.UpdateAsync(game);
+            await NotifyClientsAsync();
+        }
+
+        public async Task FinishGame()
+        {
+            game.Status = GameStatus.Finished;
             await gameRepository.UpdateAsync(game);
             await NotifyClientsAsync();
         }

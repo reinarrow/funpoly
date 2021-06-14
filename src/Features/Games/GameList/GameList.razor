@@ -25,8 +25,11 @@
                     @{
                         switch ((context as Game).Status)
                         {
+                            case GameStatus.NotStarted:
+                                <Text>No iniciado</Text>
+                                break;
                             case GameStatus.TeamsConfig:
-                                <Text>Inicio</Text>
+                                <Text>Configuarción de equipos</Text>
                                 break;
                             case GameStatus.OnGoing:
                                 <Text>En marcha</Text>
@@ -66,6 +69,7 @@
         </DataGrid>
         <GenericButton Disabled="@(selectedGame == null)"
                        OnClick="@OnStartButtonClick"
+                       Color="Color.Primary"
                        Text="Iniciar">
         </GenericButton>
     </Column>

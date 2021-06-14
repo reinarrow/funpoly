@@ -1,1 +1,23 @@
-﻿<h3>Setting list</h3>
+﻿@using Funpoly.Core
+@inject IGameManager gameManager
+<Column ColumnSize="ColumnSize.IsFull">
+    <GenericButton Color="Color.Danger" OnClick="@ShowModal" Text="Terminar juego" />
+</Column>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>Terminar juego</ModalTitle>
+            <CloseButton></CloseButton>
+        </ModalHeader>
+        <ModalBody>
+            <Label>
+                ¿Seguro que quieres terminar el juego?
+            </Label>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="@FinishGame">Aceptar</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>

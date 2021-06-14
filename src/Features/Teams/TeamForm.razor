@@ -5,7 +5,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 @if (isInitialised)
-{ 
+{
     @if (teamCookie == null)
     {
         @if (gameManager.GetGame().Teams.Count < 4)
@@ -30,6 +30,7 @@
                                                || team.Color == null
                                )"
                                Text="¡Listo!"
+                               Color="Color.Primary"
                                OnClick="@OnButtonClick"></GenericButton>
             </Column>
         }
@@ -42,8 +43,8 @@
     }
     else
     {
-    <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
-        El juego está a punto de empezar. Esperando al resto de equipos…
-    </Heading>
+        <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+            El juego está a punto de empezar. Esperando al resto de equipos…
+        </Heading>
     }
 }
