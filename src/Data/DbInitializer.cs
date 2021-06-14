@@ -268,7 +268,7 @@ namespace Funpoly.Data
                     new SurpriseCard { Text = "Buffet para tu propiedad."},
                     new SurpriseCard { Text = "Parking para tu propiedad."},
                     new SurpriseCard { Text = "Piscina para tu propiedad."},
-                    new SurpriseCard { Text = "¡Construye un hotal gratis!"},
+                    new SurpriseCard { Text = "¡Construye un hotel gratis!"},
                     new SurpriseCard { Text = "Vocal \"I\"."},
                     new SurpriseCard { Text = "Vocal \"O\"."},
                     new SurpriseCard { Text = "Vocal \"U\"."},
