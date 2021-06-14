@@ -10,7 +10,7 @@
         <Column>
             <BankerActionListItem IconSource="image/speed.png"
                                   ModalTitle="Multar por exceso de velocidad"
-                                  ModalAction="FinePerSpeedLimit">
+                                  ModalAction="ShowSpeedModal">
             </BankerActionListItem>
         </Column>
 
@@ -83,6 +83,39 @@
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="HideLapModal">Cancelar</Button>
             <Button Color="Color.Primary" Clicked="RegisterLap">Aceptar</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@speedLimitModalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>
+                Multa por velocidad a equipo @speedModalTeam.Name
+            </ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+
+            <Field>
+                <FieldLabel>¿Multar con 100 €?</FieldLabel> @*TODO: Settings*@
+                <Check @bind-Checked="speedModalFine" />
+            </Field>
+
+            <Field>
+                <FieldLabel>¿Amonestar?</FieldLabel>
+                <Check @bind-Checked="speedModalReprimand" />
+            </Field>
+
+            <Label>Amonestaciones: @speedModalTeam.ConsecutiveSixes</Label>
+            @if (@speedModalTeam.ConsecutiveSixes == 2 && speedModalReprimand)
+            {
+                <Label>3 amonestaciones consecutivas. ¡@speedModalTeam.Name debe ir a la cárcel!</Label>
+            }
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="HideSpeedModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="FinePerSpeedLimit">Aceptar</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
