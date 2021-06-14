@@ -66,16 +66,12 @@
         <ModalBody>
             <Field>
                 <FieldLabel>Nuevo transporte</FieldLabel>
-                <Select TValue="int?" @bind-SelectedValue="@modalTransportId">
+                <Select TValue="int" @bind-SelectedValue="@modalTransportId">
                     @foreach (var transport in availableTransports)
                     {
-                        // Only show the team's current transport and other free transports (not assigned to other teams)
-                        @if (!gameManager.GetGame().Teams.Any(team => team.Id != modalSelectedTeam && team.TransportId == transport.Id))
-                        {
-                            <SelectItem Value="@transport.Id">
-                                @transport.Name
-                            </SelectItem>
-                        }
+                        <SelectItem Value="@transport.Id">
+                            @transport.Name
+                        </SelectItem>
                     }
                 </Select>
             </Field>

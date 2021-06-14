@@ -58,8 +58,8 @@ namespace Funpoly.Core
             game = await gameRepository.GetByIdAsync(id, game => game
             .Include(game => game.Teams.OrderBy(t => t.Turn)));
 
-            // If game status is not in TeamsConfig Status, change it
-            if (game.Status != GameStatus.TeamsConfig)
+            // If game status is not started, change it to teams config to go to configuration page
+            if (game.Status == GameStatus.NotStarted)
             {
                 game.Status = GameStatus.TeamsConfig;
                 await gameRepository.UpdateAsync(game);

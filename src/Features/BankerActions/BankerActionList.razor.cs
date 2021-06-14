@@ -19,13 +19,11 @@ namespace Funpoly.Features.BankerActions
         private int modalTravelDays;
         private int modalTransportId;
 
-        private List<Transport> availableTransports;
+        private List<Transport> availableTransports = new List<Transport>();
 
         protected override async Task OnInitializedAsync()
         {
             rand = new Random();
-            availableTransports = await transportRepository.GetAllAsync();
-
             await base.OnInitializedAsync();
         }
 
@@ -52,6 +50,9 @@ namespace Funpoly.Features.BankerActions
         {
             modalSelectedTeam = teamId;
             modalTravelDays = 0;
+
+            var allTransports = await transportRepository.GetAllAsync();
+            availableTransports = allTransports.FindAll(transport => !gameManager.GetGame().Teams.Any(team => team.TransportId == transport.Id));
             modalTransportId = availableTransports.First().Id;
 
             registerLapModalRef.Show();
