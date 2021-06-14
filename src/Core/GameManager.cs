@@ -209,5 +209,30 @@ namespace Funpoly.Core
             await postcardTeamRepository.RemoveAsync(postcardTeam);
             await NotifyClientsAsync();
         }
+
+        public async Task PayToLotteryPrize(int teamId, decimal quantity)
+        {
+            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
+            team.Cash -= quantity;
+            await teamRepository.UpdateAsync(team);
+
+            game.LotteryPrize += quantity;
+            await gameRepository.UpdateAsync(game);
+
+            await NotifyClientsAsync();
+        }
+
+        public async Task GiveLotteryPrizeToTeam(int teamId)
+        {
+            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            team.Cash += game.LotteryPrize;
+            await teamRepository.UpdateAsync(team);
+
+            game.LotteryPrize = 0;
+            await gameRepository.UpdateAsync(game);
+
+            await NotifyClientsAsync();
+        }
     }
 }

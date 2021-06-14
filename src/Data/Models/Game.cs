@@ -10,6 +10,8 @@ namespace Funpoly.Data.Models
     {
         public string Name { get; set; }
 
+        public decimal LotteryPrize { get; set; }
+
         // Game Status
         [Required]
         public GameStatus Status { get; set; }
@@ -20,7 +22,7 @@ namespace Funpoly.Data.Models
 
         public List<Team> Teams { get; set; }
 
-        #endregion
+        #endregion relations
     }
 
     public enum GameStatus

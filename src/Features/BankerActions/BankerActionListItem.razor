@@ -14,6 +14,12 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
+            @if (ModalTitle == "Entregar lotería")
+            {
+                <Label>
+                    Premio actual: @gameManager.GetGame().LotteryPrize €
+                </Label>
+            }
             <Field>
                 <FieldLabel>Equipo</FieldLabel>
                 <Select TValue="int" @bind-SelectedValue="@selectedTeam">
