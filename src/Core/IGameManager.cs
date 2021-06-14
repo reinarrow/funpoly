@@ -44,5 +44,9 @@ namespace Funpoly.Core
         Task CreatePostcardTeam(PostcardTeam postcardTeam);
 
         Task RemovePostcardTeam(PostcardTeam postcardTeam);
+
+        Task GiveLotteryPrizeToTeam(int teamId);
+
+        Task PayToLotteryPrize(int teamId, decimal quantity);
     }
 }

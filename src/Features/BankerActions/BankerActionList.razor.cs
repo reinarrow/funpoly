@@ -37,6 +37,7 @@ namespace Funpoly.Features.BankerActions
 
         private async Task GiveLotteryPrize(int teamId)
         {
+            await gameManager.GiveLotteryPrizeToTeam(teamId);
         }
 
         private async Task RegisterLap(int teamId)

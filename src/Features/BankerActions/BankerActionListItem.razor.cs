@@ -23,6 +23,7 @@ namespace Funpoly.Features.BankerActions
 
         private void ShowModal()
         {
+            selectedTeam = gameManager.GetGame().Teams.First().Id;
             modalRef.Show();
         }
 
