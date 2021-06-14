@@ -2,6 +2,7 @@
 @using Funpoly.Data.Repositories.Interfaces
 @using Funpoly.Data.Models
 @inject IRepository<SurpriseCard> surpriseCardRepository
+@inject IRepository<Transport> transportRepository
 @inject IGameManager gameManager
 
 <Column>
@@ -32,7 +33,7 @@
         <Column>
             <BankerActionListItem IconSource="image/turn.png"
                                   ModalTitle="Registrar vuelta"
-                                  ModalAction="RegisterLap">
+                                  ModalAction="ShowLapModal">
             </BankerActionListItem>
         </Column>
     </Row>
@@ -51,5 +52,37 @@
                 @surpriseCardText
             </Label>
         </ModalBody>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@registerLapModalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>
+                Registrar vuelta
+            </ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Nuevo transporte</FieldLabel>
+                <Select TValue="int" @bind-SelectedValue="@modalTransportId">
+                    @foreach (var transport in availableTransports)
+                    {
+                        <SelectItem Value="@transport.Id">
+                            @transport.Name
+                        </SelectItem>
+                    }
+                </Select>
+            </Field>
+            <Field>
+                <FieldLabel>Días empleados en la vuelta</FieldLabel>
+                <NumericEdit @bind-Value="modalTravelDays" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="HideLapModal">Cancelar</Button>
+            <Button Color="Color.Primary" Clicked="RegisterLap">Aceptar</Button>
+        </ModalFooter>
     </ModalContent>
 </Modal>

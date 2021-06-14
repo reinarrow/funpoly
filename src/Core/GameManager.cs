@@ -58,8 +58,8 @@ namespace Funpoly.Core
             game = await gameRepository.GetByIdAsync(id, game => game
             .Include(game => game.Teams.OrderBy(t => t.Turn)));
 
-            // If game status is not in TeamsConfig Status, change it
-            if (game.Status != GameStatus.TeamsConfig)
+            // If game status is not started, change it to teams config to go to configuration page
+            if (game.Status == GameStatus.NotStarted)
             {
                 game.Status = GameStatus.TeamsConfig;
                 await gameRepository.UpdateAsync(game);
@@ -232,6 +232,23 @@ namespace Funpoly.Core
             game.LotteryPrize = 0;
             await gameRepository.UpdateAsync(game);
 
+            await NotifyClientsAsync();
+        }
+
+        public async Task RegisterTeamLap(int teamId, int travelDays, int newTransportId)
+        {
+            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            // Increment travel days
+            team.Days += travelDays;
+
+            // Pay the lap tax
+            team.Cash += 200; //TODO: To settings parameter
+
+            // Assign the new transport
+            team.TransportId = newTransportId;
+
+            await teamRepository.UpdateAsync(team);
             await NotifyClientsAsync();
         }
     }
