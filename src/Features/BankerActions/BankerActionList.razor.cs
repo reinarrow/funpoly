@@ -13,12 +13,20 @@ namespace Funpoly.Features.BankerActions
         private Random rand;
         private Modal surpriseCardModalRef;
         private string surpriseCardText;
-        private string surpriseCardTeamName;
 
-        protected override Task OnInitializedAsync()
+        private Modal registerLapModalRef;
+        private int modalSelectedTeam;
+        private int modalTravelDays;
+        private int modalTransportId;
+
+        private List<Transport> availableTransports;
+
+        protected override async Task OnInitializedAsync()
         {
             rand = new Random();
-            return base.OnInitializedAsync();
+            availableTransports = await transportRepository.GetAllAsync();
+
+            await base.OnInitializedAsync();
         }
 
         private async Task FinePerSpeedLimit(int teamId)
@@ -40,8 +48,24 @@ namespace Funpoly.Features.BankerActions
             await gameManager.GiveLotteryPrizeToTeam(teamId);
         }
 
-        private async Task RegisterLap(int teamId)
+        private async Task ShowLapModal(int teamId)
         {
+            modalSelectedTeam = teamId;
+            modalTravelDays = 0;
+            modalTransportId = availableTransports.First().Id;
+
+            registerLapModalRef.Show();
+        }
+
+        private void HideLapModal()
+        {
+            registerLapModalRef.Hide();
+        }
+
+        private async Task RegisterLap()
+        {
+            HideLapModal();
+            await gameManager.RegisterTeamLap(modalSelectedTeam, modalTravelDays, modalTransportId);
         }
     }
 }

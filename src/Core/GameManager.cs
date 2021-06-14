@@ -234,5 +234,22 @@ namespace Funpoly.Core
 
             await NotifyClientsAsync();
         }
+
+        public async Task RegisterTeamLap(int teamId, int travelDays, int newTransportId)
+        {
+            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
+
+            // Increment travel days
+            team.Days += travelDays;
+
+            // Pay the lap tax
+            team.Cash += 200; //TODO: To settings parameter
+
+            // Assign the new transport
+            team.TransportId = newTransportId;
+
+            await teamRepository.UpdateAsync(team);
+            await NotifyClientsAsync();
+        }
     }
 }
