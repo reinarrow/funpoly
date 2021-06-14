@@ -30,13 +30,4 @@
 		<PackageReference Include="System.Text.Json" Version="5.0.2" />
 		<PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Features\Games\GameList\GameList - Copia - Copia.razor.cs">
-	    <DependentUpon>GameList - Copia.razor.cs</DependentUpon>
-	  </Compile>
-	  <Compile Update="Features\Games\GameList\GameList - Copia.razor.cs">
-	    <DependentUpon>GameList.razor.cs</DependentUpon>
-	  </Compile>
-	</ItemGroup>
 </Project>

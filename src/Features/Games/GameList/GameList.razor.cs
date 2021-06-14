@@ -21,7 +21,7 @@ namespace Funpoly.Features.Games.GameList
         private static void OnGameAdded(Game game)
         {
             game.Name = "Nuevo juego";
-            game.Status = GameStatus.TeamsConfig;
+            game.Status = GameStatus.NotStarted;
             game.CreatedDate = DateTime.Now;
         }
 
