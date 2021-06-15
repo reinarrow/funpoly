@@ -73,9 +73,6 @@ namespace Funpoly.Features.Teams
 
             teamCookie = await gameManager.GetTeamId(team.Name);
             await localStorage.SetItemAsync("teamCookie", teamCookie);
-
-            // Trigger update once the cookie has been set
-            // await Update();
         }
     }
 }
