@@ -29,6 +29,8 @@ namespace Funpoly.Core
 
         Task AddTeam(Team team);
 
+        Task<int> GetTeamId(string name);
+
         Task UpdateTeam(Team team);
 
         Task DeleteTeam(Team team);

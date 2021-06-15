@@ -21,10 +21,10 @@ namespace Funpoly.Pages
             if (!isInitialised)
             {
                 //Get cookie for team (needs to be done to work on redirection)
-                string teamCookie = await localStorage.GetItemAsync<string>("teamCookie");
+                int? teamCookie = await localStorage.GetItemAsync<int>("teamCookie");
                 if (teamCookie != null)
                 {
-                    userTeam = gameManager.GetGame().Teams.Find(team => team.Name == teamCookie);
+                    userTeam = gameManager.GetGame().Teams.Find(team => team.Id == teamCookie);
                     if (userTeam == null)
                     {
                         // Cookie is from previous game. Remove it
