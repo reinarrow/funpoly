@@ -33,6 +33,7 @@ namespace Funpoly.Features.Properties
         private bool modalBuffet = false;
         private bool modalParking = false;
         private bool modalPool = false;
+        private int modalPurchasesCount = 0;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -108,6 +109,7 @@ namespace Funpoly.Features.Properties
                 modalBuffet = parcelProperty.BuffetServiceAvailable;
                 modalParking = parcelProperty.ParkingServiceAvailable;
                 modalPool = parcelProperty.PoolServiceAvailable;
+                modalPurchasesCount = parcelProperty.PurchasesCount;
             }
             else
             {
@@ -117,6 +119,7 @@ namespace Funpoly.Features.Properties
                 modalBuffet = false;
                 modalParking = false;
                 modalPool = false;
+                modalPurchasesCount = 0;
             }
             modalRef.Show();
         }
@@ -142,7 +145,8 @@ namespace Funpoly.Features.Properties
                         WifiServiceAvailable = modalWifi,
                         BuffetServiceAvailable = modalBuffet,
                         ParkingServiceAvailable = modalParking,
-                        PoolServiceAvailable = modalPool
+                        PoolServiceAvailable = modalPool,
+                        PurchasesCount = modalPurchasesCount
                     };
                     await gameManager.CreateParcelProperty(newParcelProperty);
                 }
@@ -159,7 +163,8 @@ namespace Funpoly.Features.Properties
                     || modalWifi != parcelProperty.WifiServiceAvailable
                     || modalBuffet != parcelProperty.BuffetServiceAvailable
                     || modalParking != parcelProperty.ParkingServiceAvailable
-                    || modalPool != parcelProperty.PoolServiceAvailable)
+                    || modalPool != parcelProperty.PoolServiceAvailable
+                    || modalPurchasesCount != parcelProperty.PurchasesCount)
                 {
                     // Edit parcel property
                     var editedParcelProperty = parcelProperty.ShallowCopy();
@@ -169,6 +174,7 @@ namespace Funpoly.Features.Properties
                     editedParcelProperty.BuffetServiceAvailable = modalBuffet;
                     editedParcelProperty.ParkingServiceAvailable = modalParking;
                     editedParcelProperty.PoolServiceAvailable = modalPool;
+                    editedParcelProperty.PurchasesCount = modalPurchasesCount;
 
                     await gameManager.UpdateParcelProperty(editedParcelProperty);
                 }

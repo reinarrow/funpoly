@@ -46,6 +46,11 @@
             </Field>
 
             <Field>
+                <FieldLabel>Número de compras/recompras (para incrementar valor de recompra)</FieldLabel>
+                <NumericEdit @bind-Value="@modalPurchasesCount"></NumericEdit>
+            </Field>
+
+            <Field>
                 <FieldLabel>Hotel construido</FieldLabel>
                 <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalHotelBuilt"></Check>
             </Field>
@@ -91,6 +96,12 @@
                 <Row>
                     <Label>Precio de compra: @(Parcel.Price.ToString("0.##")) €</Label>
                 </Row>
+                @if (parcelProperty != null)
+                {
+                    <Row>
+                        <Label>Precio de recompra: @((Parcel.Price*Convert.ToDecimal(Math.Pow(Convert.ToDouble(gameManager.GetSettings().RepurchaseMultiplier), parcelProperty.PurchasesCount))).ToString("0.##")) €</Label>
+                    </Row>
+                }
                 <Row>
                     <Label>Coste construcción hotel: @Parcel.HotelPrice.ToString("0.##") €</Label>
                 </Row>
