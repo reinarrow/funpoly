@@ -138,8 +138,15 @@ namespace Funpoly.Core
 
             game.Teams.Add(team);
 
+            await gameRepository.UpdateAsync(game);
+
             // Do not write into database yet. Wait for game to start
             await NotifyClientsAsync();
+        }
+
+        public async Task<int> GetTeamId(string name)
+        {
+            return game.Teams.SingleOrDefault(t => t.Name == name).Id;
         }
 
         public async Task UpdateTeam(Team team)
