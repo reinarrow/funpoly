@@ -7,16 +7,16 @@ namespace Funpoly.Data.Models
 {
     public class Settings : BaseModel
     {
-        // OK Cash of the teams at the start of the game
+        // Cash of the teams at the start of the game
         public decimal InitialCash { get; set; }
 
-        // OK Amount paid to the teams on completing a lap
+        // Amount paid to the teams on completing a lap
         public decimal LapPaymentAmount { get; set; }
 
-        // OK Tax to be payed by teams on a speed fine event
+        // Tax to be payed by teams on a speed fine event
         public decimal SpeedFineTax { get; set; }
 
-        // OK Number of reprimands to send player to prison
+        // Number of reprimands to send player to prison
         public int SpeedReprimandCount { get; set; }
 
         // Raw Property tax relation to price. For instance if a property costs 100, the raw tax will be this multiplier per 100 (default 0.5 -> 50)
@@ -33,5 +33,10 @@ namespace Funpoly.Data.Models
 
         // Increment of the property tax per available service (wifi, buffet, parking and pool)
         public decimal ServicePropertyTaxIncrement { get; set; }
+
+        public Settings ShallowCopy()
+        {
+            return (Settings)MemberwiseClone();
+        }
     }
 }

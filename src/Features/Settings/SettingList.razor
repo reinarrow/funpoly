@@ -1,23 +1,74 @@
 ﻿@using Funpoly.Core
 @inject IGameManager gameManager
-<Column ColumnSize="ColumnSize.IsFull">
-    <GenericButton Color="Color.Danger" OnClick="@ShowModal" Text="Terminar juego" />
-</Column>
 
-<Modal @ref="modalRef">
-    <ModalContent Centered="true">
-        <ModalHeader>
-            <ModalTitle>Terminar juego</ModalTitle>
-            <CloseButton></CloseButton>
-        </ModalHeader>
-        <ModalBody>
-            <Label>
-                ¿Seguro que quieres terminar el juego?
-            </Label>
-        </ModalBody>
-        <ModalFooter>
-            <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
-            <Button Color="Color.Primary" Clicked="@FinishGame">Aceptar</Button>
-        </ModalFooter>
-    </ModalContent>
-</Modal>
+@if (isInitialized)
+{
+    <Column ColumnSize="ColumnSize.IsFull">
+        <Field>
+            <FieldLabel> Dinero inicial de equipos (€) </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.InitialCash"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Pago por vuelta (€) </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.LapPaymentAmount"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Multa por velocidad (€) </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.SpeedFineTax"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Amonestaciones para mandar a cárcel </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.SpeedReprimandCount"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Multiplicador sobre precio para coste de estancia sin hotel </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.RawPropertyTaxPriceMultiplier"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Multiplicador sobre coste básico por construcción de hotel </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.HotelPropertyTaxMultiplier"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Incremento de coste de estancia por servicio (€) </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.ServicePropertyTaxIncrement"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Multiplicador sobre coste de estancia por poseer las 4 propiedades del continente </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.FourPropertiesTaxMultiplier"></NumericEdit>
+        </Field>
+
+        <Field>
+            <FieldLabel> Multiplicador del precio de una parcela para recompra </FieldLabel>
+            <NumericEdit @bind-Value="bindedSettings.RepurchaseMultiplier"></NumericEdit>
+        </Field>
+
+        <GenericButton Color="Color.Primary" OnClick="@SaveChanges" Text="Guardar" />
+
+        <GenericButton Color="Color.Danger" OnClick="@ShowModal" Text="Terminar juego" />
+    </Column>
+
+    <Modal @ref="modalRef">
+        <ModalContent Centered="true">
+            <ModalHeader>
+                <ModalTitle>Terminar juego</ModalTitle>
+                <CloseButton></CloseButton>
+            </ModalHeader>
+            <ModalBody>
+                <Label>
+                    ¿Seguro que quieres terminar el juego?
+                </Label>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
+                <Button Color="Color.Primary" Clicked="@FinishGame">Aceptar</Button>
+            </ModalFooter>
+        </ModalContent>
+    </Modal>
+}
