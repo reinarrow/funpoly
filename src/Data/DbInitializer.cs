@@ -254,7 +254,7 @@ namespace Funpoly.Data
                     new SurpriseCard { Text = "La revista \"Jardines del Hogar\" le otorga 75 €  por hablarle y cantarle con tanto mimo a las plantas. Para que te puedas pagar un psicólogo."},
                     new SurpriseCard { Text = "Estás invitada a la fiesta de jubilación de la cigüeña que te trajo al mundo y en la invitación indican que hay que vestir de gala. Paga 80 € para comprarte un traje elegante."},
                     new SurpriseCard { Text = "Vocal \"A\"."},
-                    new SurpriseCard { Text = "Este vale te da derecho a comer tarta aunque tu grupo sea el primero en caer en bancarrota."},
+                    new SurpriseCard { Text = "Este vale te da derecho a cenar aunque tu grupo sea el primero en caer en bancarrota."},
                     new SurpriseCard { Text = "Donación de 25 € a la asociación protectore de bichitos. No puedes seguir viviendo mientras se aplasta a pobres cucarachitas, arañitas y hormiguitas."},
                     new SurpriseCard { Text = "Donación mundial contra el hambre en el mundo. Todos los equipos donan: El que esté en América 10 €, Europa 15 €, Asia, 20 € y África 25 €."},
                     new SurpriseCard { Text = "Donación de 10 € para montar la asociación que siempre quisiste: \"Peluqueros caninos sin fronteras\" y que los pobres animalitos callejeros no anden con esos pelos por el mundo."},
@@ -272,6 +272,14 @@ namespace Funpoly.Data
                     new SurpriseCard { Text = "Vocal \"I\"."},
                     new SurpriseCard { Text = "Vocal \"O\"."},
                     new SurpriseCard { Text = "Vocal \"U\"."},
+                    new SurpriseCard { Text = "Devuelve un hotel sin rechistar."},
+                    new SurpriseCard { Text = "Pon a prueba tus habilidades como ladrón. Roba un servicio de una propiedad a cualquier equipo."},
+                    new SurpriseCard { Text = "Quedas libre de la cárcel (puedes guardar esta tarjeta para cuando la necesites)."},
+                    new SurpriseCard { Text = "Cambia tu transporte por el de otro equipo o por uno que esté libre."},
+                    new SurpriseCard { Text = "Ganas una postal por la cara. Elige la que más te guste."},
+                    new SurpriseCard { Text = "Viaja a la casilla que quieras sin pasar por la frontera (excepto a la lotería)."},
+                    new SurpriseCard { Text = "Un virus hace clausurar todas tus propiedades durante un turno completo. No puedes cobrar tus rentas hasta que te vuelva a tocar."},
+                    new SurpriseCard { Text = "Has perdido tu pasaporte en el aeropuerto. Paga 30 € para hacerte uno nuevo."},
                 });
             }
 
