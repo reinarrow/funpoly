@@ -17,13 +17,15 @@ namespace Funpoly.Core
         private readonly IRepository<ParcelProperty> parcelPropertyRepository;
         private readonly IRepository<Postcard> postcardRepository;
         private readonly IRepository<PostcardTeam> postcardTeamRepository;
+        private readonly IRepository<Settings> settingsRepository;
 
         public GameManager(IRepository<Game> gameRepository
             , IRepository<Team> teamRepository
             , IRepository<Parcel> parcelRepository
             , IRepository<ParcelProperty> parcelPropertyRepository
             , IRepository<Postcard> postcardRepository
-            , IRepository<PostcardTeam> postcardTeamRepository)
+            , IRepository<PostcardTeam> postcardTeamRepository
+            , IRepository<Settings> settingsRepository)
         {
             this.gameRepository = gameRepository;
             this.teamRepository = teamRepository;
@@ -31,14 +33,24 @@ namespace Funpoly.Core
             this.parcelPropertyRepository = parcelPropertyRepository;
             this.postcardRepository = postcardRepository;
             this.postcardTeamRepository = postcardTeamRepository;
+            this.settingsRepository = settingsRepository;
+
+            this.settings = settingsRepository.GetAll().SingleOrDefault();
         }
 
         private Game game;
+        private Settings settings;
 
         private Game GameProperty
         {
             get { return game; }
             set { game = value; }
+        }
+
+        private Settings SettingsProperty
+        {
+            get { return settings; }
+            set { settings = value; }
         }
 
         public event Func<Task> OnChange;
@@ -51,6 +63,18 @@ namespace Funpoly.Core
         public Game GetGame()
         {
             return GameProperty;
+        }
+
+        public Settings GetSettings()
+        {
+            return SettingsProperty;
+        }
+
+        public async Task SetSettingsAsync(Settings settings)
+        {
+            this.settings = settings;
+            await settingsRepository.UpdateAsync(settings);
+            await NotifyClientsAsync();
         }
 
         public async Task LoadGameById(int id)
@@ -84,7 +108,7 @@ namespace Funpoly.Core
         public async Task AddTeam(Team team)
         {
             // Fill in the default initial values
-            team.Cash = 1500;
+            team.Cash = settings.InitialCash;
             team.Turn = team.Color switch
             {
                 "#00B0F0" => 1, // Blue is 1st
@@ -243,7 +267,7 @@ namespace Funpoly.Core
             team.Days += travelDays;
 
             // Pay the lap tax
-            team.Cash += 200; //TODO: To settings parameter
+            team.Cash += settings.LapPaymentAmount;
 
             // Assign the new transport
             team.TransportId = newTransportId;
@@ -258,13 +282,13 @@ namespace Funpoly.Core
 
             if (fine)
             {
-                team.Cash -= 100; //TODO: To settings parameter
+                team.Cash -= settings.SpeedFineTax;
             }
 
             if (reprimand)
             {
                 team.ConsecutiveSixes += 1;
-                if (team.ConsecutiveSixes >= 3) team.ConsecutiveSixes = 0;
+                if (team.ConsecutiveSixes >= settings.SpeedReprimandCount) team.ConsecutiveSixes = 0;
             }
 
             await teamRepository.UpdateAsync(team);

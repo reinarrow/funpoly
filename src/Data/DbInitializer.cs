@@ -21,6 +21,7 @@ namespace Funpoly.Data
             var gameRepository = serviceProvider.GetRequiredService<IRepository<Game>>();
             var transportRepository = serviceProvider.GetRequiredService<IRepository<Transport>>();
             var surpriseCardRepository = serviceProvider.GetRequiredService<IRepository<SurpriseCard>>();
+            var settingsRepository = serviceProvider.GetRequiredService<IRepository<Settings>>();
 
             //Migrations
 
@@ -283,6 +284,23 @@ namespace Funpoly.Data
                 });
             }
 
+            if (settingsRepository.CheckIsEmptyAsync().Result)
+            {
+                settingsRepository.Add(
+                    new Settings
+                    {
+                        InitialCash = 1500,
+                        LapPaymentAmount = 200,
+                        SpeedFineTax = 100,
+                        SpeedReprimandCount = 3,
+                        RawPropertyTaxPriceMultiplier = 0.5M,
+                        RepurchaseMultiplier = 2,
+                        FourPropertiesTaxMultiplier = 2,
+                        HotelPropertyTaxMultiplier = 2,
+                        ServicePropertyTaxIncrement = 50
+                    });
+            }
+
             if (webHostEnvironment.IsDevelopment())
             {
                 // - Game
@@ -362,6 +380,7 @@ namespace Funpoly.Data
                     {
                         Status = GameStatus.TeamsConfig,
                         Name = "Juego 2",
+                        CreatedDate = new DateTime(2021, 05, 30),
                         Teams = new List<Team>
                         {
                             new Team
