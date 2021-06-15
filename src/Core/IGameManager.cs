@@ -9,6 +9,10 @@ namespace Funpoly.Core
     {
         Game GetGame();
 
+        Settings GetSettings();
+
+        Task SetSettingsAsync(Settings settings);
+
         event Func<Task> OnChange;
 
         Task NotifyClientsAsync();

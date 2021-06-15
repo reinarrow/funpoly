@@ -47,23 +47,24 @@ namespace Funpoly.Features.Properties
 
         private async Task CalculateParcelTax()
         {
+            var settings = gameManager.GetSettings();
             if (parcelProperty == null)
             {
-                currentParcelTax = Parcel.Price / 2;
+                currentParcelTax = Parcel.Price * settings.RawPropertyTaxPriceMultiplier;
             }
             else
             {
                 if (parcelProperty.HotelBuilt)
                 {
-                    currentParcelTax = Parcel.Price;
+                    currentParcelTax = Parcel.Price * settings.RawPropertyTaxPriceMultiplier * settings.HotelPropertyTaxMultiplier;
                 }
                 else
                 {
-                    currentParcelTax = Parcel.Price / 2;
+                    currentParcelTax = Parcel.Price * settings.RawPropertyTaxPriceMultiplier;
                 }
 
-                // Each available service increments the tax by 50 €
-                decimal servicesIncrement = 50 * (
+                // Each available service increments the tax by ServicePropertyTaxIncrement
+                decimal servicesIncrement = settings.ServicePropertyTaxIncrement * (
                     (parcelProperty.WifiServiceAvailable ? 1 : 0)
                     + (parcelProperty.BuffetServiceAvailable ? 1 : 0)
                     + (parcelProperty.ParkingServiceAvailable ? 1 : 0)
@@ -71,11 +72,11 @@ namespace Funpoly.Features.Properties
 
                 currentParcelTax += servicesIncrement;
 
-                // If the team owns all 4 parcels in the continent, the tax is doubled
+                // If the team owns all 4 parcels in the continent, the tax multiplied by FourPropertiesTaxMultiplier
                 List<ParcelProperty> teamPropertiesInContinent = await parcelPropertyRepository.GetAllAsync(p => p.Where(p => p.TeamId == parcelProperty.TeamId && p.Parcel.ContinentId == Parcel.ContinentId));
                 if (teamPropertiesInContinent.Count == 4)
                 {
-                    currentParcelTax *= 2;
+                    currentParcelTax *= settings.FourPropertiesTaxMultiplier;
                 }
             }
         }

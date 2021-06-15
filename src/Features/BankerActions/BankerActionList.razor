@@ -98,7 +98,7 @@
         <ModalBody>
 
             <Field>
-                <FieldLabel>¿Multar con 100 €?</FieldLabel> @*TODO: Settings*@
+                <FieldLabel>¿Multar con @(gameManager.GetSettings().SpeedFineTax) €?</FieldLabel>
                 <Check @bind-Checked="speedModalFine" />
             </Field>
 
@@ -108,9 +108,9 @@
             </Field>
 
             <Label>Amonestaciones: @speedModalTeam.ConsecutiveSixes</Label>
-            @if (@speedModalTeam.ConsecutiveSixes == 2 && speedModalReprimand)
+            @if (@speedModalTeam.ConsecutiveSixes == gameManager.GetSettings().SpeedReprimandCount - 1 && speedModalReprimand)
             {
-                <Label>3 amonestaciones consecutivas. ¡@speedModalTeam.Name debe ir a la cárcel!</Label>
+                <Label> @(gameManager.GetSettings().SpeedReprimandCount) amonestaciones acumuladas. ¡@speedModalTeam.Name debe ir a la cárcel!</Label>
             }
         </ModalBody>
         <ModalFooter>

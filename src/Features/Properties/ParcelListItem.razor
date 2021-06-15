@@ -89,22 +89,22 @@
         <ModalBody>
             <Column>
                 <Row>
-                    <Label>Precio de compra: @Parcel.Price €</Label>
+                    <Label>Precio de compra: @(Parcel.Price.ToString("0.##")) €</Label>
                 </Row>
                 <Row>
-                    <Label>Coste construcción hotel: @Parcel.HotelPrice €</Label>
+                    <Label>Coste construcción hotel: @Parcel.HotelPrice.ToString("0.##") €</Label>
                 </Row>
                 <Row>
-                    <Label>Coste de estancia sin hotel: @(Parcel.Price/2) €</Label>
+                    <Label>Coste de estancia sin hotel: @((Parcel.Price*gameManager.GetSettings().RawPropertyTaxPriceMultiplier).ToString("0.##")) €</Label>
                 </Row>
                 <Row>
-                    <Label>Coste de estancia con hotel: @Parcel.Price €</Label>
+                    <Label>Coste de estancia con hotel: @((Parcel.Price*gameManager.GetSettings().RawPropertyTaxPriceMultiplier*gameManager.GetSettings().HotelPropertyTaxMultiplier).ToString("0.##")) €</Label>
                 </Row>
                 <Row>
-                    <Label>Incremento por cada servicio: 50 €</Label> @*TODO: Hardcoded setting*@
+                    <Label>Incremento por cada servicio: @(gameManager.GetSettings().ServicePropertyTaxIncrement) €</Label>
                 </Row>
                 <Row>
-                    <Label>Incremento con las 4 parcelas del continente: x2</Label> @*TODO: Hardcoded setting*@
+                    <Label>Incremento con las 4 parcelas del continente: x@(gameManager.GetSettings().FourPropertiesTaxMultiplier.ToString("0.##"))</Label>
                 </Row>
 
                 <Row>
@@ -126,7 +126,7 @@
                     <Label>Piscina: @((parcelProperty?.PoolServiceAvailable ?? false) ? "Sí" : "No")</Label>
                 </Row>
                 <Row>
-                    <Label>Coste actual de la estancia: @currentParcelTax €</Label>
+                    <Label>Coste actual de la estancia: @currentParcelTax.ToString("0.##") €</Label>
                 </Row>
             </Column>
         </ModalBody>
