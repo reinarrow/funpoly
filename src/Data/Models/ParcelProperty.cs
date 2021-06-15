@@ -14,6 +14,9 @@ namespace Funpoly.Data.Models
         public bool ParkingServiceAvailable { get; set; }
         public bool PoolServiceAvailable { get; set; }
 
+        // Number of purchases of the property to calculate the repurchase price
+        public int PurchasesCount { get; set; }
+
         #region relations
 
         public int TeamId { get; set; }
