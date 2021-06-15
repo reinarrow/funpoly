@@ -60,9 +60,7 @@ namespace Funpoly.Features.Money
 
         private async Task SaveChanges()
         {
-            // Remove transferred money from user's team
-            var newUserCash = UserTeam.Cash - modalCash;
-            await gameManager.UpdateTeamCash(UserTeam, newUserCash);
+            await gameManager.PayToBank(UserTeam, modalCash);
 
             HideModal();
         }
