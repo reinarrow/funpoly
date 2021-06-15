@@ -17,6 +17,10 @@ namespace Funpoly.Core
 
         Task NotifyClientsAsync();
 
+        event Func<decimal, Task> OnBankPayment;
+
+        Task NotifyBankerAsync(decimal amount);
+
         Task LoadGameById(int id);
 
         Task StartGame();
@@ -30,6 +34,8 @@ namespace Funpoly.Core
         Task DeleteTeam(Team team);
 
         Task UpdateTeamCash(Team team, decimal newCash);
+
+        Task PayToBank(Team team, decimal newCash);
 
         Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId);
 
@@ -51,7 +57,7 @@ namespace Funpoly.Core
 
         Task GiveLotteryPrizeToTeam(int teamId);
 
-        Task PayToLotteryPrize(int teamId, decimal quantity);
+        Task AddToLotteryPrize(decimal quantity);
 
         Task RegisterTeamLap(int teamId, int travelDays, int newTransportId);
 

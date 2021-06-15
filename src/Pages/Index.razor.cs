@@ -4,6 +4,7 @@ using Funpoly.Core;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
+using Blazorise;
 
 namespace Funpoly.Pages
 {
@@ -14,6 +15,9 @@ namespace Funpoly.Pages
 
         private bool isInitialised = false;
         private bool isBanker = false;
+
+        private Modal bankerModal;
+        private decimal lastPaymentAmount;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -38,6 +42,13 @@ namespace Funpoly.Pages
                     isBanker = true;
                     navManager.NavigateTo("/");
                 }
+
+                if (isBanker)
+                {
+                    // Subscribe to notifications about payments to bank
+                    gameManager.OnBankPayment += async (amount) => await ShowBankerModal(amount);
+                }
+
                 isInitialised = true;
                 await Update();
             }
@@ -55,6 +66,27 @@ namespace Funpoly.Pages
         public void Dispose()
         {
             gameManager.OnChange -= Update; // TODO: Check this dispose
+            if (isBanker)
+            {
+                gameManager.OnBankPayment -= ShowBankerModal;
+            }
+        }
+
+        private async Task ShowBankerModal(decimal amount)
+        {
+            lastPaymentAmount = amount;
+            bankerModal.Show();
+        }
+
+        private async Task HideBankerModal()
+        {
+            bankerModal.Hide();
+        }
+
+        private async Task SendMoneyToLottery()
+        {
+            bankerModal.Hide();
+            await gameManager.AddToLotteryPrize(lastPaymentAmount);
         }
     }
 }

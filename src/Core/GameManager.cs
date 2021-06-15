@@ -60,6 +60,16 @@ namespace Funpoly.Core
             await OnChange?.Invoke();
         }
 
+        public event Func<decimal, Task> OnBankPayment;
+
+        /// <summary>
+        ///     Notify banker about payment done to bank
+        /// </summary>
+        public async Task NotifyBankerAsync(decimal amount)
+        {
+            await OnBankPayment?.Invoke(amount);
+        }
+
         public Game GetGame()
         {
             return GameProperty;
@@ -158,6 +168,15 @@ namespace Funpoly.Core
             await NotifyClientsAsync();
         }
 
+        public async Task PayToBank(Team team, decimal amount)
+        {
+            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == team.Id);
+            await UpdateTeamCash(team, team.Cash - amount);
+
+            // Notify banker to decide if money should go to lottery
+            await NotifyBankerAsync(amount);
+        }
+
         public async Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId)
         {
             //Get Parcels for given Continent including the properties and teams corresponding to the current game
@@ -234,12 +253,8 @@ namespace Funpoly.Core
             await NotifyClientsAsync();
         }
 
-        public async Task PayToLotteryPrize(int teamId, decimal quantity)
+        public async Task AddToLotteryPrize(decimal quantity)
         {
-            Team team = game.Teams.FirstOrDefault(t => t.Id == teamId);
-            team.Cash -= quantity;
-            await teamRepository.UpdateAsync(team);
-
             game.LotteryPrize += quantity;
             await gameRepository.UpdateAsync(game);
 

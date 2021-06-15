@@ -46,4 +46,19 @@
             <GameView></GameView>
         }
     </CascadingValue>
+
+    <Modal @ref="bankerModal">
+        <ModalContent Centered="true">
+            <ModalHeader>
+                <ModalTitle>Pago recibido</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+                <Label>¿Deseas enviar el pago de @lastPaymentAmount € a la lotería?</Label>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="HideBankerModal">No</Button>
+                <Button Color="Color.Primary" Clicked="SendMoneyToLottery">Sí</Button>
+            </ModalFooter>
+        </ModalContent>
+    </Modal>
 }
