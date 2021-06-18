@@ -61,6 +61,8 @@ namespace Funpoly.Data.Models
         // List of parcel properties of the team
         public List<ParcelProperty> ParcelProperties { get; set; }
 
+        public List<SurpriseCard> SurpriseCards { get; set; }
+
         #endregion relations
 
         public Team ShallowCopy()

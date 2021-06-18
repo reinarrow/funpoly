@@ -72,9 +72,14 @@ namespace Funpoly.Core
 
         public event Func<int, string, Task> OnSurpriseCard;
 
-        public async Task SendSurpriseCardToTeamAsync(int teamId, string text)
+        public async Task SendSurpriseCardToTeamAsync(int teamId, SurpriseCard surpriseCard)
         {
-            await OnSurpriseCard?.Invoke(teamId, text);
+            // Store the surprisecard into the teams' log
+            var team = game.Teams.SingleOrDefault(t => t.Id == teamId);
+            team.SurpriseCards.Add(surpriseCard);
+
+            // Send notification to team to see the text
+            await OnSurpriseCard?.Invoke(teamId, surpriseCard.Text);
         }
 
         public Game GetGame()
@@ -142,6 +147,7 @@ namespace Funpoly.Core
             team.BoardSquareId = 1;
             team.PostcardTeams = new List<PostcardTeam>();
             team.ParcelProperties = new List<ParcelProperty>();
+            team.SurpriseCards = new List<SurpriseCard>();
 
             game.Teams.Add(team);
 

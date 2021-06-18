@@ -8,5 +8,7 @@ namespace Funpoly.Data.Models
     public class SurpriseCard : BaseModel
     {
         public string Text { get; set; }
+
+        private List<Team> Teams { get; set; }
     }
 }

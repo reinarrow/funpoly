@@ -23,7 +23,7 @@ namespace Funpoly.Core
 
         event Func<int, string, Task> OnSurpriseCard;
 
-        Task SendSurpriseCardToTeamAsync(int teamId, string text);
+        Task SendSurpriseCardToTeamAsync(int teamId, SurpriseCard surpriseCard);
 
         Task LoadGameById(int id);
 

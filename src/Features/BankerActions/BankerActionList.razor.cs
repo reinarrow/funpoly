@@ -57,7 +57,7 @@ namespace Funpoly.Features.BankerActions
             int surpriseCardsCount = surpriseCardRepository.GetCount();
             SurpriseCard card = await surpriseCardRepository.GetByIdAsync(rand.Next(1, surpriseCardsCount + 1));
 
-            await gameManager.SendSurpriseCardToTeamAsync(teamId, card.Text);
+            await gameManager.SendSurpriseCardToTeamAsync(teamId, card);
         }
 
         private async Task GiveLotteryPrize(int teamId)
