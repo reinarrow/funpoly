@@ -52,29 +52,30 @@
 
             <Field>
                 <FieldLabel>Hotel construido</FieldLabel>
-                <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalHotelBuilt"></Check>
+                <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalHotelBuilt">
+                </Check>
             </Field>
 
             <Label>Servicios</Label>
             <Fields>
                 <Field>
                     <FieldLabel>Wifi</FieldLabel>
-                    <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalWifi"></Check>
+                    <Check Disabled="@(modalTeamId == 0 || !modalHotelBuilt)" @bind-Checked="@modalWifi"></Check>
                 </Field>
 
                 <Field>
                     <FieldLabel>Buffet</FieldLabel>
-                    <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalBuffet"></Check>
+                    <Check Disabled="@(modalTeamId == 0 || !modalHotelBuilt)" @bind-Checked="@modalBuffet"></Check>
                 </Field>
 
                 <Field>
                     <FieldLabel>Parking</FieldLabel>
-                    <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalParking"></Check>
+                    <Check Disabled="@(modalTeamId == 0 || !modalHotelBuilt)" @bind-Checked="@modalParking"></Check>
                 </Field>
 
                 <Field>
                     <FieldLabel>Piscina</FieldLabel>
-                    <Check Disabled="@(modalTeamId == 0)" @bind-Checked="@modalPool"></Check>
+                    <Check Disabled="@(modalTeamId == 0 || !modalHotelBuilt)" @bind-Checked="@modalPool"></Check>
                 </Field>
             </Fields>
         </ModalBody>

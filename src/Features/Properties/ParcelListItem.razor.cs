@@ -142,10 +142,10 @@ namespace Funpoly.Features.Properties
                         ParcelId = Parcel.Id,
                         TeamId = modalTeamId,
                         HotelBuilt = modalHotelBuilt,
-                        WifiServiceAvailable = modalWifi,
-                        BuffetServiceAvailable = modalBuffet,
-                        ParkingServiceAvailable = modalParking,
-                        PoolServiceAvailable = modalPool,
+                        WifiServiceAvailable = modalHotelBuilt && modalWifi,
+                        BuffetServiceAvailable = modalHotelBuilt && modalBuffet,
+                        ParkingServiceAvailable = modalHotelBuilt && modalParking,
+                        PoolServiceAvailable = modalHotelBuilt && modalPool,
                         PurchasesCount = modalPurchasesCount
                     };
                     await gameManager.CreateParcelProperty(newParcelProperty);
@@ -170,10 +170,10 @@ namespace Funpoly.Features.Properties
                     var editedParcelProperty = parcelProperty.ShallowCopy();
                     editedParcelProperty.TeamId = modalTeamId;
                     editedParcelProperty.HotelBuilt = modalHotelBuilt;
-                    editedParcelProperty.WifiServiceAvailable = modalWifi;
-                    editedParcelProperty.BuffetServiceAvailable = modalBuffet;
-                    editedParcelProperty.ParkingServiceAvailable = modalParking;
-                    editedParcelProperty.PoolServiceAvailable = modalPool;
+                    editedParcelProperty.WifiServiceAvailable = modalHotelBuilt && modalWifi;
+                    editedParcelProperty.BuffetServiceAvailable = modalHotelBuilt && modalBuffet;
+                    editedParcelProperty.ParkingServiceAvailable = modalHotelBuilt && modalParking;
+                    editedParcelProperty.PoolServiceAvailable = modalHotelBuilt && modalPool;
                     editedParcelProperty.PurchasesCount = modalPurchasesCount;
 
                     await gameManager.UpdateParcelProperty(editedParcelProperty);
