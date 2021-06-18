@@ -70,6 +70,13 @@ namespace Funpoly.Core
             await OnBankPayment?.Invoke(amount);
         }
 
+        public event Func<int, string, Task> OnSurpriseCard;
+
+        public async Task SendSurpriseCardToTeamAsync(int teamId, string text)
+        {
+            await OnSurpriseCard?.Invoke(teamId, text);
+        }
+
         public Game GetGame()
         {
             return GameProperty;

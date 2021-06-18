@@ -11,7 +11,12 @@ namespace Funpoly.Features.Teams
     {
         private Team team;
         private bool isInitialised = false;
-        private int? teamCookie;
+
+        [CascadingParameter(Name = "UserTeam")]
+        protected Team UserTeam { get; set; }
+
+        [Parameter]
+        public EventCallback GetTeamCookie { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,20 +30,6 @@ namespace Funpoly.Features.Teams
         {
             if (!isInitialised)
             {
-                //Get cookie for team (needs to be done to work on redirection)
-                teamCookie = await localStorage.GetItemAsync<int?>("teamCookie");
-
-                if (teamCookie != null)
-                {
-                    var userTeam = gameManager.GetGame().Teams.Find(team => team.Id == teamCookie);
-                    if (userTeam == null)
-                    {
-                        // Cookie is from previous game. Remove it
-                        await localStorage.RemoveItemAsync("teamCookie");
-                        teamCookie = null;
-                    }
-                }
-
                 // Declare callback for SignalR
                 gameManager.OnChange += async () => await Update();
 
@@ -70,9 +61,11 @@ namespace Funpoly.Features.Teams
             await gameManager.AddTeam(team);
 
             // Acquire assigned Id to store cookie
-
-            teamCookie = await gameManager.GetTeamId(team.Name);
+            var teamCookie = await gameManager.GetTeamId(team.Name);
             await localStorage.SetItemAsync("teamCookie", teamCookie);
+
+            // Call Index method GetTeamCookie to update cascading parameter UserTeam
+            await GetTeamCookie.InvokeAsync();
         }
     }
 }

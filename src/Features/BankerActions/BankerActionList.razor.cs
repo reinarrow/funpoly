@@ -11,8 +11,6 @@ namespace Funpoly.Features.BankerActions
     public partial class BankerActionList : ComponentBase
     {
         private Random rand;
-        private Modal surpriseCardModalRef;
-        private string surpriseCardText;
 
         private Modal registerLapModalRef;
         private int modalSelectedTeam;
@@ -57,10 +55,9 @@ namespace Funpoly.Features.BankerActions
         {
             // Extract a random surprise card and show it on screen
             int surpriseCardsCount = surpriseCardRepository.GetCount();
-            SurpriseCard card = await surpriseCardRepository.GetByIdAsync(rand.Next(1, surpriseCardsCount+1));
+            SurpriseCard card = await surpriseCardRepository.GetByIdAsync(rand.Next(1, surpriseCardsCount + 1));
 
-            surpriseCardText = card.Text;
-            surpriseCardModalRef.Show();
+            await gameManager.SendSurpriseCardToTeamAsync(teamId, card.Text);
         }
 
         private async Task GiveLotteryPrize(int teamId)

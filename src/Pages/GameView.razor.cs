@@ -9,10 +9,10 @@ namespace Funpoly.Pages
         [CascadingParameter(Name = "IsBanker")]
         public bool IsBanker { get; set; }
 
-        private bool isInitialised = false;
+        [CascadingParameter(Name = "UserTeam")]
+        protected Team UserTeam { get; set; }
 
-        // Team corresponding to the user using the device. Obtained by the browser cookie.
-        private Team userTeam;
+        private bool isInitialised = false;
 
         private string selectedTab = "money";
 
@@ -20,19 +20,6 @@ namespace Funpoly.Pages
         {
             if (!isInitialised)
             {
-                //Get cookie for team (needs to be done to work on redirection)
-                int? teamCookie = await localStorage.GetItemAsync<int>("teamCookie");
-                if (teamCookie != null)
-                {
-                    userTeam = gameManager.GetGame().Teams.Find(team => team.Id == teamCookie);
-                    if (userTeam == null)
-                    {
-                        // Cookie is from previous game. Remove it
-                        await localStorage.RemoveItemAsync("teamCookie");
-                        teamCookie = null;
-                    }
-                }
-
                 isInitialised = true;
                 await InvokeAsync(() =>
                 {

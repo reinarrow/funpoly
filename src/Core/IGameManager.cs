@@ -21,6 +21,10 @@ namespace Funpoly.Core
 
         Task NotifyBankerAsync(decimal amount);
 
+        event Func<int, string, Task> OnSurpriseCard;
+
+        Task SendSurpriseCardToTeamAsync(int teamId, string text);
+
         Task LoadGameById(int id);
 
         Task StartGame();
