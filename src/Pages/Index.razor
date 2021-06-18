@@ -14,37 +14,39 @@
 @if (isInitialised)
 {
     <CascadingValue Name="IsBanker" Value="@isBanker">
-        @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted || gameManager.GetGame().Status == GameStatus.Finished)
-        {
-            @if (isBanker)
+        <CascadingValue Name="UserTeam" Value="@userTeam">
+            @if (gameManager.GetGame() == null || gameManager.GetGame().Status == GameStatus.NotStarted || gameManager.GetGame().Status == GameStatus.Finished)
             {
-                <GameList></GameList>
-            }
-            else
-            {
-                //TODO: Vertical center
-                <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
-                    El banquero está ordenando los billetes. Espera un poco...
-                </Heading>
-            }
-        }
-
-        else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
-        {
-            @if (isBanker)
-            {
-                <TeamList />
-            }
-            else
-            {
-                <TeamForm />
+                @if (isBanker)
+                {
+                    <GameList></GameList>
+                }
+                else
+                {
+                    //TODO: Vertical center
+                    <Heading Size="HeadingSize.Is3" Alignment="TextAlignment.Center ">
+                        El banquero está ordenando los billetes. Espera un poco...
+                    </Heading>
+                }
             }
 
-        }
-        else if (gameManager.GetGame().Status == GameStatus.OnGoing)
-        {
-            <GameView></GameView>
-        }
+            else if (gameManager.GetGame().Status == GameStatus.TeamsConfig)
+            {
+                @if (isBanker)
+                {
+                    <TeamList />
+                }
+                else
+                {
+                    <TeamForm GetTeamCookie="@GetTeamCookie" />
+                }
+
+            }
+            else if (gameManager.GetGame().Status == GameStatus.OnGoing)
+            {
+                <GameView></GameView>
+            }
+        </CascadingValue>
     </CascadingValue>
 
     <Modal @ref="bankerModal">
@@ -59,6 +61,22 @@
                 <Button Color="Color.Secondary" Clicked="HideBankerModal">No</Button>
                 <Button Color="Color.Primary" Clicked="SendMoneyToLottery">Sí</Button>
             </ModalFooter>
+        </ModalContent>
+    </Modal>
+
+    <Modal @ref="@surpriseCardModalRef">
+        <ModalContent Centered="true">
+            <ModalHeader>
+                <ModalTitle>
+                    Carta sorpresa
+                </ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody>
+                <Label>
+                    @surpriseCardText
+                </Label>
+            </ModalBody>
         </ModalContent>
     </Modal>
 }
