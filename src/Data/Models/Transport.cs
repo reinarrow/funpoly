@@ -22,7 +22,7 @@ namespace Funpoly.Data.Models
 
         #region relations
 
-        public List<Team> Team { get; set; }
+        public List<Team> Teams { get; set; }
 
         #endregion relations
     }
