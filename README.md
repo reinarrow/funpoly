@@ -7,9 +7,9 @@ Funpoly is a web application for a Monopoly-like game. It consists in a VS solut
 
 ## Execution for development
 
-1. Open the solution in Visual Studio
+1. Open the solution in Visual Studio.
 1. Select the docker-compose project as the Startup Project if it is not already.
-1. Run in Debug mode with the option Docker Compose
+1. Run in Debug mode with the option Docker Compose.
 
 
 ## Data model
