@@ -82,7 +82,7 @@ namespace Funpoly.Pages
             int? teamCookie = await localStorage.GetItemAsync<int>("teamCookie");
             if (teamCookie != null)
             {
-                userTeam = gameManager.GetGame().Teams.Find(team => team.Id == teamCookie);
+                userTeam = gameManager.GetGame()?.Teams?.Find(team => team.Id == teamCookie);
                 if (userTeam != null)
                 {
                     // User belongs to a team from the current game. Subscribe to teams notifications
