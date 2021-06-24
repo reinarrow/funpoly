@@ -61,8 +61,20 @@ namespace Funpoly.Features.Money
         private async Task SaveChanges()
         {
             await gameManager.PayToBank(UserTeam, modalCash);
-
             HideModal();
+        }
+
+        private void ValidatePayment(ValidatorEventArgs args)
+        {
+            if (Convert.ToDecimal(args.Value) > 0)
+            {
+                args.Status = ValidationStatus.Success;
+            }
+            else
+            {
+                args.Status = ValidationStatus.Error;
+                args.ErrorText = "La cantidad a transferir debe ser mayor que 0.";
+            }
         }
     }
 }

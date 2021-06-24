@@ -24,14 +24,18 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
-            <Field>
-                <FieldLabel>Cantidad</FieldLabel>
-                <NumericEdit @bind-Value="@modalCash" />
-            </Field>
+
+            <Validation Validator="@ValidatePayment">
+                <Field>
+                    <FieldLabel>Cantidad</FieldLabel>
+                    <NumericEdit @bind-Value="@modalCash" />
+                    <ValidationError></ValidationError>
+                </Field>
+            </Validation>
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="@HideModal">Cancelar</Button>
-            <Button Color="Color.Primary" Clicked="@SaveChanges">Enviar</Button>
+            <Button Disabled="@(modalCash <= 0)" Color="Color.Primary" Clicked="@SaveChanges">Enviar</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
