@@ -21,7 +21,7 @@
                 <Heading Size="HeadingSize.Is3">@Team.Name</Heading>
 
                 <Field>
-                    <NumericEdit @bind-Value="@bankerModalCash" />
+                    <NumericEdit Autofocus="true" @bind-Value="@bankerModalCash" />
                 </Field>
             </ModalBody>
             <ModalFooter>
@@ -38,14 +38,17 @@
                 <CloseButton />
             </ModalHeader>
             <ModalBody>
-                <Field>
-                    <FieldLabel>Cantidad</FieldLabel>
-                    <NumericEdit @bind-Value="@playerModalCash" />
-                </Field>
+                <Validation Validator="@ValidatePayment">
+                    <Field>
+                        <FieldLabel>Cantidad</FieldLabel>
+                        <NumericEdit Autofocus="true" @bind-Value="@playerModalCash" />
+                        <ValidationError></ValidationError>
+                    </Field>
+                </Validation>
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary" Clicked="@(() => HideModal(playerModalRef))">Cancelar</Button>
-                <Button Color="Color.Primary" Clicked="@SendTransfer">Enviar</Button>
+                <Button Disabled="playerModalCash <= 0" Color="Color.Primary" Clicked="@SendTransfer">Enviar</Button>
             </ModalFooter>
         </ModalContent>
     </Modal>
