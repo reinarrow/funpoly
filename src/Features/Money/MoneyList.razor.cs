@@ -16,7 +16,7 @@ namespace Funpoly.Features.Money
         [CascadingParameter(Name = "IsBanker")]
         protected bool IsBanker { get; set; }
 
-        private decimal modalCash;
+        private decimal? modalCash;
 
         private Modal modalRef;
 
@@ -49,7 +49,7 @@ namespace Funpoly.Features.Money
 
         private void ShowModal()
         {
-            modalCash = 0;
+            modalCash = null;
             modalRef.Show();
         }
 
@@ -60,7 +60,7 @@ namespace Funpoly.Features.Money
 
         private async Task SaveChanges()
         {
-            await gameManager.PayToBank(UserTeam, modalCash);
+            await gameManager.PayToBank(UserTeam, (decimal)modalCash);
             HideModal();
         }
 

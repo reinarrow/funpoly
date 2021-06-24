@@ -21,7 +21,7 @@
                 <Heading Size="HeadingSize.Is3">@Team.Name</Heading>
 
                 <Field>
-                    <NumericEdit @bind-Value="@bankerModalCash" />
+                    <NumericEdit Autofocus="true" @bind-Value="@bankerModalCash" />
                 </Field>
             </ModalBody>
             <ModalFooter>
@@ -41,7 +41,7 @@
                 <Validation Validator="@ValidatePayment">
                     <Field>
                         <FieldLabel>Cantidad</FieldLabel>
-                        <NumericEdit @bind-Value="@playerModalCash" />
+                        <NumericEdit Autofocus="true" @bind-Value="@playerModalCash" />
                         <ValidationError></ValidationError>
                     </Field>
                 </Validation>
