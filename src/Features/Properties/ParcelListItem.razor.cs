@@ -137,7 +137,6 @@ namespace Funpoly.Features.Properties
                 if (modalTeamId != 0)
                 {
                     //Create and save parcel property
-                    modalPurchasesCount++;
                     var newParcelProperty = new ParcelProperty
                     {
                         ParcelId = Parcel.Id,
@@ -147,7 +146,7 @@ namespace Funpoly.Features.Properties
                         BuffetServiceAvailable = modalHotelBuilt && modalBuffet,
                         ParkingServiceAvailable = modalHotelBuilt && modalParking,
                         PoolServiceAvailable = modalHotelBuilt && modalPool,
-                        PurchasesCount = modalPurchasesCount
+                        PurchasesCount = 1
                     };
                     await gameManager.CreateParcelProperty(newParcelProperty);
                 }
@@ -169,7 +168,7 @@ namespace Funpoly.Features.Properties
                 {
                     // Edit parcel property
                     var editedParcelProperty = parcelProperty.ShallowCopy();
-                    if (editedParcelProperty.TeamId != modalTeamId) modalPurchasesCount++;
+                    if (editedParcelProperty.TeamId != modalTeamId && modalPurchasesCount == editedParcelProperty.PurchasesCount) modalPurchasesCount++;
                     editedParcelProperty.TeamId = modalTeamId;
                     editedParcelProperty.HotelBuilt = modalHotelBuilt;
                     editedParcelProperty.WifiServiceAvailable = modalHotelBuilt && modalWifi;
