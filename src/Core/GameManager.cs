@@ -70,6 +70,16 @@ namespace Funpoly.Core
             await OnBankPayment?.Invoke(amount);
         }
 
+        public event Func<Team, Team, decimal, Task> OnTeamPayment;
+
+        /// <summary>
+        ///     Notify banker about payment done to bank
+        /// </summary>
+        public async Task NotifyTeamPaymentAsync(Team payingTeam, Team receivingTeam, decimal amount)
+        {
+            await OnTeamPayment?.Invoke(payingTeam, receivingTeam, amount);
+        }
+
         public event Func<int, string, Task> OnSurpriseCard;
 
         public async Task SendSurpriseCardToTeamAsync(int teamId, string text)
@@ -182,9 +192,25 @@ namespace Funpoly.Core
             await NotifyClientsAsync();
         }
 
+        public async Task PayToTeam(Team payingTeam, Team receivingTeam, decimal amount)
+        {
+            // Paying team is null when the payment is made by the banker
+            if (payingTeam != null)
+            {
+                // Substract quantity from paying team
+                await UpdateTeamCash(payingTeam, payingTeam.Cash - amount);
+            }
+
+            // Add quantity to receiving team
+            await UpdateTeamCash(receivingTeam, receivingTeam.Cash + amount);
+
+            // Notify team about payment
+            NotifyTeamPaymentAsync(payingTeam, receivingTeam, amount);
+        }
+
         public async Task PayToBank(Team team, decimal amount)
         {
-            var prevTeam = game.Teams.FirstOrDefault(t => t.Id == team.Id);
+            ;
             await UpdateTeamCash(team, team.Cash - amount);
 
             // Notify banker to decide if money should go to lottery

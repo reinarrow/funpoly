@@ -56,16 +56,7 @@ namespace Funpoly.Features.Money
 
         private async Task SendTransfer()
         {
-            if (!IsBanker)
-            {
-                // Substract cash from the sending team (the user of the application)
-                var newUserCash = UserTeam.Cash - playerModalCash;
-                await gameManager.UpdateTeamCash(UserTeam, newUserCash);
-            }
-
-            // Add cash to the receiving team (the one corresponding to this MoneyListItem component, Team parameter)
-            var newOtherCash = Team.Cash + playerModalCash;
-            await gameManager.UpdateTeamCash(Team, newOtherCash);
+            await gameManager.PayToTeam(UserTeam, Team, playerModalCash);
 
             HideModal(playerModalRef);
         }
