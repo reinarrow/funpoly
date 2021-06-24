@@ -1,0 +1,19 @@
+﻿.postcard-icon {
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 32px;
+    text-align: center
+}
+
+    .postcard-icon.missing {
+        background-image: url("image/stamp-gray.png");
+    }
+
+    .postcard-icon.owned {
+        background-image: url("image/stamp-white.png");
+    }

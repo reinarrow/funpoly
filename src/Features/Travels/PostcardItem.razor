@@ -2,9 +2,10 @@
 @inject IGameManager gameManager
 
 <Tooltip Text="@Postcard.Parcel.Name">
-    <Figure Class="mt-auto mb-auto" Size="FigureSize.Is32x32" @onclick="OnPostcardClick">
-        <FigureImage Source="@(postcardTeam != null ? "image/stamp-white.png" : "image/stamp-gray.png")"></FigureImage>
-    </Figure>
+    @{ var postcardIconClass = "postcard-icon " + (postcardTeam != null ? "owned" : "missing");}
+    <div class="@postcardIconClass" @onclick="OnPostcardClick">
+        @Postcard.ParcelId
+    </div>
 </Tooltip>
 
 <Modal @ref="modalRef">
