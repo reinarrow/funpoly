@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   funpoly:
-    container_name: funpoly
+    container_name: funpoly_dev
     hostname: funpoly
     restart: always
     image: ${DOCKER_REGISTRY-}funpoly
@@ -15,7 +15,7 @@ services:
       
 
   funpoly_postgres:
-    container_name: funpoly_postgres
+    container_name: funpoly_postgres_dev
     hostname: funpoly_postgres
     image: postgres:13
     restart: always

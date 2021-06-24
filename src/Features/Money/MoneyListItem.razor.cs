@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Blazorise;
 using Funpoly.Data.Models;
 using Microsoft.AspNetCore.Components;
@@ -41,7 +42,7 @@ namespace Funpoly.Features.Money
 
         private void ShowPlayerModal()
         {
-            if (!IsBanker && UserTeam != null && UserTeam.Id != Team.Id)
+            if (IsBanker || (UserTeam != null && UserTeam.Id != Team.Id))
             {
                 playerModalCash = 0;
                 playerModalRef.Show();
@@ -55,17 +56,17 @@ namespace Funpoly.Features.Money
 
         private async Task SendTransfer()
         {
-            // If some money is being transfer and selected team is not the user's team
-            if (playerModalCash != 0)
+            if (!IsBanker)
             {
                 // Substract cash from the sending team (the user of the application)
                 var newUserCash = UserTeam.Cash - playerModalCash;
                 await gameManager.UpdateTeamCash(UserTeam, newUserCash);
-
-                // Add cash to the receiving team (the one corresponding to this MoneyListItem component, Team parameter)
-                var newOtherCash = Team.Cash + playerModalCash;
-                await gameManager.UpdateTeamCash(Team, newOtherCash);
             }
+
+            // Add cash to the receiving team (the one corresponding to this MoneyListItem component, Team parameter)
+            var newOtherCash = Team.Cash + playerModalCash;
+            await gameManager.UpdateTeamCash(Team, newOtherCash);
+
             HideModal(playerModalRef);
         }
 
@@ -77,6 +78,19 @@ namespace Funpoly.Features.Money
                 await gameManager.UpdateTeamCash(Team, bankerModalCash);
             }
             HideModal(bankerModalRef);
+        }
+
+        private void ValidatePayment(ValidatorEventArgs args)
+        {
+            if (Convert.ToDecimal(args.Value) > 0)
+            {
+                args.Status = ValidationStatus.Success;
+            }
+            else
+            {
+                args.Status = ValidationStatus.Error;
+                args.ErrorText = "La cantidad a transferir debe ser mayor que 0.";
+            }
         }
     }
 }
