@@ -21,6 +21,10 @@ namespace Funpoly.Core
 
         Task NotifyBankerAsync(decimal amount);
 
+        event Func<Team, Team, decimal, Task> OnTeamPayment;
+
+        Task NotifyTeamPaymentAsync(Team payingTeam, Team receivingTeam, decimal amount);
+
         event Func<int, string, Task> OnSurpriseCard;
 
         Task SendSurpriseCardToTeamAsync(int teamId, string text);
@@ -42,6 +46,8 @@ namespace Funpoly.Core
         Task UpdateTeamCash(Team team, decimal newCash);
 
         Task PayToBank(Team team, decimal newCash);
+
+        Task PayToTeam(Team payingTeam, Team receivingTeam, decimal amount);
 
         Task<List<Parcel>> GetContinentParcelsWithProperties(int ContinentId);
 

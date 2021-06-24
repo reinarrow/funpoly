@@ -20,8 +20,9 @@ namespace Funpoly.Pages
         private Modal bankerModal;
         private decimal lastPaymentAmount;
 
-        private Modal surpriseCardModalRef;
-        private string surpriseCardText;
+        private Modal notificationModalRef;
+        private string notificationModalTitle;
+        private string notificationModalText;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -49,9 +50,10 @@ namespace Funpoly.Pages
 
                 if (isBanker)
                 {
-                    // Subscribe to notifications about payments to bank
+                    // Subscribe to notifications about payments and surprise cards
                     gameManager.OnBankPayment += async (amount) => await ShowBankerModal(amount);
                     gameManager.OnSurpriseCard += async (teamId, text) => await OnSurpriseCardReceived(teamId, text);
+                    gameManager.OnTeamPayment += async (payingTeam, receivingTeam, amount) => await OnTeamPaymentReceived(payingTeam, receivingTeam, amount);
                 }
                 else
                 {
@@ -87,6 +89,7 @@ namespace Funpoly.Pages
                 {
                     // User belongs to a team from the current game. Subscribe to teams notifications
                     gameManager.OnSurpriseCard += async (teamId, text) => await OnSurpriseCardReceived(teamId, text);
+                    gameManager.OnTeamPayment += async (payingTeam, receivingTeam, amount) => await OnTeamPaymentReceived(payingTeam, receivingTeam, amount);
                 }
                 else
                 {
@@ -133,8 +136,28 @@ namespace Funpoly.Pages
             // Only show card to banker and corresponding team
             if (isBanker || userTeam.Id == teamId)
             {
-                surpriseCardText = text;
-                surpriseCardModalRef.Show();
+                notificationModalTitle = "Carta sorpresa";
+                notificationModalText = text;
+                notificationModalRef.Show();
+            }
+        }
+
+        private async Task OnTeamPaymentReceived(Team payingTeam, Team receivingTeam, decimal amount)
+        {
+            // Cases when the notification should appear:
+            // 1. The app user is the banker and he was not the one doing the transfer (payingTeam != null)
+            // 2. The app user is not the banker and he is the receiving team
+            if ((isBanker && payingTeam != null) || (!isBanker && userTeam != null && userTeam.Id == receivingTeam.Id))
+            {
+                notificationModalTitle = "Confirmación de Zumbi";
+                notificationModalText = (payingTeam != null ? payingTeam.Name : "Banca")
+                    + " -> "
+                    + receivingTeam.Name
+                    + ". Cantidad: "
+                    + amount.ToString()
+                    + " €";
+
+                notificationModalRef.Show();
             }
         }
     }
