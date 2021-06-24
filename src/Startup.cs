@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Microsoft.AspNetCore.Http;
 
 namespace Funpoly
 {
@@ -43,6 +44,8 @@ namespace Funpoly
               .AddBootstrapProviders()
               .AddFontAwesomeIcons();
 
+            services.AddProgressiveWebApp();
+            services.AddSingleton(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
             services.AddRazorPages();
             services.AddServerSideBlazor();
 

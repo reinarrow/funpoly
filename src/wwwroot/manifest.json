@@ -1,0 +1,17 @@
+﻿{
+    "name": "Funpoly",
+    "short_name": "Funpoly",
+    "description": "Monopoly-like game",
+    "icons": [
+        {
+            "src": "/image/favicon_package/android-chrome-192x192.png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/image/favicon_package/android-chrome-512x512.png",
+            "sizes": "512x512"
+        }
+    ],
+    "display": "standalone",
+    "start_url": "/"
+}
