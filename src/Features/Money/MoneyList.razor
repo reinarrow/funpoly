@@ -28,7 +28,7 @@
             <Validation Validator="@ValidatePayment">
                 <Field>
                     <FieldLabel>Cantidad</FieldLabel>
-                    <NumericEdit @bind-Value="@modalCash" />
+                    <NumericEdit Autofocus="true" @bind-Value="@modalCash" />
                     <ValidationError></ValidationError>
                 </Field>
             </Validation>

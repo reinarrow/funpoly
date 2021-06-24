@@ -23,7 +23,7 @@ namespace Funpoly.Features.Money
         private decimal bankerModalCash;
 
         private Modal playerModalRef;
-        private decimal playerModalCash;
+        private decimal? playerModalCash;
 
         private bool isInitialized = false;
 
@@ -44,7 +44,7 @@ namespace Funpoly.Features.Money
         {
             if (IsBanker || (UserTeam != null && UserTeam.Id != Team.Id))
             {
-                playerModalCash = 0;
+                playerModalCash = null;
                 playerModalRef.Show();
             }
         }
@@ -56,7 +56,7 @@ namespace Funpoly.Features.Money
 
         private async Task SendTransfer()
         {
-            await gameManager.PayToTeam(UserTeam, Team, playerModalCash);
+            await gameManager.PayToTeam(UserTeam, Team, (decimal)playerModalCash);
 
             HideModal(playerModalRef);
         }
