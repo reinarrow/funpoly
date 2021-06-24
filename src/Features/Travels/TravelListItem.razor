@@ -13,10 +13,14 @@
             <Row>
                 @if (Team.Transport != null)
                 {
+
                     <Figure Size="FigureSize.Is32x32" Style="margin-left: 10px; position: absolute; left: 0;">
                         @{ var iconSource = GetTransportIcon();}
-                        <FigureImage Source="@iconSource"></FigureImage>
+                        <Tooltip Placement="Placement.Right" Text="@(Team.Transport.Name + ": "+Team.Transport.Dices+" dado"+(Team.Transport.Dices > 1 ? "s":"")+", "+ "resta "+Team.Transport.Substraction+" por dado.")">
+                            <FigureImage Source="@iconSource"></FigureImage>
+                        </Tooltip>
                     </Figure>
+
                 }
                 <Text Class="ml-auto mr-auto" Alignment="TextAlignment.Center">@Team.Name: @Team.Days días</Text>
                 @if (IsBanker)
