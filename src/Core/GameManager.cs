@@ -307,6 +307,7 @@ namespace Funpoly.Core
 
             team.Cash += game.LotteryPrize;
             await teamRepository.UpdateAsync(team);
+            await NotifyTeamPaymentAsync(null, team, game.LotteryPriz);
 
             game.LotteryPrize = 0;
             await gameRepository.UpdateAsync(game);
@@ -321,8 +322,9 @@ namespace Funpoly.Core
             // Increment travel days
             team.Days += travelDays;
 
-            // Pay the lap tax
+            // Pay the lap tax and notify team
             team.Cash += settings.LapPaymentAmount;
+            await NotifyTeamPaymentAsync(null, team, settings.LapPaymentAmount);
 
             // Assign the new transport
             team.TransportId = newTransportId;
