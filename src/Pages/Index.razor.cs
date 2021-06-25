@@ -13,6 +13,7 @@ namespace Funpoly.Pages
 
         private bool isInitialised = false;
         private bool isBanker = false;
+        private bool gameLoaded = false; //Flag to detect game loaded and re-check team cookie
 
         // Team corresponding to the user using the device. Obtained by the browser cookie.
         private Team userTeam;
@@ -55,10 +56,8 @@ namespace Funpoly.Pages
                     gameManager.OnSurpriseCard += async (teamId, text) => await OnSurpriseCardReceived(teamId, text);
                     gameManager.OnTeamPayment += async (payingTeam, receivingTeam, amount) => await OnTeamPaymentReceived(payingTeam, receivingTeam, amount);
                 }
-                else
-                {
-                    await GetTeamCookie();
-                }
+
+                // Team notifications are gathered when the team cookie is obtained (triggered from update).
 
                 isInitialised = true;
                 await Update();
@@ -67,6 +66,13 @@ namespace Funpoly.Pages
 
         private async Task Update()
         {
+            // For teams (not banker), check if new game has been loaded to re-get team cookie
+            if (!isBanker && gameLoaded == false && gameManager.GetGame() != null)
+            {
+                gameLoaded = true;
+                await GetTeamCookie();
+            }
+
             // Trigger re-render
             await InvokeAsync(() =>
             {
@@ -75,7 +81,8 @@ namespace Funpoly.Pages
         }
 
         /// <summary>
-        ///     Read team cookie and save the team to the cascading parameter userTeam
+        ///     Read team cookie and save the team to the cascading parameter userTeam.
+        ///     Subscribe to team notifications if correct team cookie is found
         /// </summary>
         /// <returns></returns>
         public async Task GetTeamCookie()
