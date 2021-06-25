@@ -307,7 +307,7 @@ namespace Funpoly.Core
 
             team.Cash += game.LotteryPrize;
             await teamRepository.UpdateAsync(team);
-            await NotifyTeamPaymentAsync(null, team, game.LotteryPriz);
+            await NotifyTeamPaymentAsync(null, team, game.LotteryPrize);
 
             game.LotteryPrize = 0;
             await gameRepository.UpdateAsync(game);
