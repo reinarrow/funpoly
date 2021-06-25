@@ -146,7 +146,7 @@ namespace Funpoly.Features.Properties
                         BuffetServiceAvailable = modalHotelBuilt && modalBuffet,
                         ParkingServiceAvailable = modalHotelBuilt && modalParking,
                         PoolServiceAvailable = modalHotelBuilt && modalPool,
-                        PurchasesCount = 1
+                        PurchasesCount = modalPurchasesCount
                     };
                     await gameManager.CreateParcelProperty(newParcelProperty);
                 }
@@ -168,7 +168,6 @@ namespace Funpoly.Features.Properties
                 {
                     // Edit parcel property
                     var editedParcelProperty = parcelProperty.ShallowCopy();
-                    if (editedParcelProperty.TeamId != modalTeamId && modalPurchasesCount == editedParcelProperty.PurchasesCount) modalPurchasesCount++;
                     editedParcelProperty.TeamId = modalTeamId;
                     editedParcelProperty.HotelBuilt = modalHotelBuilt;
                     editedParcelProperty.WifiServiceAvailable = modalHotelBuilt && modalWifi;
