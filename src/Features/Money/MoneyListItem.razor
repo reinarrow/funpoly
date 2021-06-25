@@ -7,11 +7,13 @@
         @Team.Name: @Team.Cash €
         @if (IsBanker)
         {
-            <Icon Style="margin-right: 10px; position: absolute; right: 0;" Name="IconName.Edit" @onclick="@ShowBankerModal"></Icon>
+            <div style="margin-right: 10px; position: absolute; right: 0;" @onclick:stopPropagation="true">
+                <Icon Name=" IconName.Edit" @onclick="@ShowBankerModal"></Icon>
+            </div>
         }
     </div>
 
-    <Modal @ref="bankerModalRef">
+    <Modal @ref=" bankerModalRef">
         <ModalContent Centered="true">
             <ModalHeader>
                 <ModalTitle>Editar dinero</ModalTitle>
@@ -48,7 +50,7 @@
             </ModalBody>
             <ModalFooter>
                 <Button Color="Color.Secondary" Clicked="@(() => HideModal(playerModalRef))">Cancelar</Button>
-                <Button Disabled="playerModalCash <= 0" Color="Color.Primary" Clicked="@SendTransfer">Enviar</Button>
+                <Button Disabled="playerModalCash == null ||playerModalCash <= 0" Color="Color.Primary" Clicked="@SendTransfer">Enviar</Button>
             </ModalFooter>
         </ModalContent>
     </Modal>
